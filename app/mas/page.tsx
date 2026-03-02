@@ -49,7 +49,7 @@ export default function Mas() {
                         fontWeight: '900',
                         letterSpacing: '-1px'
                     }}>
-                        REDEFINING DEFENSE WITH <br />
+                        REDEFINING DEFENCE WITH <br />
                         <span style={{ color: 'var(--accent-primary)' }}>INTELLIGENT AIRPOWER.</span>
                     </h2>
 

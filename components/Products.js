@@ -118,7 +118,7 @@ export default function Products() {
         <section id="products" className="products-section">
             <div className="container">
                 <h2 className="section-title">Mission-Critical Hardware</h2>
-                <p className="section-subtitle">Engineered for Defense, Disaster Relief, and Heavy Logistics.</p>
+                <p className="section-subtitle">Engineered for Defence, Disaster Relief, and Heavy Logistics.</p>
 
                 <div className="products-grid">
                     {products.map(product => (
