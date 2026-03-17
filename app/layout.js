@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import { Inter, JetBrains_Mono, Orbitron } from 'next/font/google'
+import Chatbot from '../components/Chatbot'
 
 const inter = Inter({
     subsets: ['latin'],
@@ -40,7 +41,10 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={`${inter.variable} ${jetbrainsMono.variable} ${orbitron.variable}`}>{children}</body>
+            <body className={`${inter.variable} ${jetbrainsMono.variable} ${orbitron.variable}`}>
+                {children}
+                <Chatbot />
+            </body>
         </html>
     )
 }

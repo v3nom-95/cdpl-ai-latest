@@ -19,6 +19,7 @@ export default function Footer() {
                 <div className="footer-section">
                     <h3>Products</h3>
                     <ul>
+                        <li><Link href="/products">All Products</Link></li>
                         <li><Link href="/mas">Major Aerospace Systems (MAS)</Link></li>
                         <li><Link href="/mms">Major Marine Systems (MMS)</Link></li>
                         <li><Link href="/mgs">Major Ground Systems (MGS)</Link></li>

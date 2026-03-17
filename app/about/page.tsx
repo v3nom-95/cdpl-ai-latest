@@ -34,7 +34,7 @@ export default function AboutPage() {
 
     const leadership = [
         {
-            name: "Major Sundeep (Retd.)",
+            name: "Major Sandeep (Retd)",
             role: "Founder & CEO",
             details: "12+ Years operating Autonomous Systems | Alumni of IIT J & IIM A",
             bio: "Veteran-led insight. We understand what soldiers need because we have been in their boots.",
@@ -55,7 +55,7 @@ export default function AboutPage() {
             image: "/partners/vish.png"
         },
         {
-            name: "Major Rajesh Yangaladasu (Retd)",
+            name: "Major Rajesh (Retd)",
             role: "VP, Business Development & Sales",
             details: "Military veteran | Tactical Instructor | Defense Strategist | Alumni of IIM Lucknow",
             bio: "Strategic mind behind elite defense partnerships.",
@@ -105,8 +105,8 @@ export default function AboutPage() {
                             <h4 style={{ color: 'var(--accent-primary)', marginBottom: '1rem', letterSpacing: '2px', fontWeight: '800' }}>VISION</h4>
                             <p style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--text-primary)' }}>To create sovereign Physical Intelligence that protects India and empowers humanity through autonomous systems.</p>
                         </div>
-                        <div style={{ borderLeft: '4px solid var(--accent-secondary)', paddingLeft: '1.5rem' }}>
-                            <h4 style={{ color: 'var(--accent-secondary)', marginBottom: '1rem', letterSpacing: '2px', fontWeight: '800' }}>MISSION</h4>
+                        <div style={{ borderLeft: '4px solid var(--accent-primary)', paddingLeft: '1.5rem' }}>
+                            <h4 style={{ color: 'var(--accent-primary)', marginBottom: '1rem', letterSpacing: '2px', fontWeight: '800' }}>MISSION</h4>
                             <p style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--text-primary)' }}>Deploy intelligent autonomous systems for defense and dual-use applications & protecting soldiers, empowering industries, and establishing India's leadership in Physical Intelligence.</p>
                         </div>
                     </div>
@@ -124,6 +124,8 @@ export default function AboutPage() {
                         {divisions.map((div, i) => (
                             <div key={i} className="product-card" style={{ padding: 'clamp(2rem, 4vw, 3.5rem)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', background: '#f8fafc' }}>
                                 <span className="corner corner-tl"></span>
+                                <span className="corner corner-tr"></span>
+                                <span className="corner corner-bl"></span>
                                 <span className="corner corner-br"></span>
                                 <div style={{ height: '140px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2.5rem' }}>
                                     <img src={div.logo} alt={div.name} style={{ maxHeight: '100%', maxWidth: '90%', objectFit: 'contain' }} />
@@ -148,6 +150,8 @@ export default function AboutPage() {
                         {leadership.map((leader, index) => (
                             <div key={index} className="product-card" style={{ padding: '2.5rem', minHeight: 'auto', background: '#fff' }}>
                                 <span className="corner corner-tl"></span>
+                                <span className="corner corner-tr"></span>
+                                <span className="corner corner-bl"></span>
                                 <span className="corner corner-br"></span>
                                 {/* <div className="product-image" style={{
                                     height: '260px',

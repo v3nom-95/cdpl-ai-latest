@@ -12,6 +12,7 @@ export default function ProductPage() {
     const id = (params.id as string) || '';
     const product = products[id as keyof typeof products] as any;
     const [activeImage, setActiveImage] = useState(0);
+    const [scrollY, setScrollY] = useState(0);
     const isBard = id === 'bard';
 
     useEffect(() => {
@@ -23,11 +24,20 @@ export default function ProductPage() {
             });
         }, { threshold: 0.1 });
 
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+        };
+
         document.querySelectorAll('.reveal-section').forEach(section => {
             observer.observe(section);
         });
 
-        return () => observer.disconnect();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, [id]);
 
     if (!product) {
@@ -50,123 +60,71 @@ export default function ProductPage() {
             <div className="product-detail-page bg-white" style={{ color: 'var(--text-primary)' }}>
                 <Navbar />
 
-                {/* Tech Hero Section with Video - High Contrast / No Fog */}
-                <section className="tech-hero-section" style={{ background: '#000', minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', padding: 0 }}>
-                    <video autoPlay loop muted playsInline className="hero-video-bg" style={{ opacity: 0.7, objectFit: 'cover' }}>
+                {/* Tech Hero Section - Unified with Home Style */}
+                <section className="hero-section tech-hero-section" style={{ background: '#000', height: '100vh', position: 'relative', padding: 0 }}>
+                    <video autoPlay loop muted playsInline className="hero-video">
                         <source src="/partners/bardvideo.mp4" type="video/mp4" />
                     </video>
 
-                    {/* Tactical Overlays */}
-                    <div className="tactical-grid" style={{ opacity: 0.15, backgroundSize: '30px 30px' }}></div>
-                    <div className="scanline-v2" style={{ opacity: 0.5 }}></div>
+                    <div className="hero-overlay"></div>
 
-                    {/* Dark gradient for text legibility - Left Side Only */}
-                    <div style={{
+                    {/* Product Info - Bottom Left Overlay */}
+                    <div className="hero-info-content" style={{
                         position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        background: 'linear-gradient(to right, rgba(0,0,0,0.7) 0%, transparent 60%)',
-                        zIndex: 5
-                    }}></div>
+                        bottom: 'clamp(2rem, 6vh, 4rem)',
+                        left: 'clamp(1.5rem, 5vw, 4rem)',
+                        zIndex: 25,
+                        maxWidth: '480px',
+                        textAlign: 'left',
+                        opacity: Math.max(1 - scrollY / 600, 0),
+                        transform: `translate3d(0, ${scrollY * 0.15}px, 0)`,
+                        transition: 'opacity 0.2s cubic-bezier(0.1, 0.5, 0.5, 1), transform 0.2s cubic-bezier(0.1, 0.5, 0.5, 1)',
+                        willChange: 'transform, opacity',
+                        borderLeft: '2px solid var(--accent-primary)',
+                        paddingLeft: 'clamp(0.8rem, 1.5vw, 1.2rem)'
+                    }}>
+                        <h1 style={{
+                            fontSize: 'clamp(1.8rem, 5vw, 3.2rem)',
+                            fontWeight: '900',
+                            lineHeight: '1',
+                            marginBottom: '0.6rem',
+                            color: '#ffffff',
+                            letterSpacing: '-1px',
+                            textShadow: '0 4px 20px rgba(0,0,0,0.8)'
+                        }}>
+                            {product.name.toUpperCase()}
+                        </h1>
 
-                    <div className="container" style={{ position: 'relative', zIndex: 10, width: '100%' }}>
-                        <div className="reveal-section" style={{ maxWidth: '800px' }}>
-                            <span className="tech-hero-subtitle" style={{ color: 'var(--accent-primary)', letterSpacing: '4px', fontWeight: '800', display: 'block', marginBottom: '1.5rem', fontSize: '0.8rem' }}>{product.brand} // {product.category}</span>
-
-                            <h1 className="tech-hero-title" style={{ color: '#fff', marginBottom: '1.5rem', fontSize: 'clamp(3.5rem, 14vw, 9rem)', fontWeight: '900', lineHeight: '1' }}>
-                                BARD
-                            </h1>
-
-                            <p className="bard-hero-tagline" style={{
-                                fontSize: '1.1rem',
-                                color: 'rgba(255,255,255,0.7)',
-                                maxWidth: '550px',
-                                fontWeight: '400',
-                                lineHeight: '1.6',
-                                marginBottom: 'clamp(2rem, 5vh, 4rem)'
-                            }}>
-                                {product.tagline}
-                            </p>
-
-                            {/* MAS Highlight with Logo */}
-                            <div className="bard-mas-label" style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '1rem',
-                                marginBottom: '2.5rem',
-                                color: 'var(--accent-primary)',
-                                fontWeight: '900',
-                                fontSize: '0.75rem',
-                                letterSpacing: '2px',
-                                fontFamily: 'var(--font-mono)'
-                            }}>
-                                <img src="/partners/masicon.png" alt="MAS" style={{ height: '30px', filter: 'brightness(0) invert(1)', flexShrink: 0 }} />
-                                <div style={{ height: '2px', width: '30px', background: 'var(--accent-primary)', flexShrink: 0 }}></div>
-                                <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>[ MULTIMISSION_ISR_TACTICAL_NODE ]</span>
-                            </div>
-
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(1.2rem, 4vw, 4rem)' }}>
-                                {product.heroSpecs.map((spec: any, i: number) => (
-                                    <div key={i} style={{ borderLeft: '3px solid var(--accent-primary)', paddingLeft: '1rem' }}>
-                                        <div style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.5)', letterSpacing: '2px', marginBottom: '0.5rem', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>{spec.label}</div>
-                                        <div style={{ fontSize: 'clamp(1.5rem, 6vw, 2.5rem)', fontWeight: '900', color: '#fff' }}>{spec.value}</div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                        <p style={{
+                            fontSize: 'clamp(0.65rem, 1.2vw, 0.78rem)',
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            maxWidth: '360px',
+                            margin: '0',
+                            fontWeight: '600',
+                            lineHeight: '1.6',
+                            letterSpacing: '2.5px',
+                            textShadow: '0 2px 8px rgba(0,0,0,0.8)',
+                            fontFamily: 'var(--font-mono)',
+                            textTransform: 'uppercase'
+                        }}>
+                            {product.tagline}
+                        </p>
                     </div>
 
-                    {/* Performance HUD - Sharp Tactical Look (No Fog) */}
-                    <div style={{
-                        position: 'absolute',
-                        right: '4rem',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        width: '320px',
-                        zIndex: 10,
-                        padding: '2.5rem',
-                        borderLeft: '2px solid var(--accent-primary)',
-                        background: 'rgba(0,0,0,0.7)',
-                        backdropFilter: 'blur(8px)',
-                        boxShadow: '0 0 40px rgba(0,0,0,0.3)'
-                    }} className="reveal-section hidden-mobile">
-                        <div style={{ fontSize: '0.6rem', color: 'var(--accent-primary)', letterSpacing: '3px', marginBottom: '3rem', fontWeight: '900' }}>[ SYSTEM_TELEMETRY_STREAM ]</div>
+                    {/* Scroll indicator removed as per request */}
+                </section>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2.2rem' }}>
-                            {product.performanceMetrics?.map((stat: any, i: number) => (
-                                <div key={i}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', alignItems: 'flex-end' }}>
-                                        <span style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', fontWeight: '600' }}>{stat.label}</span>
-                                        <span style={{ fontSize: '1rem', fontWeight: '900', color: 'var(--text-primary)' }}>{stat.value}{stat.unit}</span>
-                                    </div>
-                                    <div style={{ width: '100%', height: '2px', background: 'rgba(0,0,0,0.05)', position: 'relative' }}>
-                                        <div style={{
-                                            position: 'absolute',
-                                            top: 0,
-                                            left: 0,
-                                            height: '100%',
-                                            width: `${stat.value}%`,
-                                            background: 'var(--accent-primary)',
-                                            boxShadow: '0 0 10px var(--accent-primary)'
-                                        }}></div>
-                                    </div>
+                {/* Simplified Specs Section (Visible on scroll) */}
+                <section className="reveal-section" style={{ background: '#000', padding: '100px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                    <div className="container" style={{ textAlign: 'center' }}>
+                        <div className="tech-stats-grid-mobile" style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'clamp(2rem, 5vw, 6rem)' }}>
+                            {product.heroSpecs.map((spec: any, i: number) => (
+                                <div key={i} className="tech-stat-block" style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)', letterSpacing: '2px', marginBottom: '0.5rem', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>{spec.label}</div>
+                                    <div style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', fontWeight: '900', color: '#fff' }}>{spec.value}</div>
                                 </div>
                             ))}
                         </div>
-
-                        <div style={{ marginTop: '3.5rem', fontSize: '0.65rem', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', lineHeight: '1.8' }}>
-                            {">>"} SENSOR_ARRAY: OPTIMIZED<br />
-                            {">>"} CORE_LOGIC: STABLE<br />
-                            {">>"} DATA_LINK: SYNCED
-                        </div>
-                    </div>
-
-                    {/* Bottom status — hidden on mobile to prevent overflow */}
-                    <div className="bard-status-tag" style={{ position: 'absolute', bottom: '4rem', right: '4rem', textAlign: 'right', opacity: 0.5 }}>
-                        <div style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-tertiary)', letterSpacing: '1px' }}>SYSTEM_STATUS: OPERATIONAL</div>
-                        <div style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-tertiary)', letterSpacing: '1px' }}>THREAT_LEVEL: NOMINAL</div>
                     </div>
                 </section>
 
@@ -208,19 +166,22 @@ export default function ProductPage() {
                                     { color: '#0039A6', label: 'STD_UNIT' },
                                     { color: '#005C9E', label: 'THERMAL_OPTIC' },
                                     { color: '#584E41', label: 'LRF_TARGETING' },
-                                    { color: '#CC5D29', label: 'STRIKE_MOD_D' },
-                                    { color: '#960606', label: 'STRIKE_MOD_DN' }
+                                    { color: '#CC5D29', label: 'AI_INTEGRATED' },
+                                    { color: '#960606', label: 'MISSION_CFG' },
+                                    { color: '#000000', label: 'CFG_THERMAL' }
                                 ];
                                 const theme = themes[i % themes.length];
 
                                 return (
-                                    <div key={i} className="form-factor-card" style={{
+                                    <Link key={i} href={`/products/${id}/${v.id}`} className="form-factor-card" style={{
                                         background: '#fff',
                                         borderColor: 'rgba(0,0,0,0.08)',
                                         color: 'var(--text-primary)',
                                         padding: 'clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem)',
                                         boxShadow: '0 10px 30px rgba(0,0,0,0.02)',
-                                        position: 'relative'
+                                        position: 'relative',
+                                        textDecoration: 'none',
+                                        transition: 'transform 0.3s ease, border-color 0.3s ease'
                                     }}>
                                         <div style={{
                                             position: 'absolute',
@@ -245,31 +206,61 @@ export default function ProductPage() {
 
                                         <h3 style={{ color: 'var(--text-primary)', fontSize: '2rem', letterSpacing: '-1px' }}>{v.variant}</h3>
                                         <p style={{ color: theme.color, marginBottom: '3rem', fontSize: '0.85rem', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontWeight: '700' }}>
-                                            {v.type} // {v.feature}
+                                            {v.type}
                                         </p>
 
                                         <ul className="spec-list" style={{ marginTop: '2rem' }}>
-                                            <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>ENDURANCE</span><span style={{ color: 'var(--text-primary)' }}>{v.endurance}</span></li>
-                                            <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>RANGE</span><span style={{ color: 'var(--text-primary)' }}>{v.range}</span></li>
-                                            <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>PAYLOAD</span><span style={{ color: 'var(--text-primary)' }}>{v.payload}</span></li>
-                                            <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>ALTITUDE</span><span style={{ color: 'var(--text-primary)' }}>{v.altitude}</span></li>
+                                            <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>ENDURANCE</span><span style={{ color: 'var(--text-primary)' }}>{v.performance.endurance}</span></li>
+                                            <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>RANGE</span><span style={{ color: 'var(--text-primary)' }}>{v.performance.range}</span></li>
+                                            <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>PAYLOAD</span><span style={{ color: 'var(--text-primary)' }}>{v.performance.payload}</span></li>
                                         </ul>
 
                                         <div style={{ marginTop: 'clamp(2rem, 4vh, 4rem)' }}>
-                                            <button className="btn btn-outline" style={{
+                                            <div className="btn btn-outline" style={{
                                                 borderColor: 'var(--border-color)',
                                                 color: 'var(--text-primary)',
                                                 width: '100%',
                                                 borderRadius: '0',
                                                 fontSize: '0.75rem',
                                                 letterSpacing: '2px',
-                                                textTransform: 'uppercase'
-                                            }}>Request Data Sheet</button>
+                                                textTransform: 'uppercase',
+                                                textAlign: 'center'
+                                            }}>View Variant Details</div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 );
                             })}
                         </div>
+                    </div>
+                </section>
+
+                {/* WhatsApp Contact Component */}
+                <section className="reveal-section" style={{ background: '#fff', padding: '100px 0', borderTop: '1px solid #eee' }}>
+                    <div className="container" style={{ textAlign: 'center' }}>
+                        <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: '900', marginBottom: '1.5rem', color: 'var(--text-primary)' }}>Interested in custom BARD configurations?</h2>
+                        <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem' }}>
+                            Our team can help you configure the perfect ISR platform for your specific mission requirements.
+                        </p>
+                        <a
+                            href={`https://wa.me/${product.whatsappNumber}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-primary"
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '1rem',
+                                padding: '1.2rem 2.5rem',
+                                fontSize: '1rem',
+                                borderRadius: '4px'
+                            }}
+                        >
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.025 3.204l-.694 2.54 2.597-.682c.894.488 1.827.817 2.841.817 3.18 0 5.77-2.587 5.77-5.766 0-3.181-2.587-5.779-5.771-5.779zm3.387 8.313c-.154.433-.774.792-1.077.843-.284.048-.655.078-1.058-.052-.259-.084-.585-.198-1.018-.385-1.85-.795-3.04-2.671-3.133-2.793-.093-.123-.756-.999-.756-1.999 0-1 .512-1.493.694-1.693.182-.2.398-.246.531-.246l.383.003c.125.002.293-.047.458.353.169.41.58 1.413.63 1.516.05.103.082.222.016.354l-.249.431c-.082.133-.169.27-.072.438.096.168.428.706.918 1.143.633.565 1.166.74 1.332.825.166.084.266.07.366-.046l.329-.383c.1-.115.199-.096.332-.046l2.1.991c.133.066.221.115.253.175.032.062.032.355-.122.788z" />
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964 1.002-3.674c-.65-.118-1.782-2.181-1.782-3.351 0-4.329 3.522-7.851 7.851-7.851 4.33 0 7.852 3.522 7.852 7.851 0 4.331-3.522 7.855-7.928 7.855z" />
+                            </svg>
+                            Contact for more details
+                        </a>
                     </div>
                 </section>
 
@@ -298,56 +289,72 @@ export default function ProductPage() {
                 <Footer />
 
                 <style jsx>{`
-                    /* ---- BARD PAGE MOBILE STYLES ---- */
-
-                    /* Hero: make gradient cover full width on mobile (text is short) */
-                    @media (max-width: 768px) {
-                        /* Full-width dark overlay on mobile so text is always readable */
-                        .tech-hero-section > div[style*="linear-gradient"] {
-                            background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 100%) !important;
+                    @media (max-width: 1024px) {
+                        .tech-hero-section {
+                            height: 75vh !important;
+                            min-height: 520px;
                         }
 
-                        /* Hero content: use full width, reduce padding */
-                        .tech-hero-section .container {
-                            padding: 0 1.4rem !important;
-                        }
-                        .tech-hero-section .container > div {
-                            max-width: 100% !important;
-                            padding: 7rem 0 4rem !important;
+                        .hero-info-content {
+                            bottom: 1.5rem !important;
+                            left: 1.5rem !important;
+                            right: auto !important;
+                            max-width: calc(100% - 3rem) !important;
                         }
 
-                        /* MAS label: hide the long text tag, keep icon */
-                        .bard-mas-label span:last-child {
-                            display: none;
+                        .hero-info-content h1 {
+                            font-size: clamp(1.4rem, 6vw, 2rem) !important;
+                            letter-spacing: -0.5px !important;
+                            margin-bottom: 0.4rem !important;
                         }
 
-                        /* Status tag: hide on mobile to avoid right-side overflow */
-                        .bard-status-tag {
-                            display: none !important;
+                        .hero-info-content p {
+                            font-size: 0.65rem !important;
+                            line-height: 1.5 !important;
+                            letter-spacing: 2px !important;
                         }
 
-                        /* Spec values: reduce size */
-                        .bard-hero-tagline {
-                            font-size: 0.95rem !important;
-                            margin-bottom: 2rem !important;
+                        .tech-stats-grid-mobile {
+                            display: flex !important;
+                            flex-direction: column !important;
+                            gap: 3rem !important;
+                            padding: 2rem 0 !important;
                         }
 
-                        /* Variant card h3 */
-                        .form-factor-card h3 {
-                            font-size: 1.6rem !important;
+                        .tech-stat-block {
+                            width: 100% !important;
                         }
-                        .form-factor-card p {
-                            margin-bottom: 1.5rem !important;
+                        
+                        .bard-context-grid {
+                            grid-template-columns: 1fr !important;
+                            gap: 3rem !important;
+                            padding: 4rem 1.5rem !important;
+                        }
+
+                        .form-factor-container {
+                            grid-template-columns: 1fr !important;
+                            gap: 2rem !important;
+                        }
+
+                        .spec-hero {
+                             padding-top: 120px !important;
                         }
                     }
 
                     @media (max-width: 480px) {
-                        /* On small phones, also hide the MAS line decoration */
-                        .bard-mas-label div {
-                            display: none !important;
+                        .tech-hero-section {
+                            height: 70vh !important;
                         }
-                        .tech-hero-section .container > div {
-                            padding: 6rem 0 3rem !important;
+                        .hero-info-content {
+                            bottom: 1rem !important;
+                        }
+                        .hero-info-content h1 {
+                            font-size: 1.3rem !important;
+                            letter-spacing: 0px !important;
+                        }
+                        .hero-info-content p {
+                            font-size: 0.6rem !important;
+                            letter-spacing: 1.5px !important;
                         }
                     }
                 `}</style>
@@ -361,36 +368,82 @@ export default function ProductPage() {
             <Navbar />
 
             {/* Premium Hero Section */}
-            <section className="spec-hero reveal-section">
-                <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-                    <div style={{ textAlign: 'center' }}>
-                        <span className="overline">{product.brand} · {product.category}</span>
-                        <h1 style={{
-                            fontSize: 'clamp(2rem, 8vw, 4.5rem)',
-                            fontWeight: '900',
-                            letterSpacing: '-2px',
-                            lineHeight: '1',
-                            marginBottom: '1.5rem',
-                            color: 'var(--text-primary)'
-                        }}>
-                            {product.name}
-                        </h1>
-                        <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '800px', margin: '0 auto' }}>{product.tagline}</p>
-                    </div>
+            <section style={{ background: '#000', height: '100vh', position: 'relative', padding: 0 }}>
+                {/* Background image */}
+                {product.galleryImages?.[0] && (
+                    <img
+                        src={product.galleryImages[0]}
+                        alt={product.name}
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            opacity: 0.5
+                        }}
+                    />
+                )}
 
-                    {/* Big Tech Stats Grid */}
-                    {product.heroSpecs && product.heroSpecs.length > 0 && (
-                        <div className="tech-stats-grid">
+                {/* Dark overlay */}
+                <div className="hero-overlay"></div>
+
+                {/* Product Info - Bottom Left */}
+                <div className="default-hero-content" style={{
+                    position: 'absolute',
+                    bottom: 'clamp(2rem, 6vh, 4rem)',
+                    left: 'clamp(1.5rem, 5vw, 4rem)',
+                    zIndex: 25,
+                    maxWidth: '480px',
+                    textAlign: 'left',
+                    borderLeft: '2px solid var(--accent-primary)',
+                    paddingLeft: 'clamp(0.8rem, 1.5vw, 1.2rem)'
+                }}>
+                    <h1 style={{
+                        fontSize: 'clamp(1.8rem, 5vw, 3.2rem)',
+                        fontWeight: '900',
+                        lineHeight: '1',
+                        marginBottom: '0.6rem',
+                        color: '#ffffff',
+                        letterSpacing: '-1px',
+                        textShadow: '0 4px 20px rgba(0,0,0,0.8)'
+                    }}>
+                        {product.name.toUpperCase()}
+                    </h1>
+
+                    <p style={{
+                        fontSize: 'clamp(0.65rem, 1.2vw, 0.78rem)',
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        maxWidth: '360px',
+                        margin: '0',
+                        fontWeight: '600',
+                        lineHeight: '1.6',
+                        letterSpacing: '2.5px',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.8)',
+                        fontFamily: 'var(--font-mono)',
+                        textTransform: 'uppercase'
+                    }}>
+                        {product.tagline}
+                    </p>
+                </div>
+            </section>
+
+            {/* Specs Strip */}
+            {product.heroSpecs && product.heroSpecs.length > 0 && (
+                <section style={{ background: '#000', padding: '60px 0', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                    <div className="container" style={{ textAlign: 'center' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'clamp(2rem, 5vw, 6rem)' }}>
                             {product.heroSpecs.map((spec: { label: string, value: string }, i: number) => (
-                                <div key={i} className="tech-stat-item">
-                                    <span className="tech-stat-value">{spec.value}</span>
-                                    <span className="tech-stat-label">{spec.label}</span>
+                                <div key={i} style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', letterSpacing: '2px', marginBottom: '0.4rem', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>{spec.label}</div>
+                                    <div style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)', fontWeight: '900', color: '#fff' }}>{spec.value}</div>
                                 </div>
                             ))}
                         </div>
-                    )}
-                </div>
-            </section>
+                    </div>
+                </section>
+            )}
+
 
             {/* Futuristic Product Gallery */}
             {product.galleryImages && product.galleryImages.length > 0 && (
@@ -552,6 +605,52 @@ export default function ProductPage() {
             </section> */}
 
             <Footer />
+
+            <style jsx>{`
+                @media (max-width: 1024px) {
+                    .default-hero-content {
+                        bottom: 1.5rem !important;
+                        left: 1.5rem !important;
+                        max-width: calc(100% - 3rem) !important;
+                    }
+                    .default-hero-content h1 {
+                        font-size: clamp(1.4rem, 6vw, 2rem) !important;
+                        letter-spacing: -0.5px !important;
+                        margin-bottom: 0.4rem !important;
+                    }
+                    .default-hero-content p {
+                        font-size: 0.65rem !important;
+                        letter-spacing: 2px !important;
+                    }
+
+                    .tech-stats-grid {
+                        grid-template-columns: 1fr !important;
+                        gap: 3rem !important;
+                    }
+
+                    .gallery-layout {
+                        grid-template-columns: 1fr !important;
+                    }
+
+                    .about-content {
+                        grid-template-columns: 1fr !important;
+                        gap: 4rem !important;
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    .default-hero-content {
+                        bottom: 1rem !important;
+                    }
+                    .default-hero-content h1 {
+                        font-size: 1.3rem !important;
+                    }
+                    .default-hero-content p {
+                        font-size: 0.6rem !important;
+                        letter-spacing: 1.5px !important;
+                    }
+                }
+            `}</style>
         </div>
     );
 }

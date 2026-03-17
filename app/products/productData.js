@@ -1,11 +1,11 @@
 export const products = {
     'bard': {
-        name: "Battlefield Aerial Reconnaissance Device (BARD)",
+        name: "B.A.R.D. V2.0",
         tagline: "GROUP 2 UAS · TACTICAL AUTONOMY",
         brand: "MAS",
         category: "ISR",
-        description: "A multi-role Group 2 UAS family designed for strategic reconnaissance, thermal imaging, and tactical payload delivery.",
-        longDescription: "BARD is a mission-critical Autonomous Aerial System engineered for persistent battlefield intelligence. The platform supports multiple variants ranging from standard day surveillance to advanced thermal imaging with Laser Range Finding (LRF) and specialized payload release capabilities.",
+        description: "BARD V2.0 is a compact autonomous quadcopter designed for surveillance, perimeter monitoring, and reconnaissance operations. The platform integrates stabilized electrooptical imaging with real-time transmission capability.",
+        longDescription: "BARD V2.0 is a mission-critical Autonomous Aerial System engineered for persistent battlefield intelligence. The platform supports multiple variants ranging from standard day surveillance to advanced thermal imaging with Laser Range Finding (LRF) and specialized payload release capabilities.",
         heroSpecs: [
             { label: "Endurance", value: "60m" },
             { label: "Range", value: "5km" },
@@ -33,11 +33,118 @@ export const products = {
             }
         ],
         variants: [
-            { variant: "Day", type: "Quad ISR", endurance: "~60m", range: "5km", altitude: "800m", agl: "500m", frame: "690mm", auw: "4kg", payload: "EO", camera: "2K EO", feature: "Surveillance" },
-            { variant: "Thermal", type: "Quad ISR", endurance: "~60m", range: "5km", altitude: "800m", agl: "500m", frame: "690mm", auw: "4kg", payload: "EO+Thermal", camera: "EO+Thermal", feature: "Night Surveillance" },
-            { variant: "Thermal + LRF", type: "Quad ISR", endurance: "~60m", range: "5km", altitude: "800m", agl: "500m", frame: "690mm", auw: "4kg", payload: "EO+Thermal+LRF", camera: "EO+Thermal", feature: "Laser Range Finder" },
-            { variant: "Day Grenade", type: "Quad ISR", endurance: "~30m", range: "5km", altitude: "800m", agl: "500m", frame: "690mm", auw: "6kg", payload: "2kg Grenade", camera: "4K EO", feature: "Grenade Dropper" },
-            { variant: "Day/Night Grenade", type: "Quad ISR", endurance: "~30m", range: "5km", altitude: "800m", agl: "500m", frame: "690mm", auw: "6kg", payload: "2kg Grenade", camera: "EO+Thermal", feature: "Grenade Dropper" }
+            { 
+                id: "day-moonlight",
+                variant: "Day & Moonlight Variant", 
+                type: "Multi-Rotor ISR Platform", 
+                description: "BARD V2.0 is a compact autonomous quadcopter designed for surveillance, perimeter monitoring, and reconnaissance operations. The platform integrates stabilized electrooptical imaging with real-time transmission capability.",
+                keyHighlights: [
+                    "Endurance: Up to 60 Minutes",
+                    "Operational Range: Up to 3–4 KM",
+                    "2K EO Camera with Hybrid Zoom",
+                    "Dual GPS Navigation",
+                    "3-Axis Stabilized Gimbal",
+                    "Real-Time Video & Telemetry",
+                    "Portable Handheld Ground Control Station"
+                ],
+                capabilities: ["Long endurance", "High zoom capability", "Dual GPS for redundant navigation"],
+                applications: ["Surveillance", "Perimeter monitoring", "Reconnaissance"],
+                performance: { endurance: "60m", range: "3-4km", payload: "EO Camera" },
+                gallery: ["/partners/bard1.png", "/partners/bard2.jpeg", "/partners/bard3.png"]
+            },
+            { 
+                id: "day-night-thermal-basic",
+                variant: "Day & Night (Thermal Basic)", 
+                type: "Multi-Rotor ISR Platform", 
+                description: "This variant integrates electro-optical and thermal imaging systems for reliable day and night surveillance across diverse operational environments.",
+                keyHighlights: [
+                    "Endurance: Up to 60 Minutes",
+                    "Operational Range: Up to 3–4 KM",
+                    "EO + Thermal Imaging Payload",
+                    "Multi-Palette Thermal Display",
+                    "Dual GPS Architecture",
+                    "3-Axis Stabilized Gimbal",
+                    "Live Video & Telemetry Transmission"
+                ],
+                capabilities: ["Day/Night versatility", "Thermal payload with multi-palette display"],
+                applications: ["Night surveillance", "Search and rescue", "Heat signature detection"],
+                performance: { endurance: "60m", range: "3-4km", payload: "EO+Thermal" },
+                gallery: ["/partners/bard2.jpeg", "/partners/bard1.png", "/partners/bard3.png"]
+            },
+            { 
+                id: "thermal-advanced-lrf",
+                variant: "Thermal Advanced + Laser Rangefinder", 
+                type: "Multi-Rotor ISR Platform", 
+                description: "An enhanced ISR configuration integrating advanced thermal optics with precision rangefinding for improved situational awareness and tactical observation.",
+                keyHighlights: [
+                    "Endurance: Up to 60 Minutes",
+                    "Operational Range: Up to 3–4 KM",
+                    "HD EO + Advanced Thermal Vision",
+                    "Integrated Laser Rangefinding",
+                    "Dual GPS Navigation",
+                    "Stabilized 3-Axis Gimbal",
+                    "Real-Time Mission Monitoring"
+                ],
+                capabilities: ["Advanced thermal optics", "Integrated Laser Rangefinding (LRF)"],
+                applications: ["Precision targeting", "Tactical observation", "Distance measurement"],
+                performance: { endurance: "60m", range: "3-4km", payload: "EO+Thermal+LRF" },
+                gallery: ["/partners/bard3.png", "/partners/bard1.png", "/partners/bard2.jpeg"]
+            },
+            { 
+                id: "thermal-advanced-ai",
+                variant: "Thermal Advanced + AI Tracking", 
+                type: "Multi-Rotor ISR Platform", 
+                description: "This intelligent ISR variant combines thermal imaging with AI-assisted tracking for enhanced monitoring and object-follow capability.",
+                keyHighlights: [
+                    "Endurance: Up to 60 Minutes",
+                    "Operational Range: Up to 3–4 KM",
+                    "EO + Advanced Thermal Imaging",
+                    "AI-Based Target Tracking",
+                    "Dual GPS System",
+                    "3-Axis Stabilization",
+                    "Real-Time Video & Telemetry"
+                ],
+                capabilities: ["Autonomous object-follow", "AI-assisted target tracking"],
+                applications: ["Asset tracking", "Persistent monitoring", "Automated patrol"],
+                performance: { endurance: "60m", range: "3-4km", payload: "EO+Thermal+AI" },
+                gallery: ["/partners/bard1.png", "/partners/bard3.png", "/partners/bard2.jpeg"]
+            },
+            { 
+                id: "day-mission-configured",
+                variant: "Day – Mission Configured Variant", 
+                type: "Multi-Rotor Operational Platform", 
+                description: "A day-optimized configuration designed for mission-specific payload integration and rapid deployment operations.",
+                keyHighlights: [
+                    "Endurance: Up to 30 Minutes",
+                    "Operational Range: Up to 2–3 KM",
+                    "4K EO Camera",
+                    "Dual GPS Navigation",
+                    "Stabilized Imaging System",
+                    "Portable Ground Control Station"
+                ],
+                capabilities: ["4K high-resolution capture", "Rapid deployment configuration"],
+                applications: ["Mission-specific payload tasks", "Daytime tactical support"],
+                performance: { endurance: "30m", range: "2-3km", payload: "4K EO" },
+                gallery: ["/partners/bard2.jpeg", "/partners/bard3.png", "/partners/bard1.png"]
+            },
+            { 
+                id: "day-night-mission-configured-thermal",
+                variant: "Day & Night – Mission Configured (Thermal)", 
+                type: "Multi-Rotor Operational Platform", 
+                description: "Designed for specialized day and night missions, integrating EO and thermal payloads within a compact autonomous platform.",
+                keyHighlights: [
+                    "Endurance: Up to 30 Minutes",
+                    "Operational Range: Up to 2–3 KM",
+                    "EO + Thermal Payload",
+                    "Multi-Palette Thermal Imaging",
+                    "Dual GPS Architecture",
+                    "Real-Time Video Transmission"
+                ],
+                capabilities: ["Compact EO + Thermal", "Real-time transmission"],
+                applications: ["Quick-response day/night ops", "Tactical ISR in compact areas"],
+                performance: { endurance: "30m", range: "2-3km", payload: "EO+Thermal" },
+                gallery: ["/partners/bard3.png", "/partners/bard2.jpeg", "/partners/bard1.png"]
+            }
         ],
         specs: [
             { label: "Frame Size", value: "690mm" },
@@ -58,7 +165,8 @@ export const products = {
             "/partners/bard1.png",
             "/partners/bard2.jpeg",
             "/partners/bard3.png"
-        ]
+        ],
+        whatsappNumber: "919494949698"
     },
     'horizon-vtol': {
         name: "HORIZON VTOL",
