@@ -13,19 +13,19 @@ export default function AboutPage() {
 
     const divisions = [
         {
-            name: "Major Aerospace Systems",
+            name: "Major\u00A0Aerospace\nSystems",
             id: "MAS",
             logo: "/partners/masicon.png",
             desc: "Software-defined warfare, Group 1/2/3 UAS, and kinetic interceptors."
         },
         {
-            name: "Major Ground Systems",
+            name: "Major\u00A0Ground\nSystems",
             id: "MGS",
             logo: "/partners/mgsicon.png",
             desc: "Unmanned Ground Vehicles (UGVs), Robotic Combat Vehicles (RCVs), and C-UAS."
         },
         {
-            name: "Major Marine Systems",
+            name: "Major\u00A0Marine\nSystems",
             id: "MMS",
             logo: "/partners/mmsicon.png",
             desc: "Unmanned Surface Vehicles (USVs), Autonomous Submarines, and seabed warfare."
@@ -84,36 +84,30 @@ export default function AboutPage() {
 
             {/* Hero Section */}
             <section className="about-hero" style={{ padding: 'clamp(100px, 15vh, 160px) 0 clamp(40px, 8vh, 80px)', background: '#fff' }}>
-                <div className="container">
+                <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--accent-primary)', fontFamily: 'var(--font-mono)', fontSize: 'clamp(0.6rem, 2vw, 0.8rem)', letterSpacing: '4px', marginBottom: '2rem' }}>
                         <span>[ COMPANY_IDENTITY ]</span>
                         <div style={{ flex: 1, height: '1px', background: 'rgba(0, 52, 166, 0.1)' }}></div>
                     </div>
 
-                    <img 
-                        src="/partners/cdplicon.png" 
-                        alt="CDPL" 
-                        style={{ height: 'clamp(50px, 12vw, 100px)', marginBottom: '2.5rem', display: 'block' }} 
-                    />
-                    <h1 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', fontWeight: '900', color: 'var(--accent-primary)', fontFamily: 'var(--font-mono)', letterSpacing: '4px' }}>
-                        AUTONOMOUS MISSION CONTROL
+                    <h1 style={{ fontSize: 'clamp(4rem, 8vw, 8.5rem)', fontWeight: '900', lineHeight: '0.9', letterSpacing: '-2px', textTransform: 'uppercase', margin: 0 }}>
+                        <span style={{ color: '#111', display: 'block' }}>CHAKRAVYUHA</span>
+                        <span style={{ color: 'var(--accent-primary)', display: 'block' }}>DYNAMICS</span>
                     </h1>
-
-
                 </div>
             </section>
 
             {/* Vision & Mission */}
             <section style={{ padding: 'clamp(3rem, 8vh, 6rem) 0', background: '#f8fafc', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9' }}>
-                <div className="container">
+                <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
                     <div className="vision-mission-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'clamp(2rem, 5vw, 4rem)' }}>
                         <div style={{ borderLeft: '4px solid var(--accent-primary)', paddingLeft: '1.5rem' }}>
                             <h4 style={{ color: 'var(--accent-primary)', marginBottom: '1rem', letterSpacing: '2px', fontWeight: '800' }}>VISION</h4>
-                            <p style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--text-primary)' }}>To create sovereign Physical Intelligence that protects India and empowers humanity through autonomous systems.</p>
+                            <p style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--text-primary)', lineHeight: '1.6' }}>To create sovereign Physical Intelligence that protects India and empowers humanity through autonomous systems.</p>
                         </div>
-                        <div style={{ borderLeft: '4px solid var(--accent-primary)', paddingLeft: '1.5rem' }}>
-                            <h4 style={{ color: 'var(--accent-primary)', marginBottom: '1rem', letterSpacing: '2px', fontWeight: '800' }}>MISSION</h4>
-                            <p style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--text-primary)' }}>Deploy intelligent autonomous systems for defense and dual-use applications & protecting soldiers, empowering industries, and establishing India's leadership in Physical Intelligence.</p>
+                        <div style={{ borderLeft: '4px solid var(--accent-secondary)', paddingLeft: '1.5rem' }}>
+                            <h4 style={{ color: 'var(--accent-secondary)', marginBottom: '1rem', letterSpacing: '2px', fontWeight: '800' }}>MISSION</h4>
+                            <p style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--text-primary)', lineHeight: '1.6' }}>Deploy intelligent autonomous systems for defense and dual-use applications & protecting soldiers, empowering industries, and establishing India's leadership in Physical Intelligence.</p>
                         </div>
                     </div>
                 </div>
@@ -136,7 +130,7 @@ export default function AboutPage() {
                                 <div style={{ height: '140px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2.5rem' }}>
                                     <img src={div.logo} alt={div.name} style={{ maxHeight: '100%', maxWidth: '90%', objectFit: 'contain' }} />
                                 </div>
-                                <h3 style={{ fontSize: '1.6rem', marginBottom: '1.2rem', fontWeight: '900', color: 'var(--text-primary)' }}>{div.name}</h3>
+                                <h3 style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)', marginBottom: '1.2rem', fontWeight: '900', color: 'var(--text-primary)', whiteSpace: 'pre-line', textTransform: 'uppercase' }}>{div.name}</h3>
                                 <div style={{ height: '2px', width: '40px', background: 'var(--accent-primary)', marginBottom: '1.5rem' }}></div>
                                 <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>{div.desc}</p>
                             </div>
