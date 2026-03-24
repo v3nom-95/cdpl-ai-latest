@@ -1,103 +1,68 @@
 'use client';
 
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import React, { useState } from 'react';
 import './News.css';
 
 const newsData = [
-    {
-        id: 1,
-        title: "2026 UMEX",
-        image: "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=1200&auto=format&fit=crop"
-    },
-    {
-        id: 2,
-        title: "DEFEXPO 2026",
-        image: "https://images.unsplash.com/photo-1563539745-f0ea9fbcebaf?w=1200&auto=format&fit=crop"
-    },
-    {
-        id: 3,
-        title: "AERO INDIA NEXT",
-        image: "https://images.unsplash.com/photo-1559685936-e04f4460f488?w=1200&auto=format&fit=crop"
-    }
+  {
+    id: 1,
+    title: "CDPL at UMEX 2026: Redefining Autonomous Borders",
+    images: ["/partners/bard1.png", "/partners/bard3.png"],
+    text: "At UMEX 2026, Chakravyuha Dynamics showcased its latest AI-enabled kill chain integration for border surveillance. The display highlighted BARD's autonomous patrol capabilities in desert terrains, focusing on real-time sensor fusion and GPS-denied navigation. Military delegations from eight countries reviewed the platform's multi-domain command and control (MDC2) architecture for rapid battlefield responsiveness.",
+    date: "Feb 14, 2026"
+  },
+  {
+    id: 2,
+    title: "Next-Gen Stealth USV Prototype Sea Trials Successful",
+    images: ["/partners/mmsicon.png", "/partners/navy.png"],
+    text: "MMS Division successfully completed phase-one sea trials for its 'Jal-Kumbh' stealth USV. Designed for distributed maritime operations and seabed warfare, the platform maintained full autonomous navigation through choppy waters for 48 hours. This marks a critical milestone for indigenizing high-end naval robotics and autonomous submarines for asymmetric warfare defense strategies.",
+    date: "Jan 28, 2026"
+  },
+  {
+    id: 3,
+    title: "Major Aerospace Systems (MAS) Training Hub Expansion",
+    images: ["/partners/aot.png", "/partners/r1.png"],
+    text: "The RAAVEN Training Hub has expanded to include advanced simulation for Group 2 UAS operations. Integrating TDFS Tactical Flight Simulators with real-world AOT hardware, the hub now offers 24/7 pilot training modules. This initiative accelerates OODA loop response training for elite drone units, ensuring software-defined warfare readiness and mission-critical hardware proficiency for our global partners.",
+    date: "Jan 10, 2026"
+  }
 ];
 
 export default function News() {
-    return (
-        <section id="news" className="news-section">
-            <div className="news-header-container">
-                <h2 className="news-title">NEWS</h2>
-                <div className="news-line"></div>
-            </div>
+  return (
+    <section id="news" className="news-section">
+      <div className="container">
+        <h2 className="section-title">CDPL NEWSROOM</h2>
+        <div className="news-blog-grid">
+          {newsData.map((item) => (
+            <div key={item.id} className="news-post">
+              <span className="corner corner-tl"></span>
+              <span className="corner corner-tr"></span>
+              <span className="corner corner-bl"></span>
+              <span className="corner corner-br"></span>
+              
+              <div className="news-visuals">
+                {item.images.slice(0, 2).map((img, i) => (
+                  <div key={i} className={`news-img-box ${i === 0 ? 'main-img' : 'sub-img'}`}>
+                    <img src={img} alt={item.title} />
+                  </div>
+                ))}
+              </div>
 
-            <div className="swiper-section-wrapper">
-                <Swiper
-                    modules={[Navigation, Pagination]}
-                    slidesPerView={1.5}
-                    centeredSlides={true}
-                    spaceBetween={50}
-                    loop={true}
-                    navigation={{
-                        nextEl: '.swiper-button-next-custom',
-                        prevEl: '.swiper-button-prev-custom',
-                    }}
-                    pagination={{ 
-                        el: '.news-pagination', 
-                        clickable: true,
-                        renderBullet: function (index, className) {
-                            return '<span class="' + className + ' custom-bullet"></span>';
-                        }
-                    }}
-                    breakpoints={{
-                        320: {
-                            slidesPerView: 1.1,
-                            spaceBetween: 20
-                        },
-                        768: {
-                            slidesPerView: 1.5,
-                            spaceBetween: 40
-                        },
-                        1024: {
-                            slidesPerView: 1.8,
-                            spaceBetween: 50
-                        }
-                    }}
-                    className="news-swiper"
-                >
-                    {newsData.map((item) => (
-                        <SwiperSlide key={item.id} className="news-slide">
-                            {({ isActive }) => (
-                                <div className={`slide-content ${isActive ? 'active-slide' : ''}`}>
-                                    <div className="image-wrapper">
-                                        <div 
-                                            className="news-image bg-cover" 
-                                            style={{ backgroundImage: `url(${item.image})` }}
-                                        />
-                                    </div>
-                                    <div className="slide-card">
-                                        <h3>{item.title}</h3>
-                                    </div>
-                                </div>
-                            )}
-                        </SwiperSlide>
-                    ))}
-
-                    <div className="swiper-button-prev-custom">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    </div>
-                    <div className="swiper-button-next-custom">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    </div>
-                </Swiper>
-                <div className="pagination-container">
-                    <div className="news-pagination"></div>
+              <div className="news-content">
+                <span className="news-date">{item.date}</span>
+                <h3 className="news-post-title">{item.title}</h3>
+                <p className="news-post-text">
+                  {item.text.length > 300 ? item.text.slice(0, 300) + "..." : item.text}
+                </p>
+                <div className="news-footer">
+                  <span className="word-count">{item.text.split(' ').length} WORDS</span>
+                  <a href={`/resources#news-${item.id}`} className="read-more">FULL REPORT &rarr;</a>
                 </div>
+              </div>
             </div>
-        </section>
-    );
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

@@ -91,7 +91,7 @@ export default function ProductCategories() {
         {
             id: "mms",
             title: "Major Marine Systems",
-            tagline: "A BRAND OF CDPL",
+            tagline: "CDPL MARINE DIVISION",
             description: "Pioneering distributed maritime operations and seabed warfare, delivering Autonomous Submarines and Unmanned Surface Vehicles (USVs) for asymmetric naval warfare.",
             logo: "/partners/mmsicon.png",
             link: "/mms",
@@ -101,7 +101,7 @@ export default function ProductCategories() {
         {
             id: "mgs",
             title: "Major Ground Systems",
-            tagline: "A BRAND OF CDPL",
+            tagline: "CDPL GROUND DIVISION",
             description: "Developing advanced Unmanned Ground Vehicles (UGVs) and Defense Robotics engineered for complex counter-UAS (C-UAS), human-machine teaming, and resilient logistics.",
             logo: "/partners/mgsicon.png",
             link: "/mgs",

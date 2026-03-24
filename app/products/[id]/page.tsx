@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
+import ProductRequest from '../../../components/ProductRequest';
 import { products } from '../productData';
 import Link from 'next/link';
 
@@ -431,7 +432,7 @@ export default function ProductPage() {
             {/* Specs Strip */}
             {product.heroSpecs && product.heroSpecs.length > 0 && (
                 <section style={{ background: '#000', padding: '60px 0', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                    <div className="container" style={{ textAlign: 'center' }}>
+                    <div className="container" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2.5rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'clamp(2rem, 5vw, 6rem)' }}>
                             {product.heroSpecs.map((spec: { label: string, value: string }, i: number) => (
                                 <div key={i} style={{ textAlign: 'center' }}>
@@ -440,6 +441,7 @@ export default function ProductPage() {
                                 </div>
                             ))}
                         </div>
+                        <ProductRequest productName={product.name} />
                     </div>
                 </section>
             )}

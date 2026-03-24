@@ -36,7 +36,7 @@ export const products = {
             { 
                 id: "day-moonlight",
                 variant: "Day & Moonlight Variant", 
-                type: "Multi-Rotor ISR Platform", 
+                type: "ISR Drone", 
                 description: "BARD V2.0 is a compact autonomous quadcopter designed for surveillance, perimeter monitoring, and reconnaissance operations. The platform integrates stabilized electrooptical imaging with real-time transmission capability.",
                 keyHighlights: [
                     "Endurance: Up to 60 Minutes",
@@ -55,7 +55,7 @@ export const products = {
             { 
                 id: "day-night-thermal-basic",
                 variant: "Day & Night (Thermal Basic)", 
-                type: "Multi-Rotor ISR Platform", 
+                type: "ISR Drone", 
                 description: "This variant integrates electro-optical and thermal imaging systems for reliable day and night surveillance across diverse operational environments.",
                 keyHighlights: [
                     "Endurance: Up to 60 Minutes",
@@ -74,7 +74,7 @@ export const products = {
             { 
                 id: "thermal-advanced-lrf",
                 variant: "Thermal Advanced + Laser Rangefinder", 
-                type: "Multi-Rotor ISR Platform", 
+                type: "ISR Drone", 
                 description: "An enhanced ISR configuration integrating advanced thermal optics with precision rangefinding for improved situational awareness and tactical observation.",
                 keyHighlights: [
                     "Endurance: Up to 60 Minutes",
@@ -93,7 +93,7 @@ export const products = {
             { 
                 id: "thermal-advanced-ai",
                 variant: "Thermal Advanced + AI Tracking", 
-                type: "Multi-Rotor ISR Platform", 
+                type: "ISR Drone", 
                 description: "This intelligent ISR variant combines thermal imaging with AI-assisted tracking for enhanced monitoring and object-follow capability.",
                 keyHighlights: [
                     "Endurance: Up to 60 Minutes",

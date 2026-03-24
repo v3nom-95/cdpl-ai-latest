@@ -67,13 +67,14 @@ export default function AboutPage() {
             details: "Masters in Material Science & Manufacturing | Biotechnology ex-COO",
             bio: "Leads production excellence and hardware precision.",
             image: null
-        },
+        }
+    ];
+
+    const advisors = [
         {
             name: "Srikanth Dhuta",
-            role: "Legal Advisor",
-            details: "Legal structuring & IP strategy",
-            bio: "Ensures compliance and protects sovereign technology assets.",
-            image: null
+            designation: "Legal Advisor",
+            bio: "Ensures compliance and protects sovereign technology assets."
         }
     ];
 
@@ -89,8 +90,13 @@ export default function AboutPage() {
                         <div style={{ flex: 1, height: '1px', background: 'rgba(0, 52, 166, 0.1)' }}></div>
                     </div>
 
-                    <h1 style={{ fontSize: 'clamp(2.2rem, 10vw, 6rem)', fontWeight: '900', lineHeight: '0.9', marginBottom: '2.5rem', wordBreak: 'break-word' }}>
-                        CHAKRAVYUHA <span style={{ color: 'var(--accent-primary)' }}>DYNAMICS</span>
+                    <img 
+                        src="/partners/cdplicon.png" 
+                        alt="CDPL" 
+                        style={{ height: 'clamp(50px, 12vw, 100px)', marginBottom: '2.5rem', display: 'block' }} 
+                    />
+                    <h1 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', fontWeight: '900', color: 'var(--accent-primary)', fontFamily: 'var(--font-mono)', letterSpacing: '4px' }}>
+                        AUTONOMOUS MISSION CONTROL
                     </h1>
 
 
@@ -140,6 +146,7 @@ export default function AboutPage() {
             </section>
 
             {/* Leadership Section */}
+            {/* Leadership Section */}
             <section id="leadership" style={{ padding: 'clamp(4rem, 8vh, 8rem) 0', background: '#f8fafc', borderTop: '1px solid #f1f5f9' }}>
                 <div className="container">
                     <div className="leadership-title-section" style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 6vh, 6rem)' }}>
@@ -153,30 +160,33 @@ export default function AboutPage() {
                                 <span className="corner corner-tr"></span>
                                 <span className="corner corner-bl"></span>
                                 <span className="corner corner-br"></span>
-                                {/* <div className="product-image" style={{
-                                    height: '260px',
-                                    marginBottom: '2.5rem',
-                                    position: 'relative',
-                                    overflow: 'hidden',
-                                    border: '1px solid rgba(0,0,0,0.05)',
-                                    background: '#f3f4f6'
-                                }}>
-                                    {leader.image ? (
-                                        <img src={leader.image} alt={leader.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    ) : (
-                                        <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                            <div style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', marginBottom: '0.5rem' }}>SECURE_ID: 00{index + 1}</div>
-                                            <span style={{ color: 'var(--accent-primary)', fontSize: '0.7rem', fontWeight: '800' }}>PORTRAIT_OFFLINE</span>
-                                        </div>
-                                    )}
-                                </div> */}
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                     <h3 style={{ fontSize: '1.4rem', fontWeight: '900', color: 'var(--text-primary)', marginBottom: '0.2rem' }}>{leader.name}</h3>
                                     <span style={{ color: 'var(--accent-primary)', fontWeight: '800', lineHeight: '1.2', fontSize: '0.80rem', fontFamily: 'var(--font-mono)' }}>{leader.role.toUpperCase()}</span>
-                                    {/* <p style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', lineHeight: '1.4', marginBottom: '1.5rem' }}>{leader.details}</p>
-                                    <p style={{ fontSize: '1rem', fontStyle: 'italic', color: 'var(--text-primary)', borderLeft: '2px solid var(--accent-primary)', paddingLeft: '1rem' }}>
-                                        "{leader.bio}"
-                                    </p> */}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Advisors Section */}
+            <section id="advisors" style={{ padding: 'clamp(4rem, 8vh, 8rem) 0', background: '#fff', borderTop: '1px solid #f1f5f9' }}>
+                <div className="container">
+                    <div className="leadership-title-section" style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 6vh, 6rem)' }}>
+                        <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: '900', marginTop: '1rem', color: 'var(--text-primary)' }}>Advisors</h2>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '2rem' }}>
+                        {advisors.map((advisor, index) => (
+                            <div key={index} className="product-card" style={{ width: '100%', maxWidth: '380px', padding: '2.5rem', minHeight: 'auto', background: '#f8fafc' }}>
+                                <span className="corner corner-tl"></span>
+                                <span className="corner corner-tr"></span>
+                                <span className="corner corner-bl"></span>
+                                <span className="corner corner-br"></span>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center', textAlign: 'center' }}>
+                                    <h3 style={{ fontSize: '1.4rem', fontWeight: '900', color: 'var(--text-primary)', marginBottom: '0.2rem' }}>{advisor.name}</h3>
+                                    <span style={{ color: 'var(--accent-primary)', fontWeight: '800', lineHeight: '1.2', fontSize: '0.80rem', fontFamily: 'var(--font-mono)' }}>{advisor.designation.toUpperCase()}</span>
                                 </div>
                             </div>
                         ))}

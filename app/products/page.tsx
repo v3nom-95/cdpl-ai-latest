@@ -24,10 +24,10 @@ export default function ProductsPage() {
         : productList.filter(p => p.brand === activeFilter);
 
     const filters = [
-        { id: 'ALL', label: 'ALL SYSTEMS' },
-        { id: 'MAS', label: 'AEROSPACE (MAS)', color: 'var(--team-mas)' },
-        { id: 'MGS', label: 'GROUND (MGS)', color: 'var(--team-mgs)' },
-        { id: 'MMS', label: 'MARINE (MMS)', color: 'var(--team-mms)' }
+        { id: 'ALL', label: 'ALL SYSTEMS', icon: null },
+        { id: 'MAS', label: 'MAS', icon: '/partners/masicon.png', color: 'var(--team-mas)' },
+        { id: 'MGS', label: 'MGS', icon: '/partners/mgsicon.png', color: 'var(--team-mgs)' },
+        { id: 'MMS', label: 'MMS', icon: '/partners/mmsicon.png', color: 'var(--team-mms)' }
     ];
 
     return (
@@ -100,15 +100,18 @@ export default function ProductsPage() {
                                     onClick={() => setActiveFilter(filter.id)}
                                     style={{
                                         padding: '0.8rem 1.5rem',
-                                        background: activeFilter === filter.id ? (filter.color || 'var(--accent-primary)') : 'transparent',
+                                        borderRadius: '50px',
+                                        border: '1px solid ' + (activeFilter === filter.id ? filter.color || 'var(--accent-primary)' : 'rgba(0,0,0,0.1)'),
+                                        background: activeFilter === filter.id ? filter.color || 'var(--accent-primary)' : 'transparent',
                                         color: activeFilter === filter.id ? '#fff' : 'var(--text-secondary)',
-                                        border: `1px solid ${activeFilter === filter.id ? (filter.color || 'var(--accent-primary)') : 'var(--border-color)'}`,
-                                        fontFamily: 'var(--font-mono)',
                                         fontSize: '0.75rem',
-                                        letterSpacing: '1px',
+                                        fontWeight: '800',
                                         cursor: 'pointer',
-                                        transition: 'all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1)',
-                                        borderRadius: '2px',
+                                        transition: 'all 0.3s ease',
+                                        letterSpacing: '1px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '0.5rem',
                                         boxShadow: activeFilter === filter.id ? `0 4px 15px ${filter.id === 'ALL' ? 'rgba(0, 57, 166, 0.2)' : 'rgba(0,0,0,0.1)'}` : 'none'
                                     }}
                                     onMouseEnter={(e) => {
@@ -124,6 +127,16 @@ export default function ProductsPage() {
                                         }
                                     }}
                                 >
+                                    {filter.icon && (
+                                        <img 
+                                            src={filter.icon} 
+                                            alt="" 
+                                            style={{ 
+                                                height: '14px', 
+                                                filter: activeFilter === filter.id ? 'brightness(0) invert(1)' : 'grayscale(1)' 
+                                            }} 
+                                        />
+                                    )}
                                     {filter.label}
                                 </button>
                             ))}
