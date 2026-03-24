@@ -89,39 +89,14 @@ export default function ResourcesPage() {
         <div className="resources-page" style={{ paddingTop: '100px', background: 'var(--bg-primary)', minHeight: '100vh' }}>
             <Navbar />
 
-            {/* Header Section */}
-            <section className="container" style={{ padding: '4rem 0' }}>
-                <span style={{
-                    color: 'var(--accent-primary)',
-                    fontFamily: 'var(--font-mono)',
-                    letterSpacing: '4px',
-                    fontSize: '0.9rem',
-                    display: 'block',
-                    marginBottom: '1rem',
-                    textTransform: 'uppercase'
-                }}>[ MISSIONRESOURCES_ACTIVE ]</span>
-                <h1 style={{
-                    fontSize: 'clamp(2.5rem, 6vw, 4rem)',
-                    fontWeight: '900',
-                    textTransform: 'uppercase',
-                    marginBottom: '1rem',
-                    color: 'var(--text-primary)'
-                }}>MISSION DATA HUB</h1>
-                <p style={{ maxWidth: '750px', fontSize: '1.2rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                    Access official field reports, technical specifications, and mission footage from Chakravyuh Dynamics' operational deployments.
-                </p>
 
-                {/* Visual Anchor Bar */}
-                <div style={{ width: '100%', height: '1px', background: 'var(--border-color)', marginTop: '4rem' }}></div>
-            </section>
 
             {/* News Room Section */}
             <section id="news-room" className="reveal-section" style={{ padding: '6rem 0' }}>
                 <div className="container">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
                         <div>
-                            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>FIELD REPORTS</h2>
-                            <p style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '1px', fontSize: '0.85rem' }}>// OFFICIAL DEPLOYMENT UPDATES</p>
+                            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>NEWSROOM</h2>
                         </div>
                         <div style={{ width: '60px', height: '4px', background: 'var(--accent-primary)' }}></div>
                     </div>
@@ -170,8 +145,7 @@ export default function ResourcesPage() {
                 <div className="container">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
                         <div>
-                            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>SYSTEM VISUALS</h2>
-                            <p style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '1px', fontSize: '0.85rem' }}>// SELECT A CATEGORY TO VIEW ASSETS</p>
+                            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>PHOTOS & VIDEOS</h2>
                         </div>
                         <div style={{ width: '60px', height: '4px', background: 'var(--accent-primary)' }}></div>
                     </div>
@@ -284,36 +258,11 @@ export default function ResourcesPage() {
                                         overflow: 'hidden',
                                         boxShadow: '0 50px 100px rgba(0,0,0,0.5)'
                                     }}>
-                                        <div className="slide-hud" style={{ 
-                                            position: 'absolute', 
-                                            top: 0, 
-                                            left: 0, 
-                                            padding: '1.5rem', 
-                                            zIndex: 10, 
-                                            fontFamily: 'var(--font-mono)', 
-                                            color: 'var(--accent-primary)',
-                                            fontSize: '0.7rem',
-                                            letterSpacing: '2px',
-                                            textTransform: 'uppercase'
-                                        }}>
-                                            [ FIELD_ASSET: 0{i + 1} / {trainingItems.length} ]
-                                        </div>
                                         <img 
                                             src={img.src} 
                                             alt={img.title}
                                             style={{ width: '100%', height: 'auto', display: 'block', maxHeight: '70vh', objectFit: 'contain' }}
                                         />
-                                        <div className="slide-caption" style={{ 
-                                            position: 'absolute', 
-                                            bottom: 0, 
-                                            left: 0, 
-                                            width: '100%', 
-                                            padding: '2.5rem', 
-                                            background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%)',
-                                            color: '#fff'
-                                        }}>
-                                            <h4 style={{ fontSize: '1.2rem', fontWeight: '800', letterSpacing: '1px', textTransform: 'uppercase' }}>{img.title}</h4>
-                                        </div>
                                     </div>
                                 </SwiperSlide>
                             ))}
