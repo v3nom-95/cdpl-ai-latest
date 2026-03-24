@@ -248,38 +248,9 @@ export default function VariantPage() {
                             </div>
 
                             <div style={{ marginTop: '2rem' }}>
-                                <a
-                                    href={`https://wa.me/${product.whatsappNumber}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '1.2rem',
-                                        textDecoration: 'none',
-                                        color: 'var(--text-primary)',
-                                        fontWeight: '700',
-                                        letterSpacing: '1.5px',
-                                        fontSize: '0.9rem'
-                                    }}
-                                >
-                                    <div style={{
-                                        width: '50px',
-                                        height: '50px',
-                                        background: 'var(--accent-primary)',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: '#fff',
-                                        boxShadow: '0 4px 15px rgba(0, 57, 166, 0.3)'
-                                    }}>
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
-                                        </svg>
-                                    </div>
-                                    SUBMIT REQUEST
-                                </a>
+                                <ProductRequest productName={`${product.name} - ${variant.variant}`} />
                             </div>
+
 
                             <div style={{ marginTop: '3rem', padding: '0 1rem' }}>
                                 <h4 style={{ fontSize: '0.9rem', fontWeight: '800', marginBottom: '1.5rem', color: 'var(--accent-primary)', letterSpacing: '1px' }}>CORE CAPABILITIES</h4>

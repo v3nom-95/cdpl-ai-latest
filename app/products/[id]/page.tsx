@@ -242,26 +242,8 @@ export default function ProductPage() {
                         <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem' }}>
                             Our team can help you configure the perfect ISR platform for your specific mission requirements.
                         </p>
-                        <a
-                            href={`https://wa.me/${product.whatsappNumber}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-primary"
-                            style={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '1rem',
-                                padding: '1.2rem 2.5rem',
-                                fontSize: '1rem',
-                                borderRadius: '4px'
-                            }}
-                        >
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.025 3.204l-.694 2.54 2.597-.682c.894.488 1.827.817 2.841.817 3.18 0 5.77-2.587 5.77-5.766 0-3.181-2.587-5.779-5.771-5.779zm3.387 8.313c-.154.433-.774.792-1.077.843-.284.048-.655.078-1.058-.052-.259-.084-.585-.198-1.018-.385-1.85-.795-3.04-2.671-3.133-2.793-.093-.123-.756-.999-.756-1.999 0-1 .512-1.493.694-1.693.182-.2.398-.246.531-.246l.383.003c.125.002.293-.047.458.353.169.41.58 1.413.63 1.516.05.103.082.222.016.354l-.249.431c-.082.133-.169.27-.072.438.096.168.428.706.918 1.143.633.565 1.166.74 1.332.825.166.084.266.07.366-.046l.329-.383c.1-.115.199-.096.332-.046l2.1.991c.133.066.221.115.253.175.032.062.032.355-.122.788z" />
-                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964 1.002-3.674c-.65-.118-1.782-2.181-1.782-3.351 0-4.329 3.522-7.851 7.851-7.851 4.33 0 7.852 3.522 7.852 7.851 0 4.331-3.522 7.855-7.928 7.855z" />
-                            </svg>
-                            Contact for more details
-                        </a>
+                        <ProductRequest productName="BARD SYSTEM" />
+
                     </div>
                 </section>
 
