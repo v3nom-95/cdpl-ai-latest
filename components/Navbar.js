@@ -40,10 +40,10 @@ const HackerLink = ({ href, text, children, className = "", isActive = false, on
     };
 
     return (
-        <Link 
-            href={href} 
-            className={`hacker-link ${className} ${isActive ? 'active' : ''}`} 
-            onMouseEnter={handleMouseEnter} 
+        <Link
+            href={href}
+            className={`hacker-link ${className} ${isActive ? 'active' : ''}`}
+            onMouseEnter={handleMouseEnter}
             onClick={onClick}
         >
             <div className="hacker-text-wrapper">

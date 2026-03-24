@@ -63,7 +63,7 @@ export default function Contact() {
             id: 'linkedin',
             label: 'LinkedIn',
             value: 'Connect with us',
-            href: 'https://linkedin.com/company/cdpl',
+            href: 'https://in.linkedin.com/company/cdpl-ai',
             external: true,
             icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">

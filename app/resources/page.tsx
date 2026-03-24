@@ -1,16 +1,26 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
 
+// Import Swiper components and styles
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, EffectCoverflow, Autoplay, Keyboard } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
+
 export default function ResourcesPage() {
     const [isVisible, setIsVisible] = useState(false);
+    const [activeGallery, setActiveGallery] = useState<string | null>(null);
+    const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
     useEffect(() => {
         setIsVisible(true);
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -19,14 +29,35 @@ export default function ResourcesPage() {
             });
         }, { threshold: 0.1 });
 
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!activeGallery) return;
+            if (e.key === 'Escape') setActiveGallery(null);
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
         document.querySelectorAll('.reveal-section').forEach(section => {
             observer.observe(section);
         });
 
-        return () => observer.disconnect();
-    }, []);
+        return () => {
+            observer.disconnect();
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [activeGallery, currentImgIndex]);
 
-    const newsItems = [
+    const nextSlide = () => {
+        const items = activeGallery === 'training' ? trainingItems : [];
+        setCurrentImgIndex((prev) => (prev + 1) % items.length);
+    };
+
+    const prevSlide = () => {
+        const items = activeGallery === 'training' ? trainingItems : [];
+        setCurrentImgIndex((prev) => (prev - 1 + items.length) % items.length);
+    };
+
+    const newsData = [
         {
             id: 1,
             date: "FEB 18, 2026",
@@ -45,11 +76,13 @@ export default function ResourcesPage() {
         { title: "CDPL Corporate Capability Document", type: "PDF", size: "3.4 MB" }
     ];
 
-    const mediaItems = [
-        { type: 'image', src: '/partners/bard1.png', title: 'MAS BARD Tactical Unit' },
-        { type: 'image', src: '/partners/bard2.jpeg', title: 'Operational Deployment' },
-        { type: 'image', src: '/partners/cdplicon.png', title: 'CDPL Institutional Identity' },
-        { type: 'image', src: '/partners/bard3.png', title: 'Field Performance Data' }
+    const trainingItems = [
+        { src: '/training/t1.jpeg', title: 'Tactical Reconnaissance Mission' },
+        { src: '/training/t2.jpeg', title: 'High-Altitude Surveillance' },
+        { src: '/training/t3.jpeg', title: 'Field Unit Deployment' },
+        { src: '/training/t4.jpeg', title: 'Strategic Point Training' },
+        { src: '/training/t5.jpeg', title: 'Operational Readiness Drill' },
+        { src: '/training/t6.jpeg', title: 'Mission-Ready Assets' }
     ];
 
     return (
@@ -58,26 +91,26 @@ export default function ResourcesPage() {
 
             {/* Header Section */}
             <section className="container" style={{ padding: '4rem 0' }}>
-                <span style={{ 
-                    color: 'var(--accent-primary)', 
-                    fontFamily: 'var(--font-mono)', 
-                    letterSpacing: '4px', 
+                <span style={{
+                    color: 'var(--accent-primary)',
+                    fontFamily: 'var(--font-mono)',
+                    letterSpacing: '4px',
                     fontSize: '0.9rem',
                     display: 'block',
                     marginBottom: '1rem',
                     textTransform: 'uppercase'
                 }}>[ MISSIONRESOURCES_ACTIVE ]</span>
-                <h1 style={{ 
-                    fontSize: 'clamp(2.5rem, 6vw, 4rem)', 
-                    fontWeight: '900', 
-                    textTransform: 'uppercase', 
-                    marginBottom: '1rem', 
-                    color: 'var(--text-primary)' 
+                <h1 style={{
+                    fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+                    fontWeight: '900',
+                    textTransform: 'uppercase',
+                    marginBottom: '1rem',
+                    color: 'var(--text-primary)'
                 }}>MISSION DATA HUB</h1>
                 <p style={{ maxWidth: '750px', fontSize: '1.2rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
                     Access official field reports, technical specifications, and mission footage from Chakravyuh Dynamics' operational deployments.
                 </p>
-                
+
                 {/* Visual Anchor Bar */}
                 <div style={{ width: '100%', height: '1px', background: 'var(--border-color)', marginTop: '4rem' }}></div>
             </section>
@@ -94,7 +127,7 @@ export default function ResourcesPage() {
                     </div>
 
                     <div style={{ maxWidth: '850px', margin: '0' }}>
-                        {newsItems.map((news) => (
+                        {newsData.map((news) => (
                             <div key={news.id} className="news-card" style={{ 
                                 padding: '3rem', 
                                 border: '1px solid var(--border-color)',
@@ -132,37 +165,162 @@ export default function ResourcesPage() {
                 </div>
             </section>
 
-            {/* Photos & Videos Gallery Section */}
-            <section id="photos-videos" className="reveal-section" style={{ padding: '8rem 0', background: '#f8fafc' }}>
+            {/* Training & Deployment Category Section */}
+            <section id="visual-assets" className="reveal-section" style={{ padding: '6rem 0', background: '#f8fafc' }}>
                 <div className="container">
-                    <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                        <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>SYSTEM VISUALS</h2>
-                        <p style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '1px', fontSize: '0.85rem' }}>BRAND ASSETS AND FIELD DATA</p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
+                        <div>
+                            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>SYSTEM VISUALS</h2>
+                            <p style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '1px', fontSize: '0.85rem' }}>// SELECT A CATEGORY TO VIEW ASSETS</p>
+                        </div>
+                        <div style={{ width: '60px', height: '4px', background: 'var(--accent-primary)' }}></div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
-                        {mediaItems.map((item, i) => (
-                            <div key={i} style={{ 
-                                border: '1px solid var(--border-color)', 
-                                padding: '1rem',
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
+                        {/* Training & Deployment Card */}
+                        <div 
+                            className="category-card" 
+                            onClick={() => { setActiveGallery('training'); setCurrentImgIndex(0); }}
+                            style={{
+                                padding: '2.5rem',
+                                border: '1px solid var(--border-color)',
                                 background: '#fff',
+                                cursor: 'pointer',
                                 position: 'relative',
-                                overflow: 'hidden'
-                            }}>
-                                <div style={{ height: '200px', width: '100%', overflow: 'hidden', marginBottom: '1rem', background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <img 
-                                        src={item.src} 
-                                        alt={item.title} 
-                                        style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', transition: 'transform 0.5s ease' }} 
-                                        className="gallery-img"
-                                    />
-                                </div>
-                                <h4 style={{ fontSize: '0.85rem', fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', textAlign: 'center', textTransform: 'uppercase' }}>{item.title}</h4>
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '2rem',
+                                transition: 'all 0.4s ease'
+                            }}
+                        >
+                            <span className="corner corner-tl"></span>
+                            <span className="corner corner-br"></span>
+                            <div style={{ width: '120px', height: '120px', background: '#f0f4f8', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                <img src="/training/t1.jpeg" alt="Training" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} />
                             </div>
-                        ))}
+                            <div>
+                                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', fontWeight: '800' }}>TRAINING & DEPLOYMENT</h3>
+                                <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem', marginBottom: '1rem' }}>6 Tactical Field Assets • High-Altitude Ops</p>
+                                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-primary)', fontWeight: '800' }}>OPEN_GALLERY →</span>
+                            </div>
+                        </div>
+
+                        {/* Future Categories (Placeholders for Structure) */}
+                        <div 
+                            style={{
+                                padding: '2.5rem',
+                                border: '1px dashed var(--border-color)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                opacity: 0.5
+                            }}
+                        >
+                            <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-tertiary)' }}>[ ADDITIONAL CATEGORIES ARCHIVING... ]</span>
+                        </div>
                     </div>
                 </div>
             </section>
+
+            {/* Premium Overlay Carousel with Swiper */}
+            {activeGallery && (
+                <div className="gallery-overlay" style={{
+                    position: 'fixed',
+                    inset: 0,
+                    background: 'rgba(0, 5, 15, 0.98)',
+                    zIndex: 9999,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backdropFilter: 'blur(20px)',
+                    animation: 'fadeIn 0.4s ease'
+                }}>
+                    <button 
+                        className="close-btn" 
+                        onClick={() => setActiveGallery(null)}
+                        style={{
+                            position: 'absolute',
+                            top: '40px',
+                            right: '40px',
+                            background: 'none',
+                            border: 'none',
+                            color: '#fff',
+                            fontSize: '2.5rem',
+                            cursor: 'pointer',
+                            zIndex: 10001,
+                            opacity: 0.6,
+                            transition: 'all 0.3s ease'
+                        }}
+                    >✕</button>
+
+                    <div className="carousel-wrapper" style={{ width: '100%', maxWidth: '1400px', height: '80vh', display: 'flex', alignItems: 'center' }}>
+                        <Swiper
+                            effect={'coverflow'}
+                            grabCursor={true}
+                            centeredSlides={true}
+                            slidesPerView={'auto'}
+                            initialSlide={currentImgIndex}
+                            coverflowEffect={{
+                                rotate: 30,
+                                stretch: 0,
+                                depth: 100,
+                                modifier: 1.5,
+                                slideShadows: true,
+                            }}
+                            keyboard={{ enabled: true }}
+                            navigation={true}
+                            pagination={{ clickable: true }}
+                            modules={[EffectCoverflow, Pagination, Navigation, Keyboard, Autoplay]}
+                            style={{ padding: '50px 0', width: '100%' }}
+                            onSlideChange={(swiper) => setCurrentImgIndex(swiper.activeIndex)}
+                        >
+                            {(activeGallery === 'training' ? trainingItems : []).map((img, i) => (
+                                <SwiperSlide key={i} style={{ width: 'min(90%, 800px)', backgroundPosition: 'center', backgroundSize: 'cover' }}>
+                                    <div className="slide-box" style={{ 
+                                        position: 'relative', 
+                                        borderRadius: '4px',
+                                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                                        overflow: 'hidden',
+                                        boxShadow: '0 50px 100px rgba(0,0,0,0.5)'
+                                    }}>
+                                        <div className="slide-hud" style={{ 
+                                            position: 'absolute', 
+                                            top: 0, 
+                                            left: 0, 
+                                            padding: '1.5rem', 
+                                            zIndex: 10, 
+                                            fontFamily: 'var(--font-mono)', 
+                                            color: 'var(--accent-primary)',
+                                            fontSize: '0.7rem',
+                                            letterSpacing: '2px',
+                                            textTransform: 'uppercase'
+                                        }}>
+                                            [ FIELD_ASSET: 0{i + 1} / {trainingItems.length} ]
+                                        </div>
+                                        <img 
+                                            src={img.src} 
+                                            alt={img.title}
+                                            style={{ width: '100%', height: 'auto', display: 'block', maxHeight: '70vh', objectFit: 'contain' }}
+                                        />
+                                        <div className="slide-caption" style={{ 
+                                            position: 'absolute', 
+                                            bottom: 0, 
+                                            left: 0, 
+                                            width: '100%', 
+                                            padding: '2.5rem', 
+                                            background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%)',
+                                            color: '#fff'
+                                        }}>
+                                            <h4 style={{ fontSize: '1.2rem', fontWeight: '800', letterSpacing: '1px', textTransform: 'uppercase' }}>{img.title}</h4>
+                                        </div>
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+                </div>
+            )}
 
             {/* Technical Downloads Section */}
             <section id="downloads" className="reveal-section" style={{ padding: '8rem 0 12rem', background: '#fcfcfc' }}>
@@ -182,11 +340,11 @@ export default function ResourcesPage() {
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             {downloads.map((doc, i) => (
-                                <div key={i} className="download-item" style={{ 
-                                    padding: '1.5rem 2rem', 
-                                    border: '1px solid var(--border-color)', 
-                                    display: 'flex', 
-                                    justifyContent: 'space-between', 
+                                <div key={i} className="download-item" style={{
+                                    padding: '1.5rem 2rem',
+                                    border: '1px solid var(--border-color)',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
                                     alignItems: 'center',
                                     background: '#fff',
                                     transition: 'all 0.3s ease'
@@ -198,9 +356,9 @@ export default function ResourcesPage() {
                                             <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>{doc.size}</span>
                                         </div>
                                     </div>
-                                    <button style={{ 
-                                        padding: '0.6rem 1.2rem', 
-                                        background: 'transparent', 
+                                    <button style={{
+                                        padding: '0.6rem 1.2rem',
+                                        background: 'transparent',
                                         border: '1px solid var(--accent-primary)',
                                         color: 'var(--accent-primary)',
                                         fontFamily: 'var(--font-mono)',
@@ -226,30 +384,54 @@ export default function ResourcesPage() {
                     transform: translateY(-5px);
                 }
                 
-                .media-img:hover {
-                    transform: scale(1.05);
+                :global(.swiper) {
+                    padding: 40px 0 !important;
                 }
                 
-                .download-item:hover {
+                :global(.swiper-pagination-bullet) {
+                    background: #fff !important;
+                    opacity: 0.3;
+                }
+                
+                :global(.swiper-pagination-bullet-active) {
+                    background: var(--accent-primary) !important;
+                    opacity: 1;
+                    width: 30px !important;
+                    border-radius: 4px !important;
+                    transition: all 0.3s ease;
+                }
+                
+                :global(.swiper-button-next), :global(.swiper-button-prev) {
+                    color: var(--accent-primary) !important;
+                    background: rgba(255,255,255,0.05);
+                    backdrop-filter: blur(10px);
+                    width: 60px !important;
+                    height: 60px !important;
+                    border-radius: 50%;
+                    border: 1px solid rgba(255,255,255,0.1);
+                }
+
+                :global(.swiper-button-next::after), :global(.swiper-button-prev::after) {
+                    font-size: 1.5rem !important;
+                    font-weight: bold;
+                }
+
+                .close-btn:hover {
+                    opacity: 1;
+                    transform: rotate(90deg);
+                }
+
+                .category-card:hover {
                     border-color: var(--accent-primary);
-                    box-shadow: 0 8px 20px rgba(0, 57, 166, 0.05);
+                    box-shadow: 0 30px 60px rgba(0, 57, 166, 0.1);
+                    transform: translateY(-5px);
                 }
-                
-                .download-item button:hover {
-                    background: var(--accent-primary);
-                    color: #fff;
-                }
+
+                @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
                 
                 @media (max-width: 992px) {
-                    .media-grid {
-                        grid-template-columns: 1fr 1fr !important;
-                    }
-                }
-                
-                @media (max-width: 768px) {
-                    .container {
-                        padding: 0 1.5rem;
-                    }
+                    .category-card { flex-direction: column; text-align: center; }
+                    .category-card img { width: 100% !important; }
                 }
             `}</style>
         </div>

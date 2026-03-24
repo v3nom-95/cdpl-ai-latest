@@ -1,68 +1,68 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import './News.css';
 
-const newsData = [
-  {
-    id: 1,
-    title: "CDPL at UMEX 2026: Redefining Autonomous Borders",
-    images: ["/partners/bard1.png", "/partners/bard3.png"],
-    text: "At UMEX 2026, Chakravyuha Dynamics showcased its latest AI-enabled kill chain integration for border surveillance. The display highlighted BARD's autonomous patrol capabilities in desert terrains, focusing on real-time sensor fusion and GPS-denied navigation. Military delegations from eight countries reviewed the platform's multi-domain command and control (MDC2) architecture for rapid battlefield responsiveness.",
-    date: "Feb 14, 2026"
-  },
-  {
-    id: 2,
-    title: "Next-Gen Stealth USV Prototype Sea Trials Successful",
-    images: ["/partners/mmsicon.png", "/partners/navy.png"],
-    text: "MMS Division successfully completed phase-one sea trials for its 'Jal-Kumbh' stealth USV. Designed for distributed maritime operations and seabed warfare, the platform maintained full autonomous navigation through choppy waters for 48 hours. This marks a critical milestone for indigenizing high-end naval robotics and autonomous submarines for asymmetric warfare defense strategies.",
-    date: "Jan 28, 2026"
-  },
-  {
-    id: 3,
-    title: "Major Aerospace Systems (MAS) Training Hub Expansion",
-    images: ["/partners/aot.png", "/partners/r1.png"],
-    text: "The RAAVEN Training Hub has expanded to include advanced simulation for Group 2 UAS operations. Integrating TDFS Tactical Flight Simulators with real-world AOT hardware, the hub now offers 24/7 pilot training modules. This initiative accelerates OODA loop response training for elite drone units, ensuring software-defined warfare readiness and mission-critical hardware proficiency for our global partners.",
-    date: "Jan 10, 2026"
-  }
+const newsItems = [
+    {
+        id: 1,
+        date: "FEB 18, 2026",
+        category: "FIELD DEPLOYMENT",
+        title: "MAS BARD Deployed at Exercise Topchi 2026",
+        excerpt: "Chakravyuh Dynamics' BARD system successfully completed high-altitude surveillance and target acquisition missions during the recent Exercise Topchi demonstration.",
+        link: "https://www.youtube.com/watch?v=PWX3_uDB7z4"
+    }
 ];
 
 export default function News() {
   return (
-    <section id="news" className="news-section">
-      <div className="container">
-        <h2 className="section-title">CDPL NEWSROOM</h2>
-        <div className="news-blog-grid">
-          {newsData.map((item) => (
-            <div key={item.id} className="news-post">
-              <span className="corner corner-tl"></span>
-              <span className="corner corner-tr"></span>
-              <span className="corner corner-bl"></span>
-              <span className="corner corner-br"></span>
-              
-              <div className="news-visuals">
-                {item.images.slice(0, 2).map((img, i) => (
-                  <div key={i} className={`news-img-box ${i === 0 ? 'main-img' : 'sub-img'}`}>
-                    <img src={img} alt={item.title} />
-                  </div>
-                ))}
-              </div>
-
-              <div className="news-content">
-                <span className="news-date">{item.date}</span>
-                <h3 className="news-post-title">{item.title}</h3>
-                <p className="news-post-text">
-                  {item.text.length > 300 ? item.text.slice(0, 300) + "..." : item.text}
-                </p>
-                <div className="news-footer">
-                  <span className="word-count">{item.text.split(' ').length} WORDS</span>
-                  <a href={`/resources#news-${item.id}`} className="read-more">FULL REPORT &rarr;</a>
+    <section id="news" className="news-section" style={{ padding: '6rem 0', background: '#fff' }}>
+        <div className="container">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
+                <div>
+                    <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--text-primary)', fontWeight: '900', textTransform: 'uppercase' }}>CDPL NEWSROOM</h2>
+                    <p style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '1px', fontSize: '0.85rem' }}>// OFFICIAL DEPLOYMENT UPDATES</p>
                 </div>
-              </div>
+                <div style={{ width: '60px', height: '4px', background: 'var(--accent-primary)' }}></div>
             </div>
-          ))}
+
+            <div style={{ maxWidth: '850px', margin: '0 auto' }}>
+                {newsItems.map((news) => (
+                    <div key={news.id} className="news-card" style={{ 
+                        padding: '3rem', 
+                        border: '1px solid var(--border-color)',
+                        background: '#fff',
+                        position: 'relative',
+                        transition: 'all 0.3s ease'
+                    }}>
+                        <span className="corner corner-tl"></span>
+                        <span className="corner corner-br"></span>
+                        <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-primary)', fontSize: '0.75rem', fontWeight: '800' }}>{news.category}</span>
+                            <span style={{ color: 'var(--text-tertiary)', fontSize: '0.8rem' }}>{news.date}</span>
+                        </div>
+                        <h3 style={{ fontSize: '2rem', marginBottom: '1.2rem', lineHeight: '1.3', color: 'var(--text-primary)', fontWeight: '800' }}>{news.title}</h3>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '2.5rem', lineHeight: '1.6' }}>{news.excerpt}</p>
+                        
+                        <div style={{ border: '1px solid #eee', borderRadius: '4px', overflow: 'hidden', marginBottom: '2rem', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+                            <iframe
+                                width="100%"
+                                height="450"
+                                src={`https://www.youtube.com/embed/${news.link.split('=')[1]}?rel=0`}
+                                title={news.title}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen>
+                            </iframe>
+                        </div>
+
+                        <a href={news.link} target="_blank" rel="noopener noreferrer" className="btn-text" style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '1px', color: 'var(--accent-primary)', textTransform: 'uppercase' }}>
+                            VIEW ON YOUTUBE CHANNEL →
+                        </a>
+                    </div>
+                ))}
+            </div>
         </div>
-      </div>
     </section>
   );
 }
