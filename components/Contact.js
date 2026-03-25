@@ -81,6 +81,19 @@ export default function Contact() {
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             ),
         },
+        {
+            id: 'location',
+            label: 'HQ_LOCATION',
+            value: 'T-Hub, Hyderabad, India',
+            href: 'https://www.google.com/maps/place/Chakravyuha+Dynamics+Private+Limited+-+CDPL+(formerly+MAS)/@17.4461847,78.3890188,17z/data=!3m1!4b1!4m6!3m5!1s0x3bcb91991df605d3:0xae337cba48305f9d!8m2!3d17.4461847!4d78.3915937!16s%2Fg%2F11zjzl4lwn',
+            external: true,
+            icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                </svg>
+            ),
+        },
     ];
 
     return (
@@ -95,7 +108,7 @@ export default function Contact() {
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 textAlign: 'center',
-                                padding: '2rem',
+                                padding: '1.5rem',
                                 background: '#fff',
                                 border: '1px solid var(--border-color)',
                                 transition: 'all 0.3s ease',
@@ -106,7 +119,7 @@ export default function Contact() {
                                 <span className="corner corner-tr"></span>
                                 <div style={{ color: 'var(--accent-primary)', marginBottom: '1rem' }}>{card.icon}</div>
                                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-tertiary)', letterSpacing: '2px', marginBottom: '0.5rem' }}>{card.label}</div>
-                                <div style={{ fontWeight: '700', color: 'var(--text-primary)', fontSize: '0.9rem' }}>{card.value}</div>
+                                <div style={{ fontWeight: '700', color: 'var(--text-primary)', fontSize: '0.85rem' }}>{card.value}</div>
                             </a>
                         ))}
                     </div>
@@ -141,6 +154,42 @@ export default function Contact() {
                                 </p>
                             )}
                         </form>
+                    </div>
+                </div>
+
+                {/* Mini Map Section */}
+                <div className="map-wrapper" style={{ marginTop: '4rem', position: 'relative' }}>
+                    <div className="map-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <div style={{ width: '8px', height: '8px', background: 'var(--accent-primary)', borderRadius: '50%', boxShadow: '0 0 10px var(--accent-primary)' }}></div>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-tertiary)', letterSpacing: '3px' }}>GEO_LOCATION_LOCK</span>
+                        </div>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>[ 17.4461° N, 78.3916° E ]</span>
+                    </div>
+                    
+                    <div className="map-container" style={{ 
+                        border: '1px solid var(--border-color)', 
+                        position: 'relative', 
+                        overflow: 'hidden', 
+                        height: '400px',
+                        background: '#f8fafc'
+                    }}>
+                        <span className="corner corner-tl"></span>
+                        <span className="corner corner-tr"></span>
+                        <span className="corner corner-bl"></span>
+                        <span className="corner corner-br"></span>
+                        
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.282564902478!2d78.3915937!3d17.4461847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91991df605d3%3A0xae337cba48305f9d!2sChakravyuha%20Dynamics%20Private%20Limited%20-%20CDPL%20(formerly%20MAS)!5e0!3m2!1sen!2sin!4v1774414085935!5m2!1sen!2sin"
+                            width="100%" 
+                            height="100%" 
+                            style={{ 
+                                border: 0
+                            }} 
+                            allowFullScreen="" 
+                            loading="lazy" 
+                            referrerPolicy="no-referrer-when-downgrade"
+                        ></iframe>
                     </div>
                 </div>
             </div>
