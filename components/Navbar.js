@@ -182,11 +182,11 @@ const Navbar = () => {
                         <div className={`mega-menu ${isMegaMenuOpen ? 'active' : ''}`}>
                             <div className="mega-menu-container">
                                 <div className="mega-column" style={{ borderRight: '1px solid rgba(0, 57, 166, 0.1)' }}>
-                                    <Link href="/mas" onClick={handleMegaLinkClick} className={`mega-header ${pathname === '/mas' || pathname.startsWith('/products/mas') ? 'active' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '1.5rem', textDecoration: 'none', cursor: 'pointer', position: 'relative', padding: '10px' }}>
-                                        <div style={{ height: '30px', width: '40px', background: '#ffffff', border: '1px solid var(--team-mas)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: '2', overflow: 'hidden' }}>
+                                    <Link href="/mas" onClick={handleMegaLinkClick} className={`mega-header ${pathname === '/mas' || pathname.startsWith('/products/mas') ? 'active' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem', textDecoration: 'none', cursor: 'pointer', position: 'relative' }}>
+                                        <div style={{ height: '30px', width: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: '2' }}>
                                             <img src="/partners/masicon.png" alt="MAS" style={{ height: '26px', width: '36px', objectFit: 'contain' }} />
                                         </div>
-                                        <span className="mega-category" style={{ color: 'var(--team-mas)', position: 'relative', zIndex: '2' }}>Major Aerospace Systems</span>
+                                        <h4 style={{ color: 'var(--team-mas)', position: 'relative', zIndex: '2', margin: 0, fontSize: '1rem', fontWeight: '700', letterSpacing: '0.1em', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>Major Aerospace Systems</h4>
                                         <span className="corner corner-tl"></span>
                                         <span className="corner corner-tr"></span>
                                         <span className="corner corner-bl"></span>
@@ -252,11 +252,11 @@ const Navbar = () => {
                                 </div>
 
                                 <div className="mega-column" style={{ borderRight: '1px solid rgba(75, 83, 32, 0.1)' }}>
-                                    <Link href="/mgs" onClick={handleMegaLinkClick} className={`mega-header ${pathname === '/mgs' ? 'active' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '1.5rem', textDecoration: 'none', cursor: 'pointer', position: 'relative', padding: '10px' }}>
-                                        <div style={{ height: '30px', width: '40px', background: '#ffffff', border: '1px solid var(--team-mgs)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: '2', overflow: 'hidden' }}>
+                                    <Link href="/mgs" onClick={handleMegaLinkClick} className={`mega-header ${pathname === '/mgs' ? 'active' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem', textDecoration: 'none', cursor: 'pointer', position: 'relative' }}>
+                                        <div style={{ height: '30px', width: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: '2' }}>
                                             <img src="/partners/mgsicon.png" alt="MGS" style={{ height: '26px', width: '36px', objectFit: 'contain' }} />
                                         </div>
-                                        <span className="mega-category" style={{ color: 'var(--team-mgs)', position: 'relative', zIndex: '2' }}>Major Ground Systems</span>
+                                        <h4 style={{ color: 'var(--team-mgs)', position: 'relative', zIndex: '2', margin: 0, fontSize: '1rem', fontWeight: '700', letterSpacing: '0.1em', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>Major Ground Systems</h4>
                                         <span className="corner corner-tl"></span>
                                         <span className="corner corner-tr"></span>
                                         <span className="corner corner-bl"></span>
@@ -271,11 +271,11 @@ const Navbar = () => {
                                 </div>
 
                                 <div className="mega-column">
-                                    <Link href="/mms" onClick={handleMegaLinkClick} className={`mega-header ${pathname === '/mms' ? 'active' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '1.5rem', textDecoration: 'none', cursor: 'pointer', position: 'relative', padding: '10px' }}>
-                                        <div style={{ height: '30px', width: '40px', background: '#ffffff', border: '1px solid var(--team-mms)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: '2', overflow: 'hidden' }}>
+                                    <Link href="/mms" onClick={handleMegaLinkClick} className={`mega-header ${pathname === '/mms' ? 'active' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem', textDecoration: 'none', cursor: 'pointer', position: 'relative' }}>
+                                        <div style={{ height: '30px', width: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: '2' }}>
                                             <img src="/partners/mmsicon.png" alt="MMS" style={{ height: '26px', width: '36px', objectFit: 'contain' }} />
                                         </div>
-                                        <span className="mega-category" style={{ color: 'var(--team-mms)', position: 'relative', zIndex: '2' }}>Major Marine Systems</span>
+                                        <h4 style={{ color: 'var(--team-mms)', position: 'relative', zIndex: '2', margin: 0, fontSize: '1rem', fontWeight: '700', letterSpacing: '0.1em', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>Major Marine Systems</h4>
                                         <span className="corner corner-tl"></span>
                                         <span className="corner corner-tr"></span>
                                         <span className="corner corner-bl"></span>
