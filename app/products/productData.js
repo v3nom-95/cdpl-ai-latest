@@ -169,222 +169,440 @@ export const products = {
         whatsappNumber: "919494949698"
     },
     'horizon-vtol': {
-        name: "HORIZON VTOL",
-        tagline: "FIXED WING ISR · LONG RANGE",
+        name: "HORIZON 120 – VTOL",
+        tagline: "FIXED WING VTOL · TRAINER & ISR",
         brand: "MAS",
         category: "ISR",
-        description: "Vertical Take-Off and Landing (VTOL) ISR system for extended surveillance and tactical missions.",
-        longDescription: "The HORIZON VTOL combines the efficiency of fixed-wing flight with the launch flexibility of a multirotor. It is the premier choice for long-endurance reconnaissance and beyond visual line of sight (BVLOS) defense operations, offering stable flight characteristics and advanced multi-axis stabilized sensor suites.",
+        description: "VTOL Fixed-Wing platform combining vertical takeoff with efficient cruise for extended reconnaissance.",
+        longDescription: "HORIZON 120 VTOL combines vertical takeoff capability with efficient fixed-wing cruise performance. Designed for training and ISR applications, the platform supports autonomous waypoint navigation and stabilized observation. It is the premier choice for long-endurance missions without the need for runways.",
         heroSpecs: [
             { label: "Endurance", value: "40m" },
-            { label: "Range", value: "5km" },
+            { label: "Range", value: "4km" },
             { label: "Wingspan", value: "1200mm" },
             { label: "AUW", value: "3.5kg" }
         ],
+        performanceMetrics: [
+            { label: "CRUISE_STABILITY", value: 92, unit: "%" },
+            { label: "VTOL_PRECISION", value: 95, unit: "%" },
+            { label: "ENDURANCE_RATING", value: 88, unit: "%" },
+            { label: "IMAGE_STABILITY", value: 94, unit: "%" }
+        ],
         featureCards: [
             {
-                title: "VTOL Efficiency",
-                description: "Seamless transition between vertical lift and efficient horizontal cruise for maximum field versatility."
+                title: "VTOL Hybrid Configuration",
+                description: "Seamless vertical takeoff and landing with the efficiency of fixed-wing horizontal cruise."
             },
             {
-                title: "Stabilized Imaging",
-                description: "Equipped with a 3-axis gimbal system for crystal-clear ISR imagery during high-speed flight."
+                title: "Stabilized Observations",
+                description: "3-axis stabilized gimbal system ensures vibration-free imagery for precision reconnaissance."
             },
             {
-                title: "Strategic Range",
-                description: "Optimized for 5km+ operational range with encrypted long-range telemetry and video feed."
+                title: "Rapid Deployment",
+                description: "Lightweight composite airframe designed for quick assembly and hand-launched/VTOL operations."
             }
         ],
         variants: [
-            { variant: "Day", type: "VTOL Fixed Wing ISR", endurance: "~40", range: "5", altitude: "700", agl: "300", frame: "1200mm", auw: "3.5", payload: "EO", camera: "EO 3-axis", feature: "Training/ISR" },
-            { variant: "Day/Night", type: "VTOL Fixed Wing ISR", endurance: "~40", range: "5", altitude: "700", agl: "300", frame: "1200mm", auw: "3.5", payload: "EO/IR", camera: "EO/IR 3-axis", feature: "Day Night ISR" }
+            { 
+                id: "day",
+                variant: "Day Variant", 
+                type: "VTOL Fixed Wing ISR", 
+                description: "Designed for stabilized day observation and training with autonomous waypoint navigation.",
+                keyHighlights: [
+                    "VTOL Fixed-Wing Configuration",
+                    "Endurance: Up to 30–40 Minutes",
+                    "Operational Range: Up to 3–4 KM",
+                    "3-Axis Stabilized Day EO Gimbal",
+                    "Wingspan: 1200 mm",
+                    "Lightweight Composite Airframe",
+                    "Portable Ground Control Station (7” Display)"
+                ],
+                capabilities: ["Vertical Takeoff", "Fixed-Wing Cruise", "Autonomous Navigation"],
+                applications: ["Daytime ISR", "UAV Pilot Training", "Perimeter Surveillance"],
+                performance: { endurance: "30-40m", range: "3-4km", payload: "Day EO" },
+                gallery: ["/partners/horizonvtol.png"]
+            },
+            { 
+                id: "day-night",
+                variant: "Day/Night EO/IR Variant", 
+                type: "VTOL Fixed Wing ISR", 
+                description: "Modular VTOL UAV designed for extended aerial observation in both day and night conditions.",
+                keyHighlights: [
+                    "VTOL Fixed-Wing Platform",
+                    "Endurance: Up to 30–40 Minutes",
+                    "Operational Range: Up to 3–4 KM",
+                    "3-Axis Stabilized EO/IR Gimbal",
+                    "1200 mm Wingspan",
+                    "Low Visual & Acoustic Signature",
+                    "Integrated Handheld Ground Control Station"
+                ],
+                capabilities: ["Thermal Imaging", "Night Operations", "Signature Mitigation"],
+                applications: ["Night Reconnaissance", "Tactical ISR", "BVLOS Operations"],
+                performance: { endurance: "30-40m", range: "3-4km", payload: "EO/IR" },
+                gallery: ["/partners/horizonvtol.png"]
+            }
         ],
         specs: [
             { label: "Wingspan", value: "1200mm" },
             { label: "Flight Mode", value: "VTOL to Cruise" },
-            { label: "Battery", value: "High-Density LiPo" },
+            { label: "Airframe", value: "Composite Material" },
             { label: "Max Speed", value: "75 KMPH" }
         ],
         features: [
-            "Automatic Transition",
+            "Autonomous Waypoint Navigation",
             "3-Axis Stabilized Gimbal",
-            "NAVIC/GPS Navigation",
-            "Rugged Composite Frame",
-            "BVLOS Ready"
+            "NAVIC/GPS Integration",
+            "Low Acoustic Signature",
+            "Portable GCS System"
         ],
         imageClass: "product-image-aot",
         nickname: "OBSERVER",
         galleryImages: [
             "/partners/horizonvtol.png"
-        ]
+        ],
+        whatsappNumber: "919494949698"
     },
     'horizon-fpv': {
-        name: "HORIZON FPV",
-        tagline: "FIXED WING TRAINER · HIGH SPEED",
+        name: "HORIZON 160 FPV",
+        tagline: "FIXED WING TRAINER · FPV SERIES",
         brand: "MAS",
         category: "TRAINER",
-        description: "Dedicated high-endurance fixed-wing platform for advanced pilot training and FPV operations.",
-        longDescription: "The HORIZON FPV is a specialized fixed-wing trainer designed for large-scale area familiarization and high-speed FPV pilot training. With a massive 1645mm wingspan, it offers exceptional glide performance and stability.",
+        description: "Hand-launched delta-wing trainer for realistic UAV flight and FPV mission familiarization.",
+        longDescription: "Horizon 160 FPV is a lightweight delta-wing fixed-wing trainer designed for realistic UAV flight training and FPV mission familiarization. The hand-launch configuration enables rapid deployment without runway dependency, supporting operator skill development in navigation, recovery, and mission execution.",
         heroSpecs: [
-            { label: "Endurance", value: "35m" },
-            { label: "Range", value: "6km" },
-            { label: "Wingspan", value: "1645mm" },
-            { label: "AUW", value: "3.5kg" }
+            { label: "Endurance", value: "45m" },
+            { label: "Range", value: "4km" },
+            { label: "Wingspan", value: "1600mm" },
+            { label: "Speed", value: "16m/s" }
+        ],
+        performanceMetrics: [
+            { label: "AGILITY_INDEX", value: 95, unit: "%" },
+            { label: "DEPLOYMENT_SPEED", value: 98, unit: "%" },
+            { label: "FPV_CLARITY", value: 90, unit: "%" },
+            { label: "TRAINER_RATING", value: 96, unit: "%" }
         ],
         featureCards: [
             {
-                title: "Glider Performance",
-                description: "1645mm wingspan provides superior lift-to-drag ratios for extended training sessions."
+                title: "Hand-Launched Efficiency",
+                description: "Rapid deployment delta configuration, eliminating the need for runways or launch gear."
             },
             {
-                title: "FPV Mastery",
-                description: "Low-latency FPV camera system designed for high-speed maneuvering and pilot skill development."
+                title: "FPV Mission Skills",
+                description: "2K FPV camera system designed for high-fidelity pilot training and navigation drills."
             },
             {
-                title: "Durable Frame",
-                description: "Reinforced airframe built to withstand the rigors of repeated training cycles and field landings."
+                title: "Safety First",
+                description: "Integrated Geo-Fencing and Return-to-Home (RTH) features for safe training environments."
             }
         ],
         variants: [
-            { variant: "FPV", type: "Fixed Wing Trainer", endurance: "~35", range: "6", altitude: "700", agl: "300", frame: "1645mm", auw: "3.5", payload: "0.5kg", camera: "FPV Camera", feature: "Trainer" }
+            { 
+                id: "160-fpv",
+                variant: "Horizon 160 FPV", 
+                type: "Fixed Wing Trainer", 
+                description: "Hand-launched delta wing for advanced pilot mastery.",
+                keyHighlights: [
+                    "Hand-Launched Delta Configuration",
+                    "Wingspan: 1600 mm",
+                    "Endurance: Up to 35–45 Minutes",
+                    "Operational Range: Up to 3–4 KM",
+                    "Cruise Speed: 14–16 m/s",
+                    "2K FPV Camera System",
+                    "Manual Flight + Return-to-Home (RTH)",
+                    "Geo-Fencing Enabled",
+                    "Low Visual & Acoustic Signature"
+                ],
+                capabilities: ["Manual/Acro Flight", "Long Range Telemetry", "Delta-Wing Aerodynamics"],
+                applications: ["FPV Pilot Training", "Area Familiarization", "Skill Development"],
+                performance: { endurance: "35-45m", range: "3-4km", payload: "2K FPV" },
+                gallery: ["/partners/horizonfpv.jpeg"]
+            }
         ],
         specs: [
-            { label: "Wingspan", value: "1645mm" },
-            { label: "Cruise Speed", value: "60 KMPH" },
-            { label: "Max Payload", value: "0.5kg" },
-            { label: "Range", value: "6km" }
+            { label: "Wingspan", value: "1600mm" },
+            { label: "Cruise Speed", value: "14-16 m/s" },
+            { label: "Launch", value: "Hand Launch" },
+            { label: "Safety", value: "Geo-Fencing/RTH" }
         ],
         features: [
-            "High Aspect Ratio Wings",
-            "Low Latency FPV",
-            "Modular Electronic Tray",
-            "Field Repairable",
-            "Precision Control Surface"
+            "2K Low-Latency FPV",
+            "Automatic RTH on Lost Link",
+            "Eco-friendly Materials",
+            "Field Repairable Delta Wing",
+            "Low Operational Signature"
         ],
         imageClass: "product-image-sim",
-        nickname: "SIMULATE",
+        nickname: "MASTER",
         galleryImages: [
             "/partners/horizonfpv.jpeg"
-        ]
+        ],
+        whatsappNumber: "919494949698"
     },
     'stinger': {
-        name: "STINGER",
-        tagline: "LOITERING MUNITION · KINETIC INTERCEPT",
+        name: "STINGER SERIES",
+        tagline: "TACTICAL TRAINER · FPV PLATFORM",
         brand: "MAS",
         category: "TACTICAL",
-        description: "High-performance attritable aircraft optimized for precision strike and loitering munition missions.",
-        longDescription: "The STINGER family represents the cutting edge of kinetic interceptors and tactical loitering munitions. Ranging from 7 to 15 inches, these platforms are designed for high-speed interception, heavy payload delivery, and precision target engagement in contested environments.",
+        description: "High-agility FPV tactical training platforms optimized for speed, precision, and mission rehearsal.",
+        longDescription: "The STINGER family represents the peak of FPV tactical training systems. Engineered for high-speed maneuvering and precision control, these platforms allow pilots to rehearse complex mission profiles in a cost-effective, high-performance architecture ranging from 7 to 15 inches.",
         heroSpecs: [
-            { label: "Endurance", value: "40m" },
-            { label: "Combat Range", value: "5km" },
-            { label: "Max Payload", value: "2kg" },
-            { label: "Speed", value: "120+ KPH" }
+            { label: "Max Endurance", value: "35m" },
+            { label: "Max Range", value: "5km" },
+            { label: "Top Speed", value: "26m/s" },
+            { label: "Frame Sizes", value: "7\"-15\"" }
+        ],
+        performanceMetrics: [
+            { label: "REACTION_SPEED", value: 99, unit: "%" },
+            { label: "WIND_RESISTANCE", value: 94, unit: "%" },
+            { label: "SIGNAL_STABILITY", value: 92, unit: "%" },
+            { label: "MANEUVERABILITY", value: 98, unit: "%" }
         ],
         featureCards: [
             {
-                title: "Kinetic Precision",
-                description: "High-KV motor configurations providing the agility needed for precise terminal phase maneuvers."
+                title: "Exceptional Agility",
+                description: "High-KV power systems enabling extreme acrobatic maneuvers and tactical intercepts."
             },
             {
-                title: "Heavy Payload",
-                description: "Up to 2kg mission payload capacity in the 15-inch variant, suitable for a wide range of tactical roles."
+                title: "Modular Payload",
+                description: "Support for diverse imaging systems from 2K FPV to advanced Dual EO/Thermal gimbals."
             },
             {
-                title: "Jam-Resistant Feed",
-                description: "Optimized video links designed to maintain clarity in electronically dense environments."
+                title: "Safety & Recovery",
+                description: "Standard integrated Return-to-Home and Geo-Fencing protocols to protect training assets."
             }
         ],
         variants: [
-            { variant: "7 Inch Day", type: "FPV Quad Kamikaze", endurance: "~22", range: "2", altitude: "800", agl: "400", frame: "7 Inch", auw: "1.6", payload: "1kg", camera: "2K FPV", feature: "Trainer FPV" },
-            { variant: "10 Inch Day/Night", type: "FPV Quad Kamikaze", endurance: "~35", range: "4", altitude: "800", agl: "400", frame: "10 Inch", auw: "2.4", payload: "1kg", camera: "EO+Thermal", feature: "Tactical FPV" },
-            { variant: "15 Inch Day/Night", type: "FPV Quad Kamikaze", endurance: "~40", range: "5", altitude: "800", agl: "400", frame: "15 Inch", auw: "4.2", payload: "2kg", camera: "EO+Thermal", feature: "Heavy Lift FPV" }
+            { 
+                id: "stinger-7",
+                variant: "STINGER 7” – Day Variant", 
+                type: "Compact FPV Tactical Trainer", 
+                description: "High-agility platform for precision maneuver drills and reflex-based pilot development.",
+                keyHighlights: [
+                    "7” Frame Configuration",
+                    "Endurance: Up to 20–22 Minutes",
+                    "Operational Range: Up to 1–2 KM",
+                    "Top Speed: 22–24 m/s",
+                    "2K FPV Camera",
+                    "Stabilized / Acro / Manual Modes",
+                    "Return-to-Home & Geo-Fencing",
+                    "Modular Payload Architecture",
+                    "Low Visual & Acoustic Signature"
+                ],
+                capabilities: ["Precision Maneuvering", "Acro Support", "Low Latency Feed"],
+                applications: ["Pilot Skill Drills", "Obstacle Navigation", "Reflex Training"],
+                performance: { endurance: "20-22m", range: "1-2km", payload: "2K FPV" },
+                gallery: ["/partners/stinger.jpeg"]
+            },
+            { 
+                id: "stinger-10",
+                variant: "STINGER 10” – Day/Night Variant", 
+                type: "Extended-Endurance FPV Platform", 
+                description: "Designed for advanced FPV training and extended-range tactical simulations.",
+                keyHighlights: [
+                    "10” Frame Configuration",
+                    "Endurance: Up to 25–30 Minutes",
+                    "Operational Range: Up to 3–4 KM",
+                    "HD Day + Thermal Imaging",
+                    "Top Speed: 24–26 m/s",
+                    "Multiple Flight Modes",
+                    "Return-to-Home & Geo-Fencing",
+                    "Modular Payload Support",
+                    "Low Operational Signature"
+                ],
+                capabilities: ["Thermal Navigation", "Extended Range", "Multi-Mode Flight"],
+                applications: ["Night Familiarization", "Tactical Simulations", "Search Drills"],
+                performance: { endurance: "25-30m", range: "3-4km", payload: "EO/IR" },
+                gallery: ["/partners/stinger.jpeg"]
+            },
+            { 
+                id: "stinger-15",
+                variant: "STINGER 15” – Day/Night Gimbal Variant", 
+                type: "Heavy-Lift FPV Tactical Platform", 
+                description: "High-endurance platform engineered for advanced operational training and heavier payload integration.",
+                keyHighlights: [
+                    "15” Reinforced Frame",
+                    "Endurance: Up to 30–35 Minutes",
+                    "Operational Range: Up to 4–5 KM",
+                    "HD Day + Thermal Imaging",
+                    "Enhanced Lift Capability",
+                    "Multiple Flight Modes",
+                    "Return-to-Home & Geo-Fencing",
+                    "Low Visual & Acoustic Signature"
+                ],
+                capabilities: ["Heavy Lift Support", "Gimbal Stabilization", "Persistent Recon"],
+                applications: ["Heavy Payload Training", "Mission Rehearsal", "Enhanced Surveillance"],
+                performance: { endurance: "30-35m", range: "4-5km", payload: "EO/IR Gimbal" },
+                gallery: ["/partners/stinger.jpeg"]
+            }
         ],
         specs: [
             { label: "Frame Sizes", value: "7 / 10 / 15 Inch" },
-            { label: "Max Speed", value: "140 KMPH" },
-            { label: "Latency", value: "< 20ms" },
-            { label: "Payload Max", value: "2.0kg" }
+            { label: "Top Speed", value: "26 m/s (93 KPH)" },
+            { label: "Datalink", value: "Long Range ELRS/Ghost" },
+            { label: "Link Latency", value: "< 20ms" }
         ],
         features: [
-            "High Discharge LiPo Support",
-            "Reinforced Carbon Frame",
-            "Emergency Detonate Ready",
-            "Low Profile Design",
-            "Extreme Agility"
+            "Reinforced Carbon Fiber Frame",
+            "High-Output ESC Architecture",
+            "Stabilized/Acro/Manual Modes",
+            "Return-to-Home Protocols",
+            "Rugged Field Design"
         ],
         imageClass: "product-image-hydra",
-        nickname: "HYDRA V4",
+        nickname: "STRIKE",
         galleryImages: [
             "/partners/stinger.jpeg"
-        ]
+        ],
+        whatsappNumber: "919494949698"
     },
     'aot': {
-        name: "Attritable Observation Trainer (AOT)",
-        tagline: "TACTICAL TRAINER UAS · PROP GUARDED",
+        name: "A.O.T. (Air Observer Trainer)",
+        tagline: "MULTI-ROTOR · PROP GUARD SERIES",
         brand: "MAS",
         category: "TRAINER",
-        description: "Attritable Observation Trainer for tactical maneuvering and observation readiness.",
-        longDescription: "The AOT 7-inch variant provides a responsive flight envelope for mastering complex tactical maneuvers and close-proximity observation fundamentals.",
+        description: "Compact quadcopter with integrated propeller guards for safe indoor and confined-area pilot training.",
+        longDescription: "AOT (Air Observer Trainer) is a compact 7” quadcopter designed for structured FPV pilot training and close-proximity maneuver drills. The integrated propeller guard system enhances safety during indoor and confined-area operations, making it ideal for foundational and intermediate-level operator development.",
         heroSpecs: [
             { label: "Endurance", value: "30m" },
-            { label: "Range", value: "3km" },
-            { label: "Alititude", value: "600m" },
-            { label: "Frame", value: "7 Inch" }
+            { label: "Range", value: "2km" },
+            { label: "Frame", value: "7\" Rugged" },
+            { label: "Safety", value: "Prop Guards" }
+        ],
+        performanceMetrics: [
+            { label: "SAFETY_RATING", value: 99, unit: "%" },
+            { label: "INDOOR_AGILITY", value: 95, unit: "%" },
+            { label: "DURABILITY", value: 98, unit: "%" },
+            { label: "STABILITY", value: 92, unit: "%" }
         ],
         featureCards: [
             {
-                title: "Pilot Safety",
-                description: "Full-surround prop guards significantly reduce risk during indoor and close-proximity training."
+                title: "Safety-First Architecture",
+                description: "Rugged wrap-around propeller guards designed to protect both the platform and the environment."
             },
             {
-                title: "Analog Feedback",
-                description: "Zero-latency analog FPV feed for developing instant muscle memory and flight reaction speeds."
+                title: "Confined Space Mastery",
+                description: "Small footprint and high stability for mastering flight in GPS-denied and indoor environments."
             },
             {
-                title: "Indigenous Trainer",
-                description: "Fully designed and serviced in-house to ensure high availability for military training commands."
+                title: "Progressive Learning",
+                description: "Multiple flight modes from full stabilization to manual acro for comprehensive skill building."
             }
         ],
         variants: [
-            { variant: "7 Inch Trainer", type: "Quadcopter Trainer", endurance: "~30", range: "3", altitude: "600", agl: "300", frame: "7 Inch", auw: "2", payload: "0.2kg", camera: "Analog FPV", feature: "Prop Guard Trainer" }
+            { 
+                id: "aot-7",
+                variant: "A.O.T. 7” Variant", 
+                type: "Prop-Guarded Trainer", 
+                description: "7” quadcopter designed for close-proximity maneuver training.",
+                keyHighlights: [
+                    "7” Rugged Frame with Prop Guard",
+                    "Endurance: Up to 30 Minutes",
+                    "Operational Range: Up to 1–2 KM",
+                    "Cruise Speed: 10–12 m/s",
+                    "2K FPV Camera",
+                    "Stabilized / Acro / Manual Modes",
+                    "Return-to-Home & Geo-Fencing",
+                    "Low Visual & Acoustic Signature"
+                ],
+                capabilities: ["Indoor Stability", "Crash Resilience", "Obstacle Proximity"],
+                applications: ["Foundational Training", "CQB Maneuvering", "Safety Familiarization"],
+                performance: { endurance: "30m", range: "1-2km", payload: "2K FPV" },
+                gallery: ["/partners/aot.png"]
+            }
         ],
         specs: [
-            { label: "Frame Size", value: "7 Inch" },
-            { label: "Prop Guards", value: "Integrated 360" },
-            { label: "AUW", value: "2.0kg" },
-            { label: "Navigation", value: "Standard GPS" }
+            { label: "Frame", value: "7 Inch Rugged Carbon" },
+            { label: "Safety", value: "360 Prop Guard" },
+            { label: "Propulsion", value: "Brushless Electric" },
+            { label: "Video", value: "Zero-Latency 2K" }
         ],
         features: [
-            "Shatter-Resistant Guards",
-            "High Visibility LEDs",
-            "Telemetry for Instructor",
-            "Modular Arm System",
-            "Quick-Swap Battery"
+            "Rugged Propeller Guards",
+            "Multiple Flight Skill Modes",
+            "High-Intensity Visibility LED",
+            "Compact Modular Build",
+            "Safe Indoor Deployment"
         ],
         imageClass: "product-image-aot",
-        nickname: "TRAINER",
+        nickname: "CADET",
         galleryImages: [
             "/partners/aot.png"
-        ]
+        ],
+        whatsappNumber: "919494949698"
     },
     'raven': {
-        name: "RAVEN",
-        tagline: "SIMULATOR",
+        name: "RAVEN UAV Simulator",
+        tagline: "UAV SIMULATOR · TRAINER SERIES",
         brand: "MAS",
         category: "SIMULATOR",
-        description: "",
-        longDescription: "",
-        heroSpecs: [],
-        featureCards: [],
-        variants: [],
-        specs: [],
-        features: [],
+        description: "Plug-and-play UAV simulation system for structured multi-platform drone training.",
+        longDescription: "RAVEN is a plug-and-play UAV simulation system designed for structured multi-platform drone training. The system supports FPV, rotary, and fixed-wing mission environments with realistic terrain rendering and physics-based simulation, enabling risk-free mastery of complex aerial maneuvers.",
+        heroSpecs: [
+            { label: "Display", value: "27\" Curved" },
+            { label: "Computing", value: "14th Gen i5" },
+            { label: "Graphics", value: "RTX 3050" },
+            { label: "System", value: "Plug-and-Play" }
+        ],
+        performanceMetrics: [
+            { label: "PHYSICS_ACCURACY", value: 98, unit: "%" },
+            { label: "LATENCY", value: 2, unit: "ms" },
+            { label: "RENDER_QUALITY", value: 95, unit: "%" },
+            { label: "TRAINING_ROI", value: 100, unit: "%" }
+        ],
+        featureCards: [
+            {
+                title: "Immersive Visuals",
+                description: "27” Curved High-Refresh Display for tactical environmental awareness and depth perception."
+            },
+            {
+                title: "High-Core Performance",
+                description: "Powered by 14th Gen Intel i5 and NVIDIA RTX 3050 for lag-free, high-fidelity physics."
+            },
+            {
+                title: "Complete Training Kit",
+                description: "Integrated FPV goggles, radio transmitter, and built-in UPS backup for uninterrupted sessions."
+            }
+        ],
+        variants: [
+            { 
+                id: "raven-trainer",
+                variant: "RAVEN Simulator System", 
+                type: "Professional UAV Trainer", 
+                description: "The complete simulation solution for modern UAV operators.",
+                keyHighlights: [
+                    "27” Curved High-Refresh Display",
+                    "Intel i5 (14th Gen) Performance Core",
+                    "NVIDIA RTX 3050 (8GB Graphics)",
+                    "16GB RAM | 1TB SSD",
+                    "Integrated FPV Goggles & Radio Transmitter",
+                    "Built-in UPS Backup",
+                    "Pre-Loaded Licensed Simulation Software"
+                ],
+                capabilities: ["Multi-Platform Sim", "FPV Mastery", "Mission Planning"],
+                applications: ["New Pilot Training", "Mission Profile Testing", "Advanced Acro Drills"],
+                performance: { endurance: "Unlimited", range: "N/A", payload: "Software" },
+                gallery: ["/partners/r1.png", "/partners/r2.jpeg", "/partners/r3.jpeg"]
+            }
+        ],
+        specs: [
+            { label: "Display", value: "27\" Curved Refresh" },
+            { label: "Controller", value: "Integrated Radio" },
+            { label: "Backup", value: "Built-in UPS" },
+            { label: "Software", value: "Multi-UAV Licensed" }
+        ],
+        features: [
+            "Realistic Physics Engine",
+            "Support for FPV/Fixed/Rotary",
+            "High-Fidelity Terrain Rendering",
+            "Plug-and-Play Setup",
+            "Comprehensive Mission Log"
+        ],
         imageClass: "product-image-sim",
-        nickname: "RAVEN",
+        nickname: "MAESTRO",
         galleryImages: [
             "/partners/r1.png",
             "/partners/r2.jpeg",
             "/partners/r3.jpeg"
-        ]
+        ],
+        whatsappNumber: "919494949698"
     }
 };

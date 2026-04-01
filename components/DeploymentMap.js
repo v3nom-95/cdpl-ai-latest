@@ -12,21 +12,21 @@ export default function DeploymentMap({ isCompact = false }) {
     useEffect(() => {
         const handleScroll = () => {
             if (!mapRef.current || !wrapperRef.current) return;
-            
+
             const rect = mapRef.current.getBoundingClientRect();
             const windowHeight = window.innerHeight;
-            
+
             // Calculate progress: 0 when map enters the bottom of the viewport, 1 when it's well into the screen
             const rawProgress = (windowHeight - rect.top) / (windowHeight * 0.6);
             const progress = Math.max(0, Math.min(1, rawProgress));
-            
+
             // Smoothly scale from 0.8 to 1.0, and fade from 0.3 to 1.0
             const scale = 0.8 + (0.2 * progress);
             const opacity = 0.3 + (0.7 * progress);
-            
+
             wrapperRef.current.style.transform = `scale(${scale})`;
             wrapperRef.current.style.opacity = opacity;
-            
+
             if (titleRef.current) {
                 titleRef.current.style.opacity = progress;
                 titleRef.current.style.transform = `translateY(${20 - (progress * 20)}px)`;
@@ -43,14 +43,14 @@ export default function DeploymentMap({ isCompact = false }) {
     return (
         <div ref={mapRef} className={`deployment-map-container ${isCompact ? 'compact' : ''}`}>
             {!isCompact && <h3 ref={titleRef} className="map-title" style={{ opacity: 0, transform: 'translateY(20px)', transition: 'transform 0.1s ease-out, opacity 0.1s ease-out' }}>[ STRATEGIC_NETWORK_MATRIX ]</h3>}
-            <div 
-                ref={wrapperRef} 
-                className="map-wrapper shadow-premium" 
-                style={{ 
-                    transform: 'scale(0.8)', 
-                    opacity: 0.3, 
+            <div
+                ref={wrapperRef}
+                className="map-wrapper shadow-premium"
+                style={{
+                    transform: 'scale(0.8)',
+                    opacity: 0.3,
                     transformOrigin: 'center top',
-                    transition: 'transform 0.1s ease-out, opacity 0.1s ease-out' 
+                    transition: 'transform 0.1s ease-out, opacity 0.1s ease-out'
                 }}
             >
                 <div className="map-hud-ortho">

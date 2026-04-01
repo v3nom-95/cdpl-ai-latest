@@ -537,34 +537,101 @@ export default function ProductPage() {
 
             {/* Variant Breakdown Section */}
             {product.variants && product.variants.length > 0 && (
-                <section className="about-section reveal-section" style={{ borderTop: '1px solid var(--border-color)', background: '#fff' }}>
+                <section className="reveal-section" style={{ background: '#fafafa', padding: 'clamp(4rem, 8vh, 10rem) 0', borderTop: '1px solid #eee' }}>
                     <div className="container">
-                        <h4 className="spec-category-title" style={{ marginBottom: '3rem' }}>VARIANT CONFIGURATIONS</h4>
-                        <div style={{ width: '100%', overflowX: 'auto' }}>
-                            <table className="variant-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
-                                <thead>
-                                    <tr style={{ background: 'var(--bg-tactical)', textAlign: 'left' }}>
-                                        <th style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>Variant</th>
-                                        <th style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>Type</th>
-                                        <th style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>Endurance</th>
-                                        <th style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>Range</th>
-                                        <th style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>Payload</th>
-                                        <th style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>Feature</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {product.variants.map((v: any, i: number) => (
-                                        <tr key={i} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                                            <td style={{ padding: '1rem', border: '1px solid var(--border-color)', fontWeight: '700', color: 'var(--accent-primary)' }}>{v.variant}</td>
-                                            <td style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>{v.type}</td>
-                                            <td style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>{v.endurance}</td>
-                                            <td style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>{v.range}</td>
-                                            <td style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>{v.payload}</td>
-                                            <td style={{ padding: '1rem', border: '1px solid var(--border-color)' }}>{v.feature}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                        <div style={{ marginBottom: 'clamp(2.5rem, 6vh, 6rem)' }}>
+                            <span style={{ color: 'var(--accent-primary)', letterSpacing: '3px', fontSize: '0.8rem', fontWeight: '700' }}>[ VARIANTS ]</span>
+                            <h2 style={{ fontSize: 'clamp(2.2rem, 8vw, 5rem)', fontWeight: '900', marginTop: '1rem', letterSpacing: '-1px', color: 'var(--text-primary)' }}>AVAILABLE CONFIGURATIONS</h2>
+                        </div>
+
+                        <div className="form-factor-container" style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                            gap: '2.5rem'
+                        }}>
+                            {product.variants.map((v: any, i: number) => {
+                                const themes = [
+                                    { color: '#0039A6', label: 'STD_UNIT' },
+                                    { color: '#005C9E', label: 'TACTICAL' },
+                                    { color: '#584E41', label: 'RECON' },
+                                    { color: '#CC5D29', label: 'ADV_ISR' },
+                                    { color: '#960606', label: 'OPERATIONAL' },
+                                    { color: '#000000', label: 'SPECIAL_PURPOSE' }
+                                ];
+                                const theme = themes[i % themes.length];
+
+                                return (
+                                    <Link key={i} href={`/products/${id}/${v.id}`} className="form-factor-card" style={{
+                                        background: '#fff',
+                                        borderColor: 'rgba(0,0,0,0.08)',
+                                        color: 'var(--text-primary)',
+                                        padding: 'clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem)',
+                                        boxShadow: '0 10px 30px rgba(0,0,0,0.02)',
+                                        position: 'relative',
+                                        textDecoration: 'none',
+                                        transition: 'transform 0.3s ease, border-color 0.3s ease',
+                                        display: 'block',
+                                        border: '1px solid var(--border-color)',
+                                        borderRadius: '4px'
+                                    }}>
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: '2rem',
+                                            right: '2rem',
+                                            fontSize: '0.6rem',
+                                            fontFamily: 'var(--font-mono)',
+                                            color: 'var(--text-tertiary)',
+                                            letterSpacing: '2px'
+                                        }}>
+                                            [ {theme.label} ]
+                                        </div>
+
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            width: '4px',
+                                            height: '100%',
+                                            background: theme.color
+                                        }}></div>
+
+                                        <h3 style={{ color: 'var(--text-primary)', fontSize: '2rem', letterSpacing: '-1px', marginBottom: '0.5rem' }}>{v.variant}</h3>
+                                        <p style={{ color: theme.color, marginBottom: '3rem', fontSize: '0.85rem', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontWeight: '700' }}>
+                                            {v.type}
+                                        </p>
+
+                                        <ul className="spec-list" style={{ marginTop: '2rem', listStyle: 'none', padding: 0 }}>
+                                            <li style={{ display: 'flex', justifyContent: 'space-between', padding: '0.8rem 0', borderBottom: '1px solid #f1f5f9' }}>
+                                                <span style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem', fontWeight: '600' }}>ENDURANCE</span>
+                                                <span style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{v.performance?.endurance || v.endurance || 'N/A'}</span>
+                                            </li>
+                                            <li style={{ display: 'flex', justifyContent: 'space-between', padding: '0.8rem 0', borderBottom: '1px solid #f1f5f9' }}>
+                                                <span style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem', fontWeight: '600' }}>RANGE</span>
+                                                <span style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{v.performance?.range || v.range || 'N/A'}</span>
+                                            </li>
+                                            <li style={{ display: 'flex', justifyContent: 'space-between', padding: '0.8rem 0', borderBottom: '1px solid #f1f5f9' }}>
+                                                <span style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem', fontWeight: '600' }}>PAYLOAD</span>
+                                                <span style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{v.performance?.payload || v.payload || 'N/A'}</span>
+                                            </li>
+                                        </ul>
+
+                                        <div style={{ marginTop: 'clamp(2rem, 4vh, 4rem)' }}>
+                                            <div className="btn btn-outline" style={{
+                                                borderColor: 'var(--border-color)',
+                                                color: 'var(--text-primary)',
+                                                width: '100%',
+                                                borderRadius: '0',
+                                                fontSize: '0.75rem',
+                                                letterSpacing: '2px',
+                                                textTransform: 'uppercase',
+                                                textAlign: 'center',
+                                                padding: '1rem',
+                                                border: '1px solid var(--border-color)'
+                                            }}>Explore System</div>
+                                        </div>
+                                    </Link>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>
