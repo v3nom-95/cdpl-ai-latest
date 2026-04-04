@@ -417,18 +417,29 @@ const Navbar = () => {
                         box-shadow: none;
                         background: transparent;
                         padding: 0;
-                        margin-top: 0.5rem;
-                        display: flex;
+                        margin-top: 0; 
+                        display: flex !important;
                         flex-direction: column;
                         align-items: center;
                         gap: 0.5rem;
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                        pointer-events: auto !important;
+                        transform: none !important;
+                        border: none !important;
+                        width: 100%;
                     }
                     
                     .dropdown-content a {
-                        font-size: 0.9rem;
-                        color: #555;
+                        font-family: var(--font-mono);
+                        font-size: 0.8rem;
+                        color: #555 !important;
                         text-transform: uppercase;
                         letter-spacing: 1px;
+                        padding: 0.5rem 0;
+                        border: none;
+                        width: 100%;
+                        text-align: center;
                     }
 
                     /* Mega Menu Mobile Styles */
@@ -505,20 +516,41 @@ const Navbar = () => {
                         line-height: 1.2;
                     }
 
-                    /* Hide specific sub-links and descriptions on mobile to reduce clutter */
+                    /* Hide specific product links and sub-descriptions on mobile */
                     .mega-links {
                         display: none !important;
                     }
-                    
-                    /* Show corners on hover for desktop only */
-                    .nav-links .hacker-link:hover,
-                    .nav-links .hacker-link:hover .hacker-text {
-                         color: var(--accent-primary) !important;
+
+                    .mega-header {
+                        width: 100% !important;
+                        max-width: none !important;
+                        justify-content: center !important;
+                        padding: 0.5rem 0 !important;
+                        margin-bottom: 0 !important;
+                        border: none !important;
                     }
 
+                    .mega-header h4 {
+                        font-family: var(--font-mono);
+                        font-size: 0.8rem !important;
+                        color: #555 !important;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        font-weight: 500 !important;
+                    }
+                    
+                    /* Hide those divider/logo boxes in mobile view for cleaner list */
+                    .mega-header > div:first-child {
+                         display: none !important;
+                    }
+                    
+                    .view-all-link {
+                         display: none !important;
+                    }
+                    
                     .nav-btn {
                         width: 100%;
-                        margin-top: 1rem;
+                        margin-top: 1.5rem;
                     }
                 }
                 @media (max-width: 768px) {
