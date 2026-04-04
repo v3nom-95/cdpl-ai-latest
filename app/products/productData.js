@@ -579,7 +579,7 @@ export const products = {
                 ],
                 capabilities: ["Multi-Platform Sim", "FPV Mastery", "Mission Planning"],
                 applications: ["New Pilot Training", "Mission Profile Testing", "Advanced Acro Drills"],
-                performance: { endurance: "Unlimited", range: "N/A", payload: "Software" },
+                performance: { },
                 gallery: ["/partners/r1.png", "/partners/r2.jpeg", "/partners/r3.jpeg"]
             }
         ],

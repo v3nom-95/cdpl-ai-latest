@@ -97,8 +97,9 @@ const Navbar = () => {
     const pathname = usePathname();
     const isHomePage = pathname === '/';
     const isBardPage = pathname.startsWith('/products/bard');
+    const isRavenPage = pathname === '/products/raven/raven-trainer';
     const isCareersPage = pathname === '/careers';
-    const hasDarkHero = isHomePage || isBardPage || isCareersPage;
+    const hasDarkHero = isHomePage || isBardPage || isRavenPage || isCareersPage;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -193,7 +194,7 @@ const Navbar = () => {
                                         <span className="corner corner-br"></span>
                                     </Link>
                                     <div className="mega-links">
-                                        <Link href="/products/raven" onClick={handleMegaLinkClick} className="mega-link-item team-mas" style={{ flexDirection: 'row', alignItems: 'center', gap: '15px' }}>
+                                        <Link href="/products/raven/raven-trainer" onClick={handleMegaLinkClick} className="mega-link-item team-mas" style={{ flexDirection: 'row', alignItems: 'center', gap: '15px' }}>
                                             <div style={{ width: '44px', height: '44px', background: '#f8f9fa', border: '1px solid rgba(0, 57, 166, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, borderRadius: '8px', overflow: 'hidden' }}>
                                                 <img src="/partners/r1.png" alt="RAVEN" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             </div>

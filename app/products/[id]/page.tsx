@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, redirect } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
@@ -11,6 +11,18 @@ import Link from 'next/link';
 export default function ProductPage() {
     const params = useParams();
     const id = (params.id as string) || '';
+
+    // Handle single-variant products: redirect directly to the variant page
+    if (id === 'raven') {
+        redirect('/products/raven/raven-trainer');
+    }
+    if (id === 'aot') {
+        redirect('/products/aot/aot-7');
+    }
+    if (id === 'horizon-fpv') {
+        redirect('/products/horizon-fpv/160-fpv');
+    }
+
     const product = products[id as keyof typeof products] as any;
     const [activeImage, setActiveImage] = useState(0);
     const [scrollY, setScrollY] = useState(0);
@@ -210,11 +222,13 @@ export default function ProductPage() {
                                             {v.type}
                                         </p>
 
-                                        <ul className="spec-list" style={{ marginTop: '2rem' }}>
-                                            <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>ENDURANCE</span><span style={{ color: 'var(--text-primary)' }}>{v.performance.endurance}</span></li>
-                                            <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>RANGE</span><span style={{ color: 'var(--text-primary)' }}>{v.performance.range}</span></li>
-                                            <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>PAYLOAD</span><span style={{ color: 'var(--text-primary)' }}>{v.performance.payload}</span></li>
-                                        </ul>
+                                        {product.category !== 'SIMULATOR' && (
+                                            <ul className="spec-list" style={{ marginTop: '2rem' }}>
+                                                <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>ENDURANCE</span><span style={{ color: 'var(--text-primary)' }}>{v.performance.endurance}</span></li>
+                                                <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>RANGE</span><span style={{ color: 'var(--text-primary)' }}>{v.performance.range}</span></li>
+                                                <li style={{ borderBottomColor: '#f1f5f9' }}><span style={{ color: 'var(--text-tertiary)' }}>PAYLOAD</span><span style={{ color: 'var(--text-primary)' }}>{v.performance.payload}</span></li>
+                                            </ul>
+                                        )}
 
                                         <div style={{ marginTop: 'clamp(2rem, 4vh, 4rem)' }}>
                                             <div className="btn btn-outline" style={{
@@ -600,20 +614,22 @@ export default function ProductPage() {
                                             {v.type}
                                         </p>
 
-                                        <ul className="spec-list" style={{ marginTop: '2rem', listStyle: 'none', padding: 0 }}>
-                                            <li style={{ display: 'flex', justifyContent: 'space-between', padding: '0.8rem 0', borderBottom: '1px solid #f1f5f9' }}>
-                                                <span style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem', fontWeight: '600' }}>ENDURANCE</span>
-                                                <span style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{v.performance?.endurance || v.endurance || 'N/A'}</span>
-                                            </li>
-                                            <li style={{ display: 'flex', justifyContent: 'space-between', padding: '0.8rem 0', borderBottom: '1px solid #f1f5f9' }}>
-                                                <span style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem', fontWeight: '600' }}>RANGE</span>
-                                                <span style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{v.performance?.range || v.range || 'N/A'}</span>
-                                            </li>
-                                            <li style={{ display: 'flex', justifyContent: 'space-between', padding: '0.8rem 0', borderBottom: '1px solid #f1f5f9' }}>
-                                                <span style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem', fontWeight: '600' }}>PAYLOAD</span>
-                                                <span style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{v.performance?.payload || v.payload || 'N/A'}</span>
-                                            </li>
-                                        </ul>
+                                        {product.category !== 'SIMULATOR' && (
+                                            <ul className="spec-list" style={{ marginTop: '2rem', listStyle: 'none', padding: 0 }}>
+                                                <li style={{ display: 'flex', justifyContent: 'space-between', padding: '0.8rem 0', borderBottom: '1px solid #f1f5f9' }}>
+                                                    <span style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem', fontWeight: '600' }}>ENDURANCE</span>
+                                                    <span style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{v.performance?.endurance || v.endurance || 'N/A'}</span>
+                                                </li>
+                                                <li style={{ display: 'flex', justifyContent: 'space-between', padding: '0.8rem 0', borderBottom: '1px solid #f1f5f9' }}>
+                                                    <span style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem', fontWeight: '600' }}>RANGE</span>
+                                                    <span style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{v.performance?.range || v.range || 'N/A'}</span>
+                                                </li>
+                                                <li style={{ display: 'flex', justifyContent: 'space-between', padding: '0.8rem 0', borderBottom: '1px solid #f1f5f9' }}>
+                                                    <span style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem', fontWeight: '600' }}>PAYLOAD</span>
+                                                    <span style={{ color: 'var(--text-primary)', fontWeight: '700' }}>{v.performance?.payload || v.payload || 'N/A'}</span>
+                                                </li>
+                                            </ul>
+                                        )}
 
                                         <div style={{ marginTop: 'clamp(2rem, 4vh, 4rem)' }}>
                                             <div className="btn btn-outline" style={{

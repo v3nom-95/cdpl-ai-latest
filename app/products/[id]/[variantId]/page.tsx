@@ -63,17 +63,28 @@ export default function VariantPage() {
         <div className="product-detail-page bg-white" style={{ color: 'var(--text-primary)' }}>
             <Navbar />
 
-            {/* Tech Hero Section - Unified with Home Style */}
+            {/* Tech Hero Section - Unified with Home/BARD Style */}
             <section className="hero-section tech-hero-section" style={{ background: '#000', height: '100vh', position: 'relative', padding: 0 }}>
-                <video autoPlay loop muted playsInline className="hero-video">
-                    <source src="/partners/bardvideo.mp4" type="video/mp4" />
-                </video>
+                {productId === 'bard' ? (
+                    <video autoPlay loop muted playsInline className="hero-video">
+                        <source src="/partners/bardvideo.mp4" type="video/mp4" />
+                    </video>
+                ) : (
+                    <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundImage: `url(${variant.gallery[0]})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        opacity: 0.6
+                    }}></div>
+                )}
 
                 <div className="hero-overlay"></div>
 
                 {/* Persistent Back Option */}
                 <div style={{ position: 'absolute', top: '140px', left: 'clamp(1.5rem, 5vw, 4rem)', zIndex: 35, opacity: 1 }} className="back-link-container">
-                    <Link href={`/products/${productId}`} style={{
+                    <Link href={product.variants.length <= 1 ? "/mas" : `/products/${productId}`} style={{
                         color: 'rgba(255,255,255,0.7)',
                         textDecoration: 'none',
                         fontSize: '0.75rem',
@@ -88,7 +99,7 @@ export default function VariantPage() {
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M19 12H5M12 19l-7-7 7-7" />
                         </svg>
-                        BACK TO {product.name.toUpperCase()}
+                        {product.variants.length <= 1 ? "BACK TO PORTFOLIO" : `BACK TO ${product.name.toUpperCase()}`}
                     </Link>
                 </div>
 
@@ -136,6 +147,20 @@ export default function VariantPage() {
                 </div>
 
                 {/* Scroll indicator removed as per request */}
+            </section>
+
+            {/* Tech Specs Strip - Similar to BARD Page */}
+            <section className="reveal-section" style={{ background: '#000', padding: '80px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                <div className="container" style={{ textAlign: 'center' }}>
+                    <div className="tech-stats-grid-mobile" style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'clamp(2.5rem, 6vw, 8rem)' }}>
+                        {product.heroSpecs && product.heroSpecs.map((spec: any, i: number) => (
+                            <div key={i} className="tech-stat-block" style={{ textAlign: 'center' }}>
+                                <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)', letterSpacing: '2px', marginBottom: '0.5rem', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>{spec.label}</div>
+                                <div style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)', fontWeight: '900', color: '#fff' }}>{spec.value}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </section>
 
             {/* Main Content Grid */}
@@ -205,47 +230,50 @@ export default function VariantPage() {
                             borderRadius: '8px',
                             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.02)'
                         }}>
-                            <div className="performance-grid-mobile" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem 2rem', marginBottom: '4rem' }}>
-                                {/* Range */}
-                                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                                    <div style={{ color: 'var(--accent-primary)', opacity: 0.9 }}>
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                                            <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /><line x1="12" y1="2" x2="12" y2="22" /><line x1="2" y1="12" x2="22" y2="12" />
-                                        </svg>
+                            {/* Performance Grid - Hide for Simulators */}
+                            {product.category !== 'SIMULATOR' && (
+                                <div className="performance-grid-mobile" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem 2rem', marginBottom: '4rem' }}>
+                                    {/* Range */}
+                                    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                                        <div style={{ color: 'var(--accent-primary)', opacity: 0.9 }}>
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                                                <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /><line x1="12" y1="2" x2="12" y2="22" /><line x1="2" y1="12" x2="22" y2="12" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', marginBottom: '0.2rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Range</div>
+                                            <div style={{ fontSize: '1.8rem', fontWeight: '700', color: 'var(--text-primary)' }}>{variant.performance.range}</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', marginBottom: '0.2rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Range</div>
-                                        <div style={{ fontSize: '1.8rem', fontWeight: '700', color: 'var(--text-primary)' }}>{variant.performance.range}</div>
-                                    </div>
-                                </div>
 
-                                {/* Endurance */}
-                                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                                    <div style={{ color: 'var(--accent-primary)', opacity: 0.9 }}>
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-                                            <polyline points="12 7 12 12 15 15" />
-                                        </svg>
+                                    {/* Endurance */}
+                                    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                                        <div style={{ color: 'var(--accent-primary)', opacity: 0.9 }}>
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                                                <polyline points="12 7 12 12 15 15" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', marginBottom: '0.2rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Endurance</div>
+                                            <div style={{ fontSize: '1.8rem', fontWeight: '700', color: 'var(--text-primary)' }}>{variant.performance.endurance}</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', marginBottom: '0.2rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Endurance</div>
-                                        <div style={{ fontSize: '1.8rem', fontWeight: '700', color: 'var(--text-primary)' }}>{variant.performance.endurance}</div>
-                                    </div>
-                                </div>
 
-                                {/* Payload */}
-                                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                                    <div style={{ color: 'var(--accent-primary)', opacity: 0.9 }}>
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <div style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', marginBottom: '0.2rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Mission Payload</div>
-                                        <div style={{ fontSize: '1.8rem', fontWeight: '700', color: 'var(--text-primary)' }}>{variant.performance.payload}</div>
+                                    {/* Payload */}
+                                    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                                        <div style={{ color: 'var(--accent-primary)', opacity: 0.9 }}>
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', marginBottom: '0.2rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Mission Payload</div>
+                                            <div style={{ fontSize: '1.8rem', fontWeight: '700', color: 'var(--text-primary)' }}>{variant.performance.payload}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
 
                             <div style={{ marginTop: '2rem' }}>
                                 <ProductRequest productName={`${product.name} - ${variant.variant}`} />

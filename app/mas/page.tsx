@@ -119,7 +119,7 @@ export default function Mas() {
                                     tagline: 'SIMULATOR',
                                     desc: '',
                                     imgClass: 'product-image-sim',
-                                    link: '/products/raven'
+                                    link: '/products/raven/raven-trainer'
                                 },
                                 {
                                     id: 'bard',
