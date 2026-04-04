@@ -94,7 +94,7 @@ export default function Chatbot() {
         <div className="premium-chat-window">
             <div className="premium-header">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <img src="/partners/favicon.jpg" alt="CDPL Header Logo" style={{ width: '38px', height: '38px', borderRadius: '50%', objectFit: 'contain', padding: '2px', backgroundColor: '#fff', border: '1px solid #eaeaea' }} />
+                  <img src="/images/cdplfav.png" alt="CDPL Header Logo" style={{ width: '38px', height: '38px', borderRadius: '50%', objectFit: 'contain', padding: '2px', backgroundColor: 'transparent', border: 'none' }} />
                   <div>
                     <h3 className="premium-header-title">CDPL Assistant</h3>
                     <div className="premium-header-status">
@@ -112,7 +112,7 @@ export default function Chatbot() {
                     <div key={idx} className={`premium-msg-row ${msg.role}`}>
                         {msg.role === 'bot' && (
                             <div className="bot-avatar">
-                                <img src="/partners/favicon.jpg" alt="CDPL Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%', padding: '2px', backgroundColor: '#fff' }} />
+                                <img src="/images/cdplfav.png" alt="CDPL Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%', padding: '2px', backgroundColor: 'transparent' }} />
                             </div>
                         )}
                         <div className={`premium-msg-bubble ${msg.role}`}>
@@ -151,7 +151,7 @@ export default function Chatbot() {
                 {isTyping && (
                     <div className="premium-msg-row bot">
                         <div className="bot-avatar">
-                            <img src="/partners/favicon.jpg" alt="CDPL" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%', padding: '2px', backgroundColor: '#fff' }} />
+                            <img src="/images/cdplfav.png" alt="CDPL" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%', padding: '2px', backgroundColor: 'transparent' }} />
                         </div>
                         <div className="premium-msg-bubble bot typing-bubble">
                             <span className="typing-dot"></span>

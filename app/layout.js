@@ -21,9 +21,9 @@ export const metadata = {
     title: 'CDPL | Autonomous Tech Supremacy',
     description: 'Chakravyuh Dynamics (CDPL) - Pioneers in autonomous defense across Air (MAS), Sea (MMS), and Land (MGS) domains.',
     icons: {
-        icon: '/partners/favicon-transparent.png',
-        shortcut: '/partners/favicon-transparent.png',
-        apple: '/partners/favicon-transparent.png',
+        icon: '/images/cdplfav.png',
+        shortcut: '/images/cdplfav.png',
+        apple: '/images/cdplfav.png',
     },
     keywords: [
         'Sensor Fusion', 'Edge AI for Defense', 'Autonomous Mission Control',
