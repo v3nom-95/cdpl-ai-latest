@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 
+/* ─── City pins ─── */
 const LOCATIONS = [
     { name: 'Kanchipuram HQ', lat: 12.83, lon: 79.70, type: 'hq'  },
     { name: 'New Delhi',       lat: 28.61, lon: 77.21, type: 'ops' },
@@ -13,80 +14,137 @@ const LOCATIONS = [
     { name: 'Pune',            lat: 18.52, lon: 73.86, type: 'ops' },
 ];
 
+/* ─── State color palette (brand blues) ─── */
+const STATE_COLORS = [
+    '#0039A6','#0041b8','#0031a0','#003db0','#0035a0',
+    '#0028a0','#0045c0','#002d9a','#0039b0','#003090',
+    '#0042b5','#002ea5','#0038b8','#0033a8','#0040b0',
+    '#002ca0','#0044b8','#0030a5','#003cb0','#0029a0',
+    '#0043b5','#002fa8','#0037b0','#0034a5','#0041b0',
+    '#002ba0','#0046c0','#002ea0','#003ab0','#0032a5',
+];
+
 interface GlobeMapProps { height?: number; }
 
-export default function GlobeMap({ height = 620 }: GlobeMapProps) {
-    const svgRef  = useRef<SVGSVGElement>(null);
-    const [paths, setPaths]     = useState<{ d: string; state: string; i: number }[]>([]);
-    const [pins,  setPins]      = useState<{ x: number; y: number; name: string; type: string }[]>([]);
-    const [tooltip, setTooltip] = useState<{ name: string; x: number; y: number } | null>(null);
-    const [loaded, setLoaded]   = useState(false);
-    const [dims,   setDims]     = useState({ w: 800, h: height });
+/* ─── Initial view: India centered ─── */
+// Mercator: India center ~(78, 22). We'll compute the initial transform
+// so India fills the viewport on load.
+const INDIA_CENTER_LON = 78.9;
+const INDIA_CENTER_LAT = 22.5;
 
-    // Zoom / pan state
+export default function GlobeMap({ height = 620 }: GlobeMapProps) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const svgRef       = useRef<SVGSVGElement>(null);
+
+    const [dims,    setDims]    = useState({ w: 800, h: height });
+    const [worldPaths,  setWorldPaths]  = useState<{ d: string; id: string }[]>([]);
+    const [indiaPaths,  setIndiaPaths]  = useState<{ d: string; stateIdx: number }[]>([]);
+    const [pins,        setPins]        = useState<{ x: number; y: number; name: string; type: string }[]>([]);
+    const [loaded,      setLoaded]      = useState(false);
+    const [tooltip,     setTooltip]     = useState<{ name: string; x: number; y: number } | null>(null);
+
+    // Pan/zoom transform
     const [transform, setTransform] = useState({ x: 0, y: 0, k: 1 });
+
+    // Drag state (refs to avoid stale closures)
     const isDragging  = useRef(false);
     const lastMouse   = useRef({ x: 0, y: 0 });
     const lastPinch   = useRef<number | null>(null);
 
+    // Shared Mercator projection (world scale)
+    // We use a world-scale projection and compute initial transform to center India
+    const projRef = useRef<ReturnType<typeof geoMercator> | null>(null);
+
+    /* ── Measure container ── */
     useEffect(() => {
-        const el = svgRef.current;
+        const el = containerRef.current;
         if (!el) return;
-        const ro = new ResizeObserver(entries => {
-            const { width } = entries[0].contentRect;
-            setDims({ w: width, h: height });
+        const ro = new ResizeObserver(() => {
+            setDims({ w: el.clientWidth || 800, h: height });
         });
-        ro.observe(el.parentElement!);
-        setDims({ w: el.parentElement!.clientWidth || 800, h: height });
+        ro.observe(el);
+        setDims({ w: el.clientWidth || 800, h: height });
         return () => ro.disconnect();
     }, [height]);
 
+    /* ── Load GeoJSON data ── */
     useEffect(() => {
         if (!dims.w) return;
-        fetch('/india.geojson')
-            .then(r => r.json())
-            .then(geo => {
-                // Build projection fitted to the GeoJSON bounds
-                const proj = geoMercator().fitSize([dims.w, dims.h], geo);
-                const pathGen = geoPath(proj);
 
-                // Group districts by state for coloring
-                const stateIndex: Record<string, number> = {};
-                let si = 0;
-                geo.features.forEach((f: any) => {
-                    const s = f.properties.st_nm;
-                    if (!(s in stateIndex)) stateIndex[s] = si++;
-                });
+        const W = dims.w, H = dims.h;
 
-                const districtPaths = geo.features.map((f: any, i: number) => ({
+        // World-scale Mercator: scale so full world fits in W×H
+        const worldScale = W / (2 * Math.PI);
+        const proj = geoMercator()
+            .scale(worldScale)
+            .translate([W / 2, H / 2]);
+        projRef.current = proj;
+
+        const pathGen = geoPath(proj);
+
+        // Compute initial transform to center India and zoom in
+        // India center in projected coords
+        const [cx, cy] = proj([INDIA_CENTER_LON, INDIA_CENTER_LAT]) as [number, number];
+        // We want India to fill ~60% of the viewport height
+        // India spans roughly 30° lat → at worldScale that's about worldScale*30*π/180 px
+        const indiaHeightPx = worldScale * 30 * Math.PI / 180;
+        const targetK = (H * 0.65) / indiaHeightPx;
+        const initX = W / 2 - cx * targetK;
+        const initY = H / 2 - cy * targetK;
+        setTransform({ x: initX, y: initY, k: targetK });
+
+        Promise.all([
+            fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json').then(r => r.json()),
+            fetch('/india.geojson').then(r => r.json()),
+        ]).then(([worldTopo, indiaGeo]) => {
+            // World countries
+            import('topojson-client').then(topo => {
+                const countries = (topo.feature(worldTopo, worldTopo.objects.countries as any) as any).features;
+                const wPaths = countries.map((f: any) => ({
                     d: pathGen(f) || '',
-                    state: f.properties.st_nm,
-                    i: stateIndex[f.properties.st_nm],
+                    id: f.id,
                 }));
-
-                // Project city pins
-                const cityPins = LOCATIONS.map(loc => {
-                    const [x, y] = proj([loc.lon, loc.lat]) as [number, number];
-                    return { x, y, name: loc.name, type: loc.type };
-                });
-
-                setPaths(districtPaths);
-                setPins(cityPins);
-                setLoaded(true);
+                setWorldPaths(wPaths);
             });
+
+            // India districts — group by state for coloring
+            const stateIndex: Record<string, number> = {};
+            let si = 0;
+            indiaGeo.features.forEach((f: any) => {
+                const s = f.properties.st_nm;
+                if (!(s in stateIndex)) stateIndex[s] = si++;
+            });
+            const iPaths = indiaGeo.features.map((f: any) => ({
+                d: pathGen(f) || '',
+                stateIdx: stateIndex[f.properties.st_nm],
+            }));
+            setIndiaPaths(iPaths);
+
+            // City pins
+            const cityPins = LOCATIONS.map(loc => {
+                const [x, y] = proj([loc.lon, loc.lat]) as [number, number];
+                return { x, y, name: loc.name, type: loc.type };
+            });
+            setPins(cityPins);
+            setLoaded(true);
+        });
     }, [dims.w, dims.h]);
 
-    // Color palette — shades of blue matching brand
-    const stateColors = [
-        '#0039A6','#0041b8','#0031a0','#003db0','#0035a0',
-        '#0028a0','#0045c0','#002d9a','#0039b0','#003090',
-        '#0042b5','#002ea5','#0038b8','#0033a8','#0040b0',
-        '#002ca0','#0044b8','#0030a5','#003cb0','#0029a0',
-        '#0043b5','#002fa8','#0037b0','#0034a5','#0041b0',
-        '#002ba0','#0046c0','#002ea0','#003ab0','#0032a5',
-    ];
+    /* ── Zoom helper ── */
+    const zoom = useCallback((factor: number, pivotX?: number, pivotY?: number) => {
+        setTransform(t => {
+            const newK = Math.min(40, Math.max(0.5, t.k * factor));
+            const px = pivotX ?? dims.w / 2;
+            const py = pivotY ?? dims.h / 2;
+            return {
+                k: newK,
+                x: px - (px - t.x) * (newK / t.k),
+                y: py - (py - t.y) * (newK / t.k),
+            };
+        });
+    }, [dims.w, dims.h]);
 
-    // Drag handlers
+    /* ── Mouse handlers ── */
     const onMouseDown = (e: React.MouseEvent) => {
         isDragging.current = true;
         lastMouse.current  = { x: e.clientX, y: e.clientY };
@@ -102,22 +160,11 @@ export default function GlobeMap({ height = 620 }: GlobeMapProps) {
 
     const onWheel = (e: React.WheelEvent) => {
         e.preventDefault();
-        const factor = e.deltaY < 0 ? 1.12 : 0.89;
-        setTransform(t => {
-            const newK = Math.min(8, Math.max(0.5, t.k * factor));
-            // Zoom toward mouse position
-            const rect = svgRef.current!.getBoundingClientRect();
-            const mx = e.clientX - rect.left;
-            const my = e.clientY - rect.top;
-            return {
-                k: newK,
-                x: mx - (mx - t.x) * (newK / t.k),
-                y: my - (my - t.y) * (newK / t.k),
-            };
-        });
+        const rect = svgRef.current!.getBoundingClientRect();
+        zoom(e.deltaY < 0 ? 1.12 : 0.89, e.clientX - rect.left, e.clientY - rect.top);
     };
 
-    // Touch
+    /* ── Touch handlers ── */
     const onTouchStart = (e: React.TouchEvent) => {
         if (e.touches.length === 1) {
             isDragging.current = true;
@@ -139,34 +186,24 @@ export default function GlobeMap({ height = 620 }: GlobeMapProps) {
             const dx   = e.touches[0].clientX - e.touches[1].clientX;
             const dy   = e.touches[0].clientY - e.touches[1].clientY;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            const factor = dist / lastPinch.current;
-            setTransform(t => ({ ...t, k: Math.min(8, Math.max(0.5, t.k * factor)) }));
+            zoom(dist / lastPinch.current);
             lastPinch.current = dist;
         }
     };
     const onTouchEnd = () => { isDragging.current = false; lastPinch.current = null; };
 
-    const zoom = (delta: number) => {
-        setTransform(t => {
-            const newK = Math.min(8, Math.max(0.5, t.k * delta));
-            const cx = dims.w / 2, cy = dims.h / 2;
-            return {
-                k: newK,
-                x: cx - (cx - t.x) * (newK / t.k),
-                y: cy - (cy - t.y) * (newK / t.k),
-            };
-        });
-    };
+    const strokeW = Math.max(0.3, 0.5 / transform.k);
+    const pinScale = 1 / transform.k;
 
     return (
-        <div style={{ position: 'relative', width: '100%', background: '#f0f4ff', border: '1px solid rgba(0,57,166,0.1)', overflow: 'hidden' }}>
+        <div ref={containerRef} style={{ position: 'relative', width: '100%', background: '#e8f0ff', border: '1px solid rgba(0,57,166,0.1)', overflow: 'hidden' }}>
 
             {/* Loading */}
             {!loaded && (
                 <div style={{
                     position: 'absolute', inset: 0, zIndex: 20,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    background: '#f0f4ff', flexDirection: 'column', gap: '1rem',
+                    background: '#e8f0ff', flexDirection: 'column', gap: '1rem',
                     height: `${height}px`,
                 }}>
                     <div style={{
@@ -182,13 +219,13 @@ export default function GlobeMap({ height = 620 }: GlobeMapProps) {
                 </div>
             )}
 
-            {/* Zoom controls */}
+            {/* Zoom buttons */}
             <div style={{
                 position: 'absolute', right: '1.2rem', top: '50%', transform: 'translateY(-50%)',
                 zIndex: 10, display: 'flex', flexDirection: 'column', gap: '4px',
             }}>
-                {[{ label: '+', d: 1.25 }, { label: '−', d: 0.8 }].map(btn => (
-                    <button key={btn.label} onClick={() => zoom(btn.d)} style={{
+                {[{ label: '+', f: 1.3 }, { label: '−', f: 0.77 }].map(btn => (
+                    <button key={btn.label} onClick={() => zoom(btn.f)} style={{
                         width: '34px', height: '34px', background: '#fff',
                         border: '1px solid rgba(0,57,166,0.2)', color: 'var(--accent-primary)',
                         fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer',
@@ -200,14 +237,36 @@ export default function GlobeMap({ height = 620 }: GlobeMapProps) {
                         onMouseLeave={e => (e.currentTarget.style.background = '#fff')}
                     >{btn.label}</button>
                 ))}
+                {/* Reset to India view */}
+                <button onClick={() => {
+                    if (!projRef.current) return;
+                    const W = dims.w, H = dims.h;
+                    const worldScale = W / (2 * Math.PI);
+                    const [cx, cy] = projRef.current([INDIA_CENTER_LON, INDIA_CENTER_LAT]) as [number, number];
+                    const indiaHeightPx = worldScale * 30 * Math.PI / 180;
+                    const targetK = (H * 0.65) / indiaHeightPx;
+                    setTransform({ x: W / 2 - cx * targetK, y: H / 2 - cy * targetK, k: targetK });
+                }} style={{
+                    width: '34px', height: '34px', background: '#fff',
+                    border: '1px solid rgba(0,57,166,0.2)', color: 'var(--accent-primary)',
+                    fontSize: '0.6rem', fontWeight: '800', cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    lineHeight: 1, boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                    letterSpacing: '0.5px', transition: 'background 0.2s',
+                    marginTop: '8px',
+                }}
+                    onMouseEnter={e => (e.currentTarget.style.background = '#e8eeff')}
+                    onMouseLeave={e => (e.currentTarget.style.background = '#fff')}
+                    title="Reset to India"
+                >IN</button>
             </div>
 
             {/* HUD corners */}
             {([
-                { top: '0.8rem', left: '0.8rem',  bt: true, bl: true  },
-                { top: '0.8rem', right: '0.8rem', bt: true, br: true  },
-                { bottom: '0.8rem', left: '0.8rem',  bb: true, bl: true },
-                { bottom: '0.8rem', right: '0.8rem', bb: true, br: true },
+                { top: '0.8rem',    left: '0.8rem',  bt: true, bl: true  },
+                { top: '0.8rem',    right: '0.8rem', bt: true, br: true  },
+                { bottom: '0.8rem', left: '0.8rem',  bb: true, bl: true  },
+                { bottom: '0.8rem', right: '0.8rem', bb: true, br: true  },
             ] as any[]).map((c, i) => (
                 <div key={i} style={{
                     position: 'absolute', zIndex: 10, pointerEvents: 'none',
@@ -220,7 +279,7 @@ export default function GlobeMap({ height = 620 }: GlobeMapProps) {
                 }} />
             ))}
 
-            {/* SVG Map */}
+            {/* SVG */}
             <svg
                 ref={svgRef}
                 width={dims.w}
@@ -236,46 +295,54 @@ export default function GlobeMap({ height = 620 }: GlobeMapProps) {
                 onTouchEnd={onTouchEnd}
             >
                 <g transform={`translate(${transform.x},${transform.y}) scale(${transform.k})`}>
-                    {/* Districts */}
-                    {paths.map((p, idx) => (
+
+                    {/* ── World countries (base layer) ── */}
+                    {worldPaths.map((p, i) => (
                         <path
-                            key={idx}
+                            key={i}
                             d={p.d}
-                            fill={stateColors[p.i % stateColors.length]}
-                            stroke="#88bbff"
-                            strokeWidth={0.5 / transform.k}
-                            opacity={0.92}
+                            fill={p.id === '356' ? 'none' : '#0a1f5c'}  /* India = transparent (overridden by district layer) */
+                            stroke="#162d7a"
+                            strokeWidth={strokeW}
+                            opacity={0.85}
                         />
                     ))}
 
-                    {/* City pins */}
-                    {pins.map((pin, idx) => {
+                    {/* ── India district layer (detailed, on top) ── */}
+                    {indiaPaths.map((p, i) => (
+                        <path
+                            key={i}
+                            d={p.d}
+                            fill={STATE_COLORS[p.stateIdx % STATE_COLORS.length]}
+                            stroke="#88bbff"
+                            strokeWidth={strokeW * 0.8}
+                            opacity={0.95}
+                        />
+                    ))}
+
+                    {/* ── City pins ── */}
+                    {pins.map((pin, i) => {
                         const isHQ = pin.type === 'hq';
-                        const r    = (isHQ ? 7 : 5) / transform.k;
-                        const rOuter = (isHQ ? 13 : 10) / transform.k;
+                        const r    = (isHQ ? 6 : 4.5) * pinScale;
+                        const rOut = (isHQ ? 12 : 9) * pinScale;
                         return (
-                            <g key={idx}
-                                style={{ cursor: 'pointer' }}
+                            <g key={i} style={{ cursor: 'pointer' }}
                                 onMouseEnter={e => {
                                     const rect = svgRef.current!.getBoundingClientRect();
                                     setTooltip({ name: pin.name, x: e.clientX - rect.left, y: e.clientY - rect.top });
                                 }}
                                 onMouseLeave={() => setTooltip(null)}
                             >
-                                {/* Outer ring */}
-                                <circle
-                                    cx={pin.x} cy={pin.y} r={rOuter}
+                                <circle cx={pin.x} cy={pin.y} r={rOut}
                                     fill="none"
                                     stroke={isHQ ? '#0055ff' : '#CC5D29'}
-                                    strokeWidth={1.5 / transform.k}
+                                    strokeWidth={1.5 * pinScale}
                                     opacity={0.5}
                                 />
-                                {/* Core dot */}
-                                <circle
-                                    cx={pin.x} cy={pin.y} r={r}
+                                <circle cx={pin.x} cy={pin.y} r={r}
                                     fill={isHQ ? '#0055ff' : '#CC5D29'}
                                     stroke="#fff"
-                                    strokeWidth={1.5 / transform.k}
+                                    strokeWidth={1.5 * pinScale}
                                 />
                             </g>
                         );
