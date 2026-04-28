@@ -5,13 +5,16 @@ import { geoMercator, geoPath } from 'd3-geo';
 
 /* ─── City pins ─── */
 const LOCATIONS = [
-    { name: 'Kanchipuram HQ', lat: 12.83, lon: 79.70, type: 'hq'  },
-    { name: 'New Delhi',       lat: 28.61, lon: 77.21, type: 'ops' },
-    { name: 'Mumbai',          lat: 19.08, lon: 72.88, type: 'ops' },
-    { name: 'Bengaluru',       lat: 12.97, lon: 77.59, type: 'ops' },
-    { name: 'Hyderabad',       lat: 17.39, lon: 78.49, type: 'ops' },
-    { name: 'Chennai',         lat: 13.08, lon: 80.27, type: 'ops' },
-    { name: 'Pune',            lat: 18.52, lon: 73.86, type: 'ops' },
+    { name: 'Jammu',              lat: 32.73,  lon: 74.87,  type: 'ops' },
+    { name: 'Maharashtra',        lat: 19.08,  lon: 75.72,  type: 'ops' },
+    { name: 'Arunachal Pradesh',  lat: 27.10,  lon: 93.62,  type: 'ops' },
+    { name: 'Himachal Pradesh',   lat: 31.10,  lon: 77.17,  type: 'ops' },
+    { name: 'Uttarakhand',        lat: 30.07,  lon: 79.02,  type: 'ops' },
+    { name: 'Punjab',             lat: 31.15,  lon: 75.34,  type: 'ops' },
+    { name: 'Uttar Pradesh',      lat: 26.85,  lon: 80.95,  type: 'ops' },
+    { name: 'Tripura',            lat: 23.94,  lon: 91.99,  type: 'ops' },
+    { name: 'Odisha',             lat: 20.29,  lon: 85.82,  type: 'ops' },
+    { name: 'Telangana',          lat: 17.39,  lon: 78.49,  type: 'ops' },
 ];
 
 /* ─── State color palette (brand blues) ─── */
@@ -320,11 +323,10 @@ export default function GlobeMap({ height = 620 }: GlobeMapProps) {
                         />
                     ))}
 
-                    {/* ── City pins ── */}
+                    {/* ── City pins — masicon.png ── */}
                     {pins.map((pin, i) => {
                         const isHQ = pin.type === 'hq';
-                        const r    = (isHQ ? 6 : 4.5) * pinScale;
-                        const rOut = (isHQ ? 12 : 9) * pinScale;
+                        const size = (isHQ ? 28 : 22) * pinScale;
                         return (
                             <g key={i} style={{ cursor: 'pointer' }}
                                 onMouseEnter={e => {
@@ -333,16 +335,21 @@ export default function GlobeMap({ height = 620 }: GlobeMapProps) {
                                 }}
                                 onMouseLeave={() => setTooltip(null)}
                             >
-                                <circle cx={pin.x} cy={pin.y} r={rOut}
-                                    fill="none"
-                                    stroke={isHQ ? '#0055ff' : '#CC5D29'}
-                                    strokeWidth={1.5 * pinScale}
-                                    opacity={0.5}
+                                {/* Drop shadow circle */}
+                                <circle
+                                    cx={pin.x} cy={pin.y + size * 0.55}
+                                    r={size * 0.28}
+                                    fill="rgba(0,0,0,0.25)"
+                                    style={{ filter: 'blur(2px)' }}
                                 />
-                                <circle cx={pin.x} cy={pin.y} r={r}
-                                    fill={isHQ ? '#0055ff' : '#CC5D29'}
-                                    stroke="#fff"
-                                    strokeWidth={1.5 * pinScale}
+                                {/* masicon image centered on pin point */}
+                                <image
+                                    href="/maspointer.png"
+                                    x={pin.x - size / 2}
+                                    y={pin.y - size}
+                                    width={size}
+                                    height={size}
+                                    style={{ filter: isHQ ? 'drop-shadow(0 0 4px #0055ff)' : 'none' }}
                                 />
                             </g>
                         );

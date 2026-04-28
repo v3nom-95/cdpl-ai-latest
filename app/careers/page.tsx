@@ -6,34 +6,10 @@ import Footer from '../../components/Footer';
 import Link from 'next/link';
 import GlobeMap from '../../components/GlobeMap';
 
-/* ─── Animated counter hook ─── */
-function useCounter(target: number, duration = 1800, start = false) {
-    const [count, setCount] = useState(0);
-    useEffect(() => {
-        if (!start) return;
-        let startTime: number | null = null;
-        const step = (timestamp: number) => {
-            if (!startTime) startTime = timestamp;
-            const progress = Math.min((timestamp - startTime) / duration, 1);
-            setCount(Math.floor(progress * target));
-            if (progress < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-    }, [start, target, duration]);
-    return count;
-}
-
 export default function CareersPage() {
     const [heroVisible, setHeroVisible] = useState(false);
-    const [statsVisible, setStatsVisible] = useState(false);
     const [activePillar, setActivePillar] = useState(0);
-    const statsRef = useRef<HTMLDivElement>(null);
     const pillarTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-    const c1 = useCounter(2, 1200, statsVisible);
-    const c2 = useCounter(100, 1600, statsVisible);
-    const c3 = useCounter(12, 1400, statsVisible);
-    const c4 = useCounter(3, 1000, statsVisible);
 
     useEffect(() => {
         // Hero entrance
@@ -44,13 +20,11 @@ export default function CareersPage() {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    if (entry.target === statsRef.current) setStatsVisible(true);
                 }
             });
         }, { threshold: 0.12 });
 
         document.querySelectorAll('.reveal-section').forEach(s => observer.observe(s));
-        if (statsRef.current) observer.observe(statsRef.current);
 
         // Auto-cycle pillars
         pillarTimerRef.current = setInterval(() => {
@@ -244,27 +218,6 @@ export default function CareersPage() {
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '3px', color: 'rgba(255,255,255,0.5)', writingMode: 'vertical-rl' }}>SCROLL</span>
                 </div>
             </section>
-
-            {/* ── STATS BAR ── */}
-            <div ref={statsRef} style={{ background: '#000', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', padding: '3rem 2rem' }}>
-                    {[
-                        { val: c1, suffix: '+', label: 'Years R&D' },
-                        { val: c2, suffix: '%', label: 'Indigenous Tech' },
-                        { val: c3, suffix: '+', label: 'Months to First Flight' },
-                        { val: c4, suffix: '', label: 'Active Platforms' },
-                    ].map((s, i) => (
-                        <div key={i} style={{ textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none', padding: '1rem' }}>
-                            <div style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: '900', color: '#fff', lineHeight: 1 }}>
-                                {s.val}{s.suffix}
-                            </div>
-                            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '2px', marginTop: '0.5rem', textTransform: 'uppercase' }}>
-                                {s.label}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
 
             {/* ── HOW WE WORK ── */}
             <section className="reveal-section" style={{ padding: 'clamp(5rem, 10vh, 9rem) 0', background: '#fff' }}>
