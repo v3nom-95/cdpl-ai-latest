@@ -1,9 +1,7 @@
-'use client';
-
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import ProductCategories from '../components/ProductCategories';
-import DeploymentMap from '../components/DeploymentMap';
+import GlobeMap from '../components/GlobeMap';
 import Footer from '../components/Footer';
 import News from '../components/News';
 import PhotoGallery from '../components/PhotoGallery';
@@ -17,7 +15,8 @@ export default function Home() {
             <ProductCategories />
             <section style={{ padding: '80px 0', background: '#fff' }}>
                 <div className="container">
-                    <DeploymentMap />
+                    <h2 className="section-title" style={{ marginBottom: '0.5rem' }}>Our Reach</h2>
+                    <GlobeMap height={620} showTitle={false} />
                 </div>
             </section>
             <PhotoGallery />

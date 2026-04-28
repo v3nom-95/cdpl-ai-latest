@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
+import GlobeMap from '../../components/GlobeMap';
 
 /* ─── Animated counter hook ─── */
 function useCounter(target: number, duration = 1800, start = false) {
@@ -319,7 +320,6 @@ export default function CareersPage() {
                                     fontSize: '0.9rem',
                                     lineHeight: '1.7',
                                     color: activePillar === i ? 'rgba(255,255,255,0.6)' : 'var(--text-secondary)',
-                                    transition: 'color 0.4s ease',
                                     maxHeight: activePillar === i ? '200px' : '0px',
                                     overflow: 'hidden',
                                     opacity: activePillar === i ? 1 : 0,
@@ -362,6 +362,14 @@ export default function CareersPage() {
                             </div>
                         ))}
                     </div>
+                </div>
+            </section>
+
+            {/* ── GLOBE ── */}
+            <section style={{ background: '#fff', padding: '80px 0' }}>
+                <div className="container">
+                    <h2 className="section-title" style={{ marginBottom: '0.5rem' }}>Where We Operate</h2>
+                    <GlobeMap height={580} showTitle={false} />
                 </div>
             </section>
 
