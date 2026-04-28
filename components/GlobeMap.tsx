@@ -13,7 +13,7 @@ const LOCATIONS = [
     { name: 'Punjab',             lat: 31.15,  lon: 75.34,  type: 'ops' },
     { name: 'Uttar Pradesh',      lat: 26.85,  lon: 80.95,  type: 'ops' },
     { name: 'Tripura',            lat: 23.94,  lon: 91.99,  type: 'ops' },
-    { name: 'Odisha',             lat: 20.29,  lon: 85.82,  type: 'ops' },
+    { name: 'Chennai',            lat: 13.08,  lon: 80.27,  type: 'ops' },
     { name: 'Telangana',          lat: 17.39,  lon: 78.49,  type: 'ops' },
 ];
 
