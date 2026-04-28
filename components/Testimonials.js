@@ -24,14 +24,13 @@ export default function Testimonials() {
   return (
     <section className="testimonials-section bg-dark-soft">
       <div className="container">
-        <h2 className="section-title">VOICES FROM THE FIELD</h2>
+        <h2 className="section-title">Voices From The Field</h2>
         <div className="testimonials-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem', marginTop: '4rem' }}>
           {testimonials.map((t, i) => (
             <div key={i} className="testimonial-card">
               <span className="quote-mark">"</span>
               <p className="feedback-text">{t.feedback}</p>
               <div className="client-info">
-                <span className="client-name">{t.name}</span>
                 {t.organization && <span className="client-org">{t.organization}</span>}
               </div>
             </div>

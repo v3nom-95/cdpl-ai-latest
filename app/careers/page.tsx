@@ -1,237 +1,455 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
 
+/* ─── Animated counter hook ─── */
+function useCounter(target: number, duration = 1800, start = false) {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        if (!start) return;
+        let startTime: number | null = null;
+        const step = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            setCount(Math.floor(progress * target));
+            if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+    }, [start, target, duration]);
+    return count;
+}
+
 export default function CareersPage() {
-    const [isVisible, setIsVisible] = useState(false);
+    const [heroVisible, setHeroVisible] = useState(false);
+    const [statsVisible, setStatsVisible] = useState(false);
+    const [activePillar, setActivePillar] = useState(0);
+    const statsRef = useRef<HTMLDivElement>(null);
+    const pillarTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    const c1 = useCounter(2, 1200, statsVisible);
+    const c2 = useCounter(100, 1600, statsVisible);
+    const c3 = useCounter(12, 1400, statsVisible);
+    const c4 = useCounter(3, 1000, statsVisible);
 
     useEffect(() => {
-        setIsVisible(true);
-        
+        // Hero entrance
+        const t = setTimeout(() => setHeroVisible(true), 100);
+
+        // Scroll reveal
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    if (entry.target === statsRef.current) setStatsVisible(true);
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.12 });
 
-        document.querySelectorAll('.reveal-section').forEach(section => {
-            observer.observe(section);
-        });
+        document.querySelectorAll('.reveal-section').forEach(s => observer.observe(s));
+        if (statsRef.current) observer.observe(statsRef.current);
 
-        return () => observer.disconnect();
+        // Auto-cycle pillars
+        pillarTimerRef.current = setInterval(() => {
+            setActivePillar(p => (p + 1) % 4);
+        }, 3000);
+
+        return () => {
+            clearTimeout(t);
+            observer.disconnect();
+            if (pillarTimerRef.current) clearInterval(pillarTimerRef.current);
+        };
     }, []);
+
+    const pillars = [
+        {
+            num: '01',
+            title: 'AUTONOMY',
+            desc: 'We build systems that think, adapt, and act — reducing human risk on the battlefield through intelligent autonomy.',
+        },
+        {
+            num: '02',
+            title: 'SPEED',
+            desc: 'From concept to flight test in weeks. We move fast, iterate relentlessly, and ship mission-ready hardware.',
+        },
+        {
+            num: '03',
+            title: 'PRECISION',
+            desc: 'Every gram, every line of code, every weld is optimised for the mission. Precision is non-negotiable.',
+        },
+        {
+            num: '04',
+            title: 'IMPACT',
+            desc: 'Your work protects soldiers and secures India\'s sovereignty. The stakes are real — so is the purpose.',
+        },
+    ];
+
+    const values = [
+        { title: 'Technical Excellence', desc: 'We hold engineering to the highest standard — no shortcuts, no compromises.' },
+        { title: 'Ownership', desc: 'You own outcomes, not just tasks. Every team member drives results end-to-end.' },
+        { title: 'Radical Transparency', desc: 'We share hard truths openly. Honest feedback accelerates growth.' },
+        { title: 'Mission First', desc: 'Every decision is filtered through one question: does this serve the mission?' },
+        { title: 'Continuous Learning', desc: 'We treat failure as data. Curiosity and iteration are core competencies.' },
+        { title: 'National Commitment', desc: 'We are building India\'s sovereign defense capability — that responsibility drives us.' },
+    ];
 
     const jobOpenings = [
         {
             id: 1,
-            title: "UAV Systems Engineer",
-            division: "MAS (Aerospace)",
-            location: "Kanchipuram, TN",
-            type: "Full-Time",
-            description: "Lead the design and integration of next-generation flight control systems for our VTOL and STOL platforms."
+            title: 'UAV Systems Engineer',
+            division: 'MAS · Aerospace',
+            location: 'Kanchipuram, TN',
+            type: 'Full-Time',
+            desc: 'Lead design and integration of next-generation flight control systems for VTOL and STOL platforms.',
         },
         {
             id: 2,
-            title: "Embedded Systems Developer",
-            division: "Tactical Computing",
-            location: "Kanchipuram, TN",
-            type: "Full-Time",
-            description: "Develop low-latency, mission-critical firmware for autonomous navigation and edge-AI processing."
+            title: 'Embedded Systems Developer',
+            division: 'Tactical Computing',
+            location: 'Kanchipuram, TN',
+            type: 'Full-Time',
+            desc: 'Develop low-latency, mission-critical firmware for autonomous navigation and edge-AI processing.',
         },
         {
             id: 3,
-            title: "Composite Structures Specialist",
-            division: "Manufacturing",
-            location: "Kanchipuram, TN",
-            type: "Full-Time",
-            description: "Work with advanced carbon fiber and composite materials to optimize airframe strength and weight ratio."
+            title: 'Composite Structures Specialist',
+            division: 'Manufacturing',
+            location: 'Kanchipuram, TN',
+            type: 'Full-Time',
+            desc: 'Work with advanced carbon fibre and composite materials to optimise airframe strength-to-weight ratio.',
         },
         {
             id: 4,
-            title: "Ground Systems Architect",
-            division: "MGS (Ground)",
-            location: "Remote / Hybrid",
-            type: "Full-Time",
-            description: "Design autonomous navigation stacks for tactical ground vehicles and robotics."
-        }
+            title: 'Ground Systems Architect',
+            division: 'MGS · Ground',
+            location: 'Remote / Hybrid',
+            type: 'Full-Time',
+            desc: 'Design autonomous navigation stacks for tactical ground vehicles and robotic combat systems.',
+        },
     ];
 
     return (
-        <div className="careers-page bg-white">
+        <div className="careers-page" style={{ background: '#fff', color: 'var(--text-primary)', overflowX: 'hidden' }}>
             <Navbar />
 
-            {/* Hero Section */}
-            <section className="hero-section" style={{ 
-                height: '75vh', 
-                background: '#000', 
-                position: 'relative', 
-                display: 'flex', 
-                alignItems: 'center', 
+            {/* ── HERO ── */}
+            <section style={{
+                height: '100vh',
+                background: '#000',
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'flex-end',
                 overflow: 'hidden',
-                paddingTop: '100px'
             }}>
-                <video autoPlay loop muted playsInline className="hero-video" style={{ opacity: 0.5 }}>
+                <video autoPlay loop muted playsInline style={{
+                    position: 'absolute', inset: 0,
+                    width: '100%', height: '100%',
+                    objectFit: 'cover', opacity: 0.45,
+                }}>
                     <source src="/partners/bardvideo.mp4" type="video/mp4" />
                 </video>
-                <div className="hero-overlay" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.4))' }}></div>
-                
-                <div className="container" style={{ position: 'relative', zIndex: 10 }}>
-                    <div style={{ maxWidth: '900px' }}>
-                        <span style={{ 
-                            color: '#0039A6', 
-                            fontFamily: 'var(--font-mono)', 
-                            letterSpacing: '4px', 
-                            fontSize: '0.9rem',
-                            display: 'block',
-                            marginBottom: '1.5rem',
+
+                {/* gradient overlay */}
+                <div style={{
+                    position: 'absolute', inset: 0,
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)',
+                    zIndex: 2,
+                }} />
+
+                {/* scan-line texture */}
+                <div style={{
+                    position: 'absolute', inset: 0, zIndex: 3,
+                    backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px)',
+                    pointerEvents: 'none',
+                }} />
+
+                <div className="container" style={{ position: 'relative', zIndex: 10, paddingBottom: 'clamp(3rem, 8vh, 6rem)', width: '100%' }}>
+                    {/* tag */}
+                    <div style={{
+                        opacity: heroVisible ? 1 : 0,
+                        transform: heroVisible ? 'translateY(0)' : 'translateY(20px)',
+                        transition: 'all 0.8s cubic-bezier(0.16,1,0.3,1) 0.1s',
+                        display: 'flex', alignItems: 'center', gap: '1rem',
+                        marginBottom: '1.5rem',
+                    }}>
+                        <span style={{
+                            color: 'var(--accent-primary)',
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.75rem',
+                            letterSpacing: '4px',
+                            fontWeight: '800',
                             textTransform: 'uppercase',
-                            fontWeight: '800'
                         }}>[ RECRUITMENT_PHASE_ACTIVE ]</span>
-                        <h1 style={{ 
-                            fontSize: 'clamp(2.5rem, 8vw, 5.5rem)', 
-                            color: '#fff', 
-                            lineHeight: '1', 
-                            marginBottom: '2rem',
-                            fontWeight: '900',
-                            letterSpacing: '-2px'
-                        }}>BUILD THE <span style={{ color: '#0055ff', textShadow: '0 0 30px rgba(0, 85, 255, 0.4)' }}>DEFENSE</span> OF TOMORROW.</h1>
-                        <p style={{ 
-                            fontSize: '1.25rem', 
-                            color: 'rgba(255,255,255,0.8)', 
-                            maxWidth: '600px',
-                            lineHeight: '1.6'
-                        }}>
-                            We are looking for engineers, designers, and visionaries to join our mission of pushing the boundaries of autonomous systems and national security.
-                        </p>
+                        <div style={{ flex: 1, height: '1px', background: 'rgba(0,57,166,0.4)', maxWidth: '120px' }} />
                     </div>
+
+                    {/* headline */}
+                    <h1 style={{
+                        fontSize: 'clamp(2.8rem, 8vw, 7rem)',
+                        color: '#fff',
+                        lineHeight: '0.95',
+                        fontWeight: '900',
+                        letterSpacing: '-3px',
+                        textTransform: 'uppercase',
+                        marginBottom: '2rem',
+                        opacity: heroVisible ? 1 : 0,
+                        transform: heroVisible ? 'translateY(0)' : 'translateY(40px)',
+                        transition: 'all 1s cubic-bezier(0.16,1,0.3,1) 0.25s',
+                    }}>
+                        BUILD THE<br />
+                        <span style={{ color: 'var(--accent-primary)' }}>DEFENSE</span><br />
+                        OF TOMORROW.
+                    </h1>
+
+                    {/* sub */}
+                    <p style={{
+                        fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
+                        color: 'rgba(255,255,255,0.65)',
+                        maxWidth: '520px',
+                        lineHeight: '1.7',
+                        marginBottom: '3rem',
+                        opacity: heroVisible ? 1 : 0,
+                        transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
+                        transition: 'all 1s cubic-bezier(0.16,1,0.3,1) 0.4s',
+                    }}>
+                        We are looking for engineers, designers, and visionaries to push the boundaries of autonomous systems and national security.
+                    </p>
+
+                    <div style={{
+                        display: 'flex', gap: '1.5rem', flexWrap: 'wrap',
+                        opacity: heroVisible ? 1 : 0,
+                        transform: heroVisible ? 'translateY(0)' : 'translateY(20px)',
+                        transition: 'all 1s cubic-bezier(0.16,1,0.3,1) 0.55s',
+                    }}>
+                        <a href="#openings" className="btn btn-primary" style={{ fontSize: '0.85rem', padding: '1rem 2.5rem' }}>
+                            EXPLORE OPENINGS
+                        </a>
+                        <a href="mailto:careers@cdpl.co.in" className="btn btn-outline" style={{ fontSize: '0.85rem', padding: '1rem 2.5rem', borderColor: 'rgba(255,255,255,0.3)', color: '#fff' }}>
+                            GENERAL APPLICATION
+                        </a>
+                    </div>
+                </div>
+
+                {/* scroll hint */}
+                <div style={{
+                    position: 'absolute', bottom: '2rem', right: '3rem', zIndex: 10,
+                    opacity: heroVisible ? 0.5 : 0,
+                    transition: 'opacity 1s ease 1.2s',
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
+                }}>
+                    <div style={{ width: '1px', height: '60px', background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.6))', animation: 'scrollLine 2s ease-in-out infinite' }} />
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '3px', color: 'rgba(255,255,255,0.5)', writingMode: 'vertical-rl' }}>SCROLL</span>
                 </div>
             </section>
 
-            {/* Why CDPL Section */}
-            <section className="reveal-section" style={{ padding: '10rem 0', background: '#fcfcfc' }}>
+            {/* ── STATS BAR ── */}
+            <div ref={statsRef} style={{ background: '#000', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', padding: '3rem 2rem' }}>
+                    {[
+                        { val: c1, suffix: '+', label: 'Years R&D' },
+                        { val: c2, suffix: '%', label: 'Indigenous Tech' },
+                        { val: c3, suffix: '+', label: 'Months to First Flight' },
+                        { val: c4, suffix: '', label: 'Active Platforms' },
+                    ].map((s, i) => (
+                        <div key={i} style={{ textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none', padding: '1rem' }}>
+                            <div style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: '900', color: '#fff', lineHeight: 1 }}>
+                                {s.val}{s.suffix}
+                            </div>
+                            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '2px', marginTop: '0.5rem', textTransform: 'uppercase' }}>
+                                {s.label}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* ── HOW WE WORK ── */}
+            <section className="reveal-section" style={{ padding: 'clamp(5rem, 10vh, 9rem) 0', background: '#fff' }}>
                 <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
-                        <div>
-                            <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>WHY JOIN CDPL?</h2>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '2.5rem', lineHeight: '1.7' }}>
-                                At Chakravyuh Dynamics, you aren't just building products; you're building solutions for critical missions. We foster a culture of rapid innovation, technical excellence, and deep engineering honesty.
-                            </p>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-                                <div>
-                                    <h4 style={{ color: 'var(--accent-primary)', marginBottom: '0.8rem', fontSize: '1rem' }}>RAPID PROTOTYPING</h4>
-                                    <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>From design to flight test in weeks, not months. We value speed and iteration.</p>
-                                </div>
-                                <div>
-                                    <h4 style={{ color: 'var(--accent-primary)', marginBottom: '0.8rem', fontSize: '1rem' }}>MISSION FIRST</h4>
-                                    <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Every line of code and every rivet is dedicated to the success of the mission.</p>
-                                </div>
+                    <div style={{ marginBottom: '4rem' }}>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '4px', color: 'var(--accent-primary)', fontWeight: '800' }}>HOW WE WORK</span>
+                        <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: '900', marginTop: '1rem', letterSpacing: '-1px' }}>WE ARE BUILT DIFFERENT.</h2>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0', border: '1px solid var(--border-color)' }} className="pillars-grid">
+                        {pillars.map((p, i) => (
+                            <div
+                                key={i}
+                                onClick={() => {
+                                    setActivePillar(i);
+                                    if (pillarTimerRef.current) clearInterval(pillarTimerRef.current);
+                                }}
+                                style={{
+                                    padding: 'clamp(2rem, 4vw, 3rem)',
+                                    borderRight: i < 3 ? '1px solid var(--border-color)' : 'none',
+                                    cursor: 'pointer',
+                                    background: activePillar === i ? '#000' : '#fff',
+                                    transition: 'background 0.5s ease',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                {/* active bar */}
+                                <div style={{
+                                    position: 'absolute', top: 0, left: 0,
+                                    width: activePillar === i ? '100%' : '0%',
+                                    height: '3px',
+                                    background: 'var(--accent-primary)',
+                                    transition: 'width 3s linear',
+                                }} />
+                                <div style={{
+                                    fontFamily: 'var(--font-mono)',
+                                    fontSize: '0.65rem',
+                                    color: activePillar === i ? 'rgba(255,255,255,0.4)' : 'var(--text-tertiary)',
+                                    letterSpacing: '2px',
+                                    marginBottom: '1.5rem',
+                                    transition: 'color 0.4s ease',
+                                }}>{p.num}</div>
+                                <h3 style={{
+                                    fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)',
+                                    fontWeight: '900',
+                                    letterSpacing: '-0.5px',
+                                    marginBottom: '1rem',
+                                    color: activePillar === i ? '#fff' : 'var(--text-primary)',
+                                    transition: 'color 0.4s ease',
+                                }}>{p.title}</h3>
+                                <p style={{
+                                    fontSize: '0.9rem',
+                                    lineHeight: '1.7',
+                                    color: activePillar === i ? 'rgba(255,255,255,0.6)' : 'var(--text-secondary)',
+                                    transition: 'color 0.4s ease',
+                                    maxHeight: activePillar === i ? '200px' : '0px',
+                                    overflow: 'hidden',
+                                    opacity: activePillar === i ? 1 : 0,
+                                    transition: 'all 0.5s ease',
+                                }}>{p.desc}</p>
                             </div>
-                        </div>
-                        <div style={{ position: 'relative' }}>
-                            <div style={{ 
-                                padding: '3rem', 
-                                background: '#fff', 
-                                border: '1px solid var(--border-color)',
-                                position: 'relative',
-                                zIndex: 2
-                            }}>
-                                <span className="corner corner-tl"></span>
-                                <span className="corner corner-br"></span>
-                                <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: 'var(--accent-primary)' }}>OUR CULTURE</h3>
-                                <ul style={{ listStyle: 'none', padding: 0 }}>
-                                    {[
-                                        "Technical Excellence above all.",
-                                        "Ownership of outcomes, not just tasks.",
-                                        "Radical transparency in engineering.",
-                                        "Continuous learning through failure.",
-                                        "Commitment to National Security."
-                                    ].map((item, i) => (
-                                        <li key={i} style={{ 
-                                            padding: '1rem 0', 
-                                            borderBottom: '1px solid #eee',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '1rem',
-                                            fontSize: '0.95rem',
-                                            fontWeight: '600'
-                                        }}>
-                                            <span style={{ width: '6px', height: '6px', background: 'var(--accent-primary)' }}></span>
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div style={{ 
-                                position: 'absolute', 
-                                top: '20px', 
-                                left: '20px', 
-                                width: '100%', 
-                                height: '100%', 
-                                border: '2px solid var(--accent-primary)', 
-                                zIndex: 1,
-                                opacity: 0.1
-                            }}></div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* Job Openings Section */}
-            <section id="openings" className="reveal-section" style={{ padding: '8rem 0 12rem' }}>
+            {/* ── VALUES ── */}
+            <section className="reveal-section" style={{ padding: 'clamp(5rem, 10vh, 9rem) 0', background: '#f8fafc', borderTop: '1px solid #f1f5f9' }}>
                 <div className="container">
                     <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                        <h2 style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>OPEN POSITIONS</h2>
-                        <div style={{ width: '60px', height: '4px', background: 'var(--accent-primary)', margin: '0 auto' }}></div>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '4px', color: 'var(--accent-primary)', fontWeight: '800' }}>OUR CULTURE</span>
+                        <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: '900', marginTop: '1rem', letterSpacing: '-1px' }}>WHAT WE STAND FOR.</h2>
                     </div>
 
-                    <div style={{ display: 'grid', gap: '1.5rem' }}>
-                        {jobOpenings.map((job) => (
-                            <div key={job.id} className="job-card" style={{ 
-                                padding: '2.5rem', 
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+                        {values.map((v, i) => (
+                            <div key={i} className="value-card" style={{
+                                padding: '2.5rem',
+                                background: '#fff',
                                 border: '1px solid var(--border-color)',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                transition: 'all 0.4s cubic-bezier(0.16,1,0.3,1)',
+                            }}>
+                                <span className="corner corner-tl" /><span className="corner corner-tr" />
+                                <span className="corner corner-bl" /><span className="corner corner-br" />
+                                <div style={{
+                                    width: '32px', height: '3px',
+                                    background: 'var(--accent-primary)',
+                                    marginBottom: '1.5rem',
+                                    transition: 'width 0.4s ease',
+                                }} className="value-bar" />
+                                <h4 style={{ fontSize: '1rem', fontWeight: '800', marginBottom: '0.8rem', letterSpacing: '0.5px' }}>{v.title.toUpperCase()}</h4>
+                                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.7' }}>{v.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── OPEN POSITIONS ── */}
+            <section id="openings" className="reveal-section" style={{ padding: 'clamp(5rem, 10vh, 9rem) 0', background: '#fff' }}>
+                <div className="container">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem', flexWrap: 'wrap', gap: '1rem' }}>
+                        <div>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '4px', color: 'var(--accent-primary)', fontWeight: '800' }}>JOIN THE TEAM</span>
+                            <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: '900', marginTop: '1rem', letterSpacing: '-1px' }}>OPEN POSITIONS.</h2>
+                        </div>
+                        <div style={{ width: '60px', height: '4px', background: 'var(--accent-primary)' }} />
+                    </div>
+
+                    <div style={{ display: 'grid', gap: '1px', background: 'var(--border-color)', border: '1px solid var(--border-color)' }}>
+                        {jobOpenings.map((job, i) => (
+                            <div key={job.id} className="job-row" style={{
                                 display: 'grid',
                                 gridTemplateColumns: '1fr auto',
                                 alignItems: 'center',
                                 gap: '2rem',
+                                padding: '2.5rem',
+                                background: '#fff',
                                 transition: 'all 0.3s ease',
-                                background: '#fff'
+                                position: 'relative',
+                                overflow: 'hidden',
                             }}>
+                                {/* left accent line on hover */}
+                                <div className="job-accent" style={{
+                                    position: 'absolute', left: 0, top: 0, bottom: 0,
+                                    width: '3px', background: 'var(--accent-primary)',
+                                    transform: 'scaleY(0)', transformOrigin: 'bottom',
+                                    transition: 'transform 0.3s ease',
+                                }} />
                                 <div>
-                                    <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', alignItems: 'center' }}>
-                                        <span style={{ 
-                                            background: 'var(--accent-dim)', 
-                                            color: 'var(--accent-primary)', 
-                                            fontSize: '0.7rem', 
-                                            padding: '0.3rem 0.8rem', 
+                                    <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.8rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                                        <span style={{
+                                            background: 'rgba(0,57,166,0.06)',
+                                            color: 'var(--accent-primary)',
+                                            fontSize: '0.68rem',
+                                            padding: '0.3rem 0.8rem',
                                             fontFamily: 'var(--font-mono)',
                                             fontWeight: '700',
-                                            border: '1px solid rgba(0, 57, 166, 0.1)'
+                                            border: '1px solid rgba(0,57,166,0.12)',
+                                            letterSpacing: '1px',
                                         }}>{job.division}</span>
-                                        <span style={{ color: 'var(--text-tertiary)', fontSize: '0.8rem' }}>{job.location} • {job.type}</span>
+                                        <span style={{ color: 'var(--text-tertiary)', fontSize: '0.78rem', fontFamily: 'var(--font-mono)' }}>
+                                            {job.location} &nbsp;·&nbsp; {job.type}
+                                        </span>
                                     </div>
-                                    <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>{job.title}</h3>
-                                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', maxWidth: '800px' }}>{job.description}</p>
+                                    <h3 style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', fontWeight: '800', marginBottom: '0.6rem' }}>{job.title}</h3>
+                                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', maxWidth: '700px', lineHeight: '1.6' }}>{job.desc}</p>
                                 </div>
-                                <Link 
-                                    href="mailto:careers@cdpl.co.in" 
+                                <a
+                                    href="mailto:careers@cdpl.co.in"
                                     className="btn btn-outline"
-                                    style={{ padding: '1rem 2rem' }}
+                                    style={{ padding: '0.9rem 2rem', fontSize: '0.8rem', whiteSpace: 'nowrap', flexShrink: 0 }}
                                 >
                                     APPLY NOW
-                                </Link>
+                                </a>
                             </div>
                         ))}
                     </div>
 
-                    <div style={{ marginTop: '5rem', textAlign: 'center', padding: '4rem', background: 'var(--bg-tactical)', border: '1px dashed var(--border-color)' }}>
-                        <h3 style={{ marginBottom: '1rem' }}>DON'T SEE A FIT?</h3>
-                        <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>We are always looking for exceptional talent. Send us your CV and a brief note on how you can contribute.</p>
-                        <a href="mailto:careers@cdpl.co.in" className="btn btn-primary">GENERAL APPLICATION</a>
+                    {/* General application CTA */}
+                    <div style={{
+                        marginTop: '3rem',
+                        padding: '4rem',
+                        background: '#000',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        textAlign: 'center',
+                    }}>
+                        <div style={{
+                            position: 'absolute', inset: 0,
+                            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,57,166,0.15) 1px, transparent 0)',
+                            backgroundSize: '28px 28px',
+                        }} />
+                        <div style={{ position: 'relative', zIndex: 2 }}>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '4px', color: 'var(--accent-primary)', fontWeight: '800' }}>OPEN APPLICATION</span>
+                            <h3 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', fontWeight: '900', color: '#fff', margin: '1rem 0', letterSpacing: '-0.5px' }}>DON'T SEE A FIT?</h3>
+                            <p style={{ color: 'rgba(255,255,255,0.55)', marginBottom: '2.5rem', maxWidth: '500px', margin: '0 auto 2.5rem', lineHeight: '1.7', fontSize: '0.95rem' }}>
+                                We are always looking for exceptional talent. Send us your CV and a brief note on how you can contribute to the mission.
+                            </p>
+                            <a href="mailto:careers@cdpl.co.in" className="btn btn-primary" style={{ fontSize: '0.85rem', padding: '1rem 2.5rem' }}>
+                                SEND GENERAL APPLICATION
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -239,19 +457,63 @@ export default function CareersPage() {
             <Footer />
 
             <style jsx>{`
-                .job-card:hover {
-                    border-color: var(--accent-primary);
-                    box-shadow: 0 10px 30px rgba(0, 57, 166, 0.05);
-                    transform: translateX(10px);
+                @keyframes scrollLine {
+                    0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+                    50% { opacity: 1; transform: scaleY(1); }
                 }
-                
-                @media (max-width: 768px) {
-                    .job-card {
-                        grid-template-columns: 1fr;
-                        padding: 1.5rem;
+
+                .value-card:hover {
+                    transform: translateY(-4px);
+                    border-color: var(--accent-primary);
+                    box-shadow: 0 12px 40px rgba(0, 57, 166, 0.08);
+                }
+                .value-card:hover .value-bar {
+                    width: 60px;
+                }
+                .value-card:hover .corner {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+
+                .job-row:hover {
+                    background: #fafbff;
+                    transform: translateX(6px);
+                }
+                .job-row:hover .job-accent {
+                    transform: scaleY(1);
+                }
+
+                .pillars-grid {
+                    overflow: hidden;
+                }
+
+                @media (max-width: 900px) {
+                    .pillars-grid {
+                        grid-template-columns: 1fr 1fr !important;
                     }
-                    .job-card .btn {
+                    .pillars-grid > div:nth-child(2) {
+                        border-right: none !important;
+                    }
+                    .pillars-grid > div:nth-child(1),
+                    .pillars-grid > div:nth-child(2) {
+                        border-bottom: 1px solid var(--border-color);
+                    }
+                }
+
+                @media (max-width: 600px) {
+                    .pillars-grid {
+                        grid-template-columns: 1fr !important;
+                    }
+                    .pillars-grid > div {
+                        border-right: none !important;
+                        border-bottom: 1px solid var(--border-color) !important;
+                    }
+                    .job-row {
+                        grid-template-columns: 1fr !important;
+                    }
+                    .job-row .btn {
                         width: 100%;
+                        text-align: center;
                     }
                 }
             `}</style>

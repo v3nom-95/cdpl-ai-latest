@@ -18,12 +18,8 @@ export default function News() {
   return (
     <section id="news" className="news-section" style={{ padding: '6rem 0', background: '#fff' }}>
         <div className="container">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
-                <div>
-                    <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--text-primary)', fontWeight: '900', textTransform: 'uppercase' }}>CDPL NEWSROOM</h2>
-                    <p style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '1px', fontSize: '0.85rem' }}>// OFFICIAL DEPLOYMENT UPDATES</p>
-                </div>
-                <div style={{ width: '60px', height: '4px', background: 'var(--accent-primary)' }}></div>
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                <h2 className="section-title">NEWSROOM</h2>
             </div>
 
             <div style={{ maxWidth: '850px', margin: '0 auto' }}>

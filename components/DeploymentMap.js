@@ -42,7 +42,7 @@ export default function DeploymentMap({ isCompact = false }) {
 
     return (
         <div ref={mapRef} className={`deployment-map-container ${isCompact ? 'compact' : ''}`}>
-            {!isCompact && <h3 ref={titleRef} className="map-title" style={{ opacity: 0, transform: 'translateY(20px)', transition: 'transform 0.1s ease-out, opacity 0.1s ease-out' }}>[ STRATEGIC_NETWORK_MATRIX ]</h3>}
+            {!isCompact && <h2 ref={titleRef} className="section-title" style={{ opacity: 0, transform: 'translateY(20px)', transition: 'transform 0.1s ease-out, opacity 0.1s ease-out', marginBottom: '3.5rem' }}>Our Reach</h2>}
             <div
                 ref={wrapperRef}
                 className="map-wrapper shadow-premium"
@@ -53,12 +53,6 @@ export default function DeploymentMap({ isCompact = false }) {
                     transition: 'transform 0.1s ease-out, opacity 0.1s ease-out'
                 }}
             >
-                <div className="map-hud-ortho">
-                    <span className="hud-metric top-l">PROJECTION: ORTHOGRAPHIC_3D</span>
-                    <span className="hud-metric top-r">DATA_POINTS: CLASSIFIED</span>
-                    <span className="hud-metric bot-l">V_ACCURACY: 100%</span>
-                </div>
-
                 <div className="image-container-v3">
                     <img src="/images/india_top_3d.png" alt="Tactical Top-Down View of India" className="map-image-top" />
                     <div className="terrain-gloss"></div>

@@ -275,12 +275,7 @@ export default function VariantPage() {
                                 </div>
                             )}
 
-                            <div style={{ marginTop: '2rem' }}>
-                                <ProductRequest productName={`${product.name} - ${variant.variant}`} />
-                            </div>
-
-
-                            <div style={{ marginTop: '3rem', padding: '0 1rem' }}>
+                            <div style={{ marginTop: '2rem', padding: '0 1rem' }}>
                                 <h4 style={{ fontSize: '0.9rem', fontWeight: '800', marginBottom: '1.5rem', color: 'var(--accent-primary)', letterSpacing: '1px' }}>CORE CAPABILITIES</h4>
                                 <ul style={{ listStyle: 'none', padding: 0 }}>
                                     {variant.capabilities.map((cap: string, i: number) => (
@@ -312,6 +307,10 @@ export default function VariantPage() {
                                         }}>{app}</span>
                                     ))}
                                 </div>
+                            </div>
+
+                            <div style={{ marginTop: '3rem' }}>
+                                <ProductRequest productName={`${product.name} - ${variant.variant}`} />
                             </div>
                         </div>
                     </div>

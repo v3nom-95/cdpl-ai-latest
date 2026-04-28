@@ -113,7 +113,7 @@ export default function ProductCategories() {
     return (
         <section id="products" className="products-section">
             <div className="container">
-                <h2 className="section-title">Brand Hierarchy</h2>
+                <h2 className="section-title">Our Offerings</h2>
                 <p className="section-subtitle">Pioneering Autonomy across Air, Sea, and Land domains.</p>
 
                 <div className="products-grid">

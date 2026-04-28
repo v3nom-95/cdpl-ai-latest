@@ -38,35 +38,40 @@ export default function AboutPage() {
             role: "Founder & CEO",
             details: "12+ Years operating Autonomous Systems | Alumni of IIT J & IIM A",
             bio: "Veteran-led insight. We understand what soldiers need because we have been in their boots.",
-            image: "/partners/rama.jpg"
+            image: "/partners/rama.jpg",
+            linkedin: "#" // TODO: update with actual LinkedIn URL
         },
         {
             name: "Naveen Kanakadandi",
             role: "Co-Founder, MD & CFO",
             details: "18+ years steering strategy and tech execution | ex-Amazon, Google",
             bio: "Drives financial strategy and operational scaling for global growth.",
-            image: "/partners/nav.jpeg"
+            image: "/partners/nav.jpeg",
+            linkedin: "#" // TODO: update with actual LinkedIn URL
         },
         {
             name: "Vishal Kumar Singh",
             role: "Co-Founder & CTO",
             details: "6+ Years of Product development and Engineering experience",
             bio: "Leads autonomy platform and AI system architecture.",
-            image: "/partners/vish.png"
+            image: "/partners/vish.png",
+            linkedin: "#" // TODO: update with actual LinkedIn URL
         },
         {
             name: "Major Rajesh (Retd)",
             role: "VP, Business Development & Sales",
             details: "Military veteran | Tactical Instructor | Defense Strategist | Alumni of IIM Lucknow",
             bio: "Strategic mind behind elite defense partnerships.",
-            image: null
+            image: null,
+            linkedin: "#" // TODO: update with actual LinkedIn URL
         },
         {
             name: "Anurag Madedhi",
             role: "Co-Founder, Head of Procurement & Vendor Strategy",
             details: "Masters in Material Science & Manufacturing | Biotechnology ex-COO",
             bio: "Leads production excellence and hardware precision.",
-            image: null
+            image: null,
+            linkedin: "#" // TODO: update with actual LinkedIn URL
         }
     ];
 
@@ -85,12 +90,7 @@ export default function AboutPage() {
             {/* Hero Section */}
             <section className="about-hero" style={{ padding: 'clamp(100px, 15vh, 160px) 0 clamp(40px, 8vh, 80px)', background: '#fff' }}>
                 <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--accent-primary)', fontFamily: 'var(--font-mono)', fontSize: 'clamp(0.6rem, 2vw, 0.8rem)', letterSpacing: '4px', marginBottom: '2rem' }}>
-                        <span>[ COMPANY_IDENTITY ]</span>
-                        <div style={{ flex: 1, height: '1px', background: 'rgba(0, 52, 166, 0.1)' }}></div>
-                    </div>
-
-                    <h1 style={{ fontSize: 'clamp(4rem, 8vw, 8.5rem)', fontWeight: '900', lineHeight: '0.9', letterSpacing: '-2px', textTransform: 'uppercase', margin: 0 }}>
+                    <h1 style={{ fontSize: 'clamp(3.5rem, 6.5vw, 7rem)', fontWeight: '900', lineHeight: '0.9', letterSpacing: '-2px', textTransform: 'uppercase', margin: 0 }}>
                         <span style={{ color: '#111', display: 'block' }}>CHAKRAVYUHA</span>
                         <span style={{ color: 'var(--accent-primary)', display: 'block' }}>DYNAMICS</span>
                     </h1>
@@ -102,12 +102,12 @@ export default function AboutPage() {
                 <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
                     <div className="vision-mission-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'clamp(2rem, 5vw, 4rem)' }}>
                         <div style={{ borderLeft: '4px solid var(--accent-primary)', paddingLeft: '1.5rem' }}>
-                            <h4 style={{ color: 'var(--accent-primary)', marginBottom: '1rem', letterSpacing: '2px', fontWeight: '800' }}>VISION</h4>
-                            <p style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--text-primary)', lineHeight: '1.6' }}>To create sovereign Physical Intelligence that protects India and empowers humanity through autonomous systems.</p>
+                            <h4 style={{ color: 'var(--accent-primary)', marginBottom: '1rem', letterSpacing: '2px', fontWeight: '800', fontSize: '1.3rem' }}>VISION</h4>
+                            <p style={{ fontSize: '1.2rem', fontWeight: '500', color: 'var(--text-primary)', lineHeight: '1.7' }}>To create sovereign Physical Intelligence that protects India and empowers humanity through autonomous systems.</p>
                         </div>
                         <div style={{ borderLeft: '4px solid var(--accent-secondary)', paddingLeft: '1.5rem' }}>
-                            <h4 style={{ color: 'var(--accent-secondary)', marginBottom: '1rem', letterSpacing: '2px', fontWeight: '800' }}>MISSION</h4>
-                            <p style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--text-primary)', lineHeight: '1.6' }}>Deploy intelligent autonomous systems for defense and dual-use applications & protecting soldiers, empowering industries, and establishing India's leadership in Physical Intelligence.</p>
+                            <h4 style={{ color: 'var(--accent-secondary)', marginBottom: '1rem', letterSpacing: '2px', fontWeight: '800', fontSize: '1.3rem' }}>MISSION</h4>
+                            <p style={{ fontSize: '1.2rem', fontWeight: '500', color: 'var(--text-primary)', lineHeight: '1.7' }}>Deploy intelligent autonomous systems for defense and dual-use applications & protecting soldiers, empowering industries, and establishing India's leadership in Physical Intelligence.</p>
                         </div>
                     </div>
                 </div>
@@ -117,7 +117,7 @@ export default function AboutPage() {
             <section style={{ padding: 'clamp(4rem, 8vh, 8rem) 0', background: '#fff' }}>
                 <div className="container">
                     <div className="leadership-title-section" style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 6vh, 6rem)' }}>
-                        <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: '900', marginTop: '1rem', color: 'var(--text-primary)' }}>Core Divisions</h2>
+                        <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: '900', marginTop: '1rem', color: 'var(--text-primary)' }}>Our Offerings</h2>
                     </div>
 
                     <div className="divisions-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem' }}>
@@ -149,16 +149,21 @@ export default function AboutPage() {
 
                     <div className="products-grid leadership-grid">
                         {leadership.map((leader, index) => (
-                            <div key={index} className="product-card" style={{ padding: '2.5rem', minHeight: 'auto', background: '#fff' }}>
-                                <span className="corner corner-tl"></span>
-                                <span className="corner corner-tr"></span>
-                                <span className="corner corner-bl"></span>
-                                <span className="corner corner-br"></span>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    <h3 style={{ fontSize: '1.4rem', fontWeight: '900', color: 'var(--text-primary)', marginBottom: '0.2rem' }}>{leader.name}</h3>
-                                    <span style={{ color: 'var(--accent-primary)', fontWeight: '800', lineHeight: '1.2', fontSize: '0.80rem', fontFamily: 'var(--font-mono)' }}>{leader.role.toUpperCase()}</span>
+                            <a key={index} href={leader.linkedin} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+                                <div className="product-card" style={{ padding: '2.5rem', minHeight: 'auto', background: '#fff', cursor: 'pointer', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }}
+                                    onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-3px)'; (e.currentTarget as HTMLDivElement).style.boxShadow = '0 8px 24px rgba(0,52,166,0.12)'; }}
+                                    onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLDivElement).style.boxShadow = ''; }}
+                                >
+                                    <span className="corner corner-tl"></span>
+                                    <span className="corner corner-tr"></span>
+                                    <span className="corner corner-bl"></span>
+                                    <span className="corner corner-br"></span>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                        <h3 style={{ fontSize: '1.4rem', fontWeight: '900', color: 'var(--text-primary)', marginBottom: '0.2rem' }}>{leader.name}</h3>
+                                        <span style={{ color: 'var(--accent-primary)', fontWeight: '800', lineHeight: '1.2', fontSize: '0.80rem', fontFamily: 'var(--font-mono)' }}>{leader.role.toUpperCase()}</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         ))}
                     </div>
                 </div>

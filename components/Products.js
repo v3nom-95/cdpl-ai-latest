@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
     const [titleText, setTitleText] = useState(product.title);
@@ -47,9 +48,11 @@ const ProductCard = ({ product }) => {
             <span className="corner corner-bl"></span>
             <span className="corner corner-br"></span>
 
-            <div className={`product-image ${product.imageClass}`}>
-                <div className="product-type-badge">{product.type}</div>
-            </div>
+            <Link href={product.link} style={{ display: 'block', textDecoration: 'none' }}>
+                <div className={`product-image ${product.imageClass}`} style={{ cursor: 'pointer' }}>
+                    <div className="product-type-badge">{product.type}</div>
+                </div>
+            </Link>
             <div className="product-content">
                 <span className="product-tagline">{product.tagline}</span>
                 <h3>{titleText}</h3>
@@ -82,7 +85,7 @@ export default function Products() {
                 { val: "5km", label: "Range" },
             ],
             imageClass: "product-image-aot",
-            link: "/mas#products"
+            link: "/products/aot"
         },
         {
             id: "bard",
@@ -96,7 +99,7 @@ export default function Products() {
                 { val: "IP67", label: "Rugged" },
             ],
             imageClass: "product-image-bard",
-            link: "/mas#products"
+            link: "/products/bard"
         },
         {
             id: "tdfs",
@@ -110,14 +113,14 @@ export default function Products() {
                 { val: "VR", label: "Support" },
             ],
             imageClass: "product-image-tdfs",
-            link: "/mas#products"
+            link: "/products/raven"
         }
     ];
 
     return (
         <section id="products" className="products-section">
             <div className="container">
-                <h2 className="section-title">Mission-Critical Hardware</h2>
+                <h2 className="section-title">Our Products</h2>
                 <p className="section-subtitle">Engineered for Defence, Disaster Relief, and Heavy Logistics.</p>
 
                 <div className="products-grid">
