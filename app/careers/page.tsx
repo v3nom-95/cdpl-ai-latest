@@ -369,7 +369,7 @@ export default function CareersPage() {
             <section style={{ background: '#fff', padding: '80px 0' }}>
                 <div className="container">
                     <h2 className="section-title" style={{ marginBottom: '0.5rem' }}>Where We Operate</h2>
-                    <GlobeMap height={580} showTitle={false} />
+                    <GlobeMap height={580} />
                 </div>
             </section>
 
