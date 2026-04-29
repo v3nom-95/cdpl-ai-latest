@@ -118,7 +118,7 @@ export default function Mas() {
                                     type: 'SIMULATOR',
                                     tagline: 'SIMULATOR',
                                     desc: '',
-                                    imgClass: 'product-image-sim',
+                                    image: '/partners/r1.png',
                                     link: '/products/raven/raven-trainer'
                                 },
                                 {
@@ -128,7 +128,7 @@ export default function Mas() {
                                     type: 'GROUP 2 UAS',
                                     tagline: 'TACTICAL ISR PLATFORM',
                                     desc: 'Advanced autonomous aerial system supporting Day/Night Thermal ISR, LRF, and multi-mission payload integration.',
-                                    imgClass: 'product-image-bard',
+                                    image: '/partners/bard1.png',
                                     link: '/products/bard'
                                 },
                                 {
@@ -138,37 +138,37 @@ export default function Mas() {
                                     type: 'LONG RANGE ISR',
                                     tagline: 'FIXED WING VTOL',
                                     desc: 'Vertical Take-Off fixed-wing platform offering 40m endurance and stabilized 3-axis imagery.',
-                                    imgClass: 'product-image-aot',
+                                    image: '/partners/horizonvtol.png',
                                     link: '/products/horizon-vtol'
                                 },
                                 {
                                     id: 'horizon-fpv',
                                     name: 'HORIZON FPV',
-                                    nickname: 'SIMULATE',
+                                    nickname: 'MASTER',
                                     type: 'ADVANCED TRAINER',
                                     tagline: 'FIXED WING FPV',
                                     desc: 'Large-scale 1645mm wingspan trainer for high-speed area familiarization and FPV training.',
-                                    imgClass: 'product-image-sim',
+                                    image: '/partners/horizonfpv.jpeg',
                                     link: '/products/horizon-fpv'
                                 },
                                 {
                                     id: 'stinger',
                                     name: 'STINGER Family',
-                                    nickname: 'HYDRA V4',
+                                    nickname: 'STRIKE',
                                     type: 'KINETIC INTERCEPT',
                                     tagline: 'LOITERING MUNITION',
                                     desc: 'Attritable, high-performance platform (7-15\") engineered for precision kinetic intercept and heavy payload strike.',
-                                    imgClass: 'product-image-hydra',
+                                    image: '/partners/stinger.jpeg',
                                     link: '/products/stinger'
                                 },
                                 {
                                     id: 'aot',
                                     name: 'AOT (7 Inch)',
-                                    nickname: 'TRAINER',
+                                    nickname: 'CADET',
                                     type: 'PILOT TRAINING',
                                     tagline: 'ATTRITABLE TRAINER SYSTEM',
                                     desc: 'Shatter-resistant aerial training system with integrated guards and zero-latency hardware feedback.',
-                                    imgClass: 'product-image-aot',
+                                    image: '/partners/aot.png',
                                     link: '/products/aot'
                                 }
                             ].map((product) => (
@@ -179,17 +179,28 @@ export default function Mas() {
                                         <span className="corner corner-bl"></span>
                                         <span className="corner corner-br"></span>
 
-                                        <div className={`product-image ${product.imgClass}`}>
+                                        <div className="product-image" style={{ background: '#000', position: 'relative', overflow: 'hidden' }}>
                                             <div className="product-type-badge">{product.type}</div>
-
-                                            {/* Image Slot moved here - near nickname */}
-                                            <div className="product-card-image-slot">
-                                                [ Product {product.nickname} Asset ]
-                                            </div>
-
-                                            <div style={{ position: 'absolute', bottom: '1rem', left: '1rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '2px' }}>
-                                                NICKNAME: {product.nickname}
-                                            </div>
+                                            <img
+                                                src={product.image}
+                                                alt={product.name}
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    objectFit: 'cover',
+                                                    display: 'block',
+                                                    opacity: 0.9,
+                                                    transition: 'transform 0.4s ease, opacity 0.4s ease',
+                                                }}
+                                                onMouseEnter={e => {
+                                                    (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.05)';
+                                                    (e.currentTarget as HTMLImageElement).style.opacity = '1';
+                                                }}
+                                                onMouseLeave={e => {
+                                                    (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)';
+                                                    (e.currentTarget as HTMLImageElement).style.opacity = '0.9';
+                                                }}
+                                            />
                                         </div>
                                         <div className="product-content">
                                             <span className="product-tagline">{product.tagline}</span>
