@@ -177,10 +177,6 @@ export default function VariantPage() {
                                         alt={variant.variant}
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
-                                    <div className="gallery-overlay-tech">
-                                        <div className="tech-tag top-left" style={{ background: 'var(--accent-primary)', color: '#000' }}>{variantId.toUpperCase()}</div>
-                                        <div className="tech-tag bottom-right" style={{ background: 'var(--accent-primary)', color: '#000' }}>LIVE_FEED</div>
-                                    </div>
                                 </div>
                             </div>
 

@@ -143,11 +143,9 @@ export default function ProductPage() {
 
                 {/* Tactical Context Section */}
                 <section className="reveal-section bard-context-section" style={{ position: 'relative', display: 'flex', alignItems: 'center', background: '#fff' }}>
-                    <div className="scanline-v2"></div>
                     <div className="container bard-context-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'clamp(2rem, 6vw, 4rem)', alignItems: 'center', padding: 'clamp(4rem, 10vh, 8rem) 1.5rem' }}>
                         <div>
-                            <span style={{ color: 'var(--accent-primary)', letterSpacing: '3px', fontSize: '0.8rem', fontWeight: '700' }}>[ MISSION_READY ]</span>
-                            <h2 style={{ fontSize: 'clamp(1.8rem, 6vw, 4rem)', fontWeight: '800', margin: '1.5rem 0', lineHeight: '1.1', color: 'var(--text-primary)' }}>TACTICAL ISR</h2>
+                            <h2 style={{ fontSize: 'clamp(1.8rem, 6vw, 4rem)', fontWeight: '800', margin: '0 0 1.5rem', lineHeight: '1.1', color: 'var(--text-primary)' }}>TACTICAL ISR</h2>
                             <p style={{ color: 'var(--text-secondary)', fontSize: 'clamp(0.95rem, 2.5vw, 1.2rem)', marginBottom: '3rem' }}>
                                 Every system is a modular node in a vast, autonomous network. {product.description}
                             </p>
@@ -155,10 +153,6 @@ export default function ProductPage() {
                         <div style={{ position: 'relative' }}>
                             <div className="gallery-frame" style={{ aspectRatio: '16/10', border: '1px solid rgba(0,0,0,0.1)' }}>
                                 <img src={product.galleryImages[0]} alt="Bard Action" className="main-gallery-image" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                <div className="gallery-overlay-tech">
-                                    <div className="tech-tag top-left" style={{ background: 'var(--accent-primary)', color: '#000' }}>AERIAL_RECON</div>
-                                    <div className="tech-tag bottom-right" style={{ background: 'var(--accent-primary)', color: '#000' }}>360_SENSORY_SWEEP</div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -454,14 +448,6 @@ export default function ProductPage() {
                                     <span className="corner corner-tr"></span>
                                     <span className="corner corner-bl"></span>
                                     <span className="corner corner-br"></span>
-
-                                    <div className="gallery-overlay-tech">
-                                        <div className="tech-tag top-left">SYSTEM_VIEW_{activeImage + 1}</div>
-                                        <div className="tech-tag top-right">MAS_ID_{id.toUpperCase()}_0{activeImage + 1}</div>
-                                        <div className="tech-tag bottom-left">RADAR_LOCK: STABLE</div>
-                                        <div className="tech-tag bottom-right">RECON_MODE: ACTIVE</div>
-                                        <div className="scan-line"></div>
-                                    </div>
 
                                     <img
                                         key={activeImage}
