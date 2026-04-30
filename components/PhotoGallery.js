@@ -202,27 +202,27 @@ export default function PhotoGallery() {
                   {/* Label bar */}
                   <div style={{
                     padding: '1.2rem 1.4rem',
-                    background: isActive ? '#000' : '#111',
+                    background: '#fff',
                     transition: 'background 0.4s ease',
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                   }}>
                     <div>
                       <div style={{
                         fontFamily: 'var(--font-title)', fontSize: 'clamp(0.85rem, 1.5vw, 1rem)',
-                        fontWeight: '800', color: '#fff', letterSpacing: '1px',
+                        fontWeight: '800', color: 'var(--accent-primary)', letterSpacing: '1px',
                         marginBottom: '0.2rem',
                       }}>{img.label}</div>
                       <div style={{
                         fontFamily: 'var(--font-mono)', fontSize: '0.6rem',
-                        color: isActive ? 'var(--accent-primary)' : 'rgba(255,255,255,0.4)',
-                        letterSpacing: '2px', transition: 'color 0.4s ease',
+                        color: 'var(--accent-primary)',
+                        letterSpacing: '2px',
                       }}>VIEW SPECS →</div>
                     </div>
                     <div style={{
                       width: '32px', height: '32px', borderRadius: '50%',
-                      border: `1px solid ${isActive ? 'var(--accent-primary)' : 'rgba(255,255,255,0.2)'}`,
+                      border: `1px solid var(--accent-primary)`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: isActive ? 'var(--accent-primary)' : 'rgba(255,255,255,0.4)',
+                      color: 'var(--accent-primary)',
                       fontSize: '0.9rem', transition: 'all 0.4s ease',
                     }}>→</div>
                   </div>
