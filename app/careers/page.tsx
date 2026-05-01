@@ -149,15 +149,6 @@ export default function CareersPage() {
                         display: 'flex', alignItems: 'center', gap: '1rem',
                         marginBottom: '1.5rem',
                     }}>
-                        <span style={{
-                            color: 'var(--accent-primary)',
-                            fontFamily: 'var(--font-mono)',
-                            fontSize: '0.75rem',
-                            letterSpacing: '4px',
-                            fontWeight: '800',
-                            textTransform: 'uppercase',
-                        }}>[ RECRUITMENT_PHASE_ACTIVE ]</span>
-                        <div style={{ flex: 1, height: '1px', background: 'rgba(0,57,166,0.4)', maxWidth: '120px' }} />
                     </div>
 
                     {/* headline */}
@@ -198,9 +189,6 @@ export default function CareersPage() {
                         transform: heroVisible ? 'translateY(0)' : 'translateY(20px)',
                         transition: 'all 1s cubic-bezier(0.16,1,0.3,1) 0.55s',
                     }}>
-                        <a href="#openings" className="btn btn-primary" style={{ fontSize: '0.85rem', padding: '1rem 2.5rem' }}>
-                            EXPLORE OPENINGS
-                        </a>
                         <a href="mailto:careers@cdpl.co.in" className="btn btn-outline" style={{ fontSize: '0.85rem', padding: '1rem 2.5rem', borderColor: 'rgba(255,255,255,0.3)', color: '#fff' }}>
                             GENERAL APPLICATION
                         </a>
@@ -318,11 +306,33 @@ export default function CareersPage() {
                 </div>
             </section>
 
-            {/* ── GLOBE ── */}
-            <section style={{ background: '#fff', padding: '80px 0' }}>
+            {/* ── APPLY CTA ── */}
+            <section className="reveal-section" style={{ padding: 'clamp(5rem, 10vh, 9rem) 0', background: '#fff' }}>
                 <div className="container">
-                    <h2 className="section-title" style={{ marginBottom: '0.5rem' }}>Where We Operate</h2>
-                    <GlobeMap height={580} />
+                    <div style={{
+                        padding: '4rem',
+                        background: '#fff',
+                        border: '2px solid rgba(0,57,166,0.3)',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        textAlign: 'center',
+                    }}>
+                        <div style={{
+                            position: 'absolute', inset: 0,
+                            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,57,166,0.06) 1px, transparent 0)',
+                            backgroundSize: '28px 28px',
+                        }} />
+                        <div style={{ position: 'relative', zIndex: 2 }}>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '4px', color: 'var(--accent-primary)', fontWeight: '800' }}>JOIN US</span>
+                            <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: '900', color: 'var(--text-primary)', margin: '1rem 0', letterSpacing: '-0.5px' }}>READY TO BUILD THE FUTURE?</h2>
+                            <p style={{ color: 'var(--text-secondary)', maxWidth: '520px', margin: '0 auto 2.5rem', lineHeight: '1.7', fontSize: '0.95rem' }}>
+                                Send us your CV and a brief note on how you can contribute to India's autonomous defense mission.
+                            </p>
+                            <a href="mailto:careers@cdpl.co.in" className="btn btn-primary" style={{ fontSize: '0.85rem', padding: '1rem 2.5rem' }}>
+                                APPLY NOW →
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </section>
 
