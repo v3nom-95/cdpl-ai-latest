@@ -45,30 +45,13 @@ export default function ProductsPage() {
                     overflow: 'hidden'
                 }}>
                     <div className="container">
-                        <span style={{ 
-                            fontFamily: 'var(--font-mono)', 
-                            color: 'var(--accent-primary)', 
-                            letterSpacing: '4px',
-                            fontSize: '0.8rem',
-                            display: 'block',
-                            marginBottom: '1rem'
-                        }}>PORTFOLIO OVERVIEW</span>
                         <h1 style={{ 
                             fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
                             fontWeight: '900',
                             marginBottom: '1.5rem',
                             lineHeight: '1',
                             letterSpacing: '-2px'
-                        }}>OUR <span style={{ color: 'var(--accent-primary)' }}>SOLUTIONS</span></h1>
-                        <p style={{ 
-                            maxWidth: '700px', 
-                            margin: '0 auto', 
-                            color: 'var(--text-secondary)',
-                            fontSize: '1.1rem'
-                        }}>
-                            From strategic aerial intelligence to robotic ground systems and marine security, 
-                            we build the future of multi-domain defense.
-                        </p>
+                        }}>OUR <span style={{ color: 'var(--accent-primary)' }}>PRODUCTS</span></h1>
                     </div>
 
                     {/* Decorative pattern */}
