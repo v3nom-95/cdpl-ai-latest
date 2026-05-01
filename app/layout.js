@@ -19,7 +19,7 @@ const orbitron = Orbitron({
 
 export const metadata = {
     title: 'CDPL | Autonomous Tech Supremacy',
-    description: 'Chakravyuh Dynamics (CDPL) - Pioneers in autonomous defense across Air (MAS), Sea (MMS), and Land (MGS) domains.',
+    description: 'Chakravyuha Dynamics (CDPL) - Pioneers in autonomous defense across Air (MAS), Sea (MMS), and Land (MGS) domains.',
     icons: {
         icon: '/images/cdplfav.png',
         shortcut: '/images/cdplfav.png',

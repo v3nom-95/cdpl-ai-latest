@@ -44,7 +44,7 @@ export default function Footer() {
             </div>
 
             <div className="copyright" style={{ marginTop: '5rem', textAlign: 'center', borderTop: '1px solid #f0f0f0', paddingTop: '30px' }}>
-                <p style={{ color: '#999', fontSize: '0.85rem' }}>© {currentYear} Chakravyuh Dynamics Pvt Ltd. | Air · Sea · Land Autonomy.</p>
+                <p style={{ color: '#999', fontSize: '0.85rem' }}>© {currentYear} Chakravyuha Dynamics Pvt Ltd. | Air · Sea · Land Autonomy.</p>
             </div>
         </footer>
     );

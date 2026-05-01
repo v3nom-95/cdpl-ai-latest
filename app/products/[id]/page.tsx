@@ -105,23 +105,8 @@ export default function ProductPage() {
                             letterSpacing: '-1px',
                             textShadow: '0 4px 20px rgba(0,0,0,0.8)'
                         }}>
-                            {product.name.toUpperCase()}
+                            {product.name.replace(/\s+V[\d.]+$/i, '').replace(/\s*–\s*/, ' ').replace(/\s+\d+\s+/, ' ').replace(/\s+SERIES$/i, '').trim().toUpperCase()}
                         </h1>
-
-                        <p style={{
-                            fontSize: 'clamp(0.65rem, 1.2vw, 0.78rem)',
-                            color: 'rgba(255, 255, 255, 0.7)',
-                            maxWidth: '360px',
-                            margin: '0',
-                            fontWeight: '600',
-                            lineHeight: '1.6',
-                            letterSpacing: '2.5px',
-                            textShadow: '0 2px 8px rgba(0,0,0,0.8)',
-                            fontFamily: 'var(--font-mono)',
-                            textTransform: 'uppercase'
-                        }}>
-                            {product.tagline}
-                        </p>
                     </div>
 
                     {/* Scroll indicator removed as per request */}
@@ -399,23 +384,8 @@ export default function ProductPage() {
                         letterSpacing: '-1px',
                         textShadow: '0 4px 20px rgba(0,0,0,0.8)'
                     }}>
-                        {product.name.toUpperCase()}
+                        {product.name.replace(/\s+V[\d.]+$/i, '').replace(/\s*–\s*/, ' ').replace(/\s+\d+\s+/, ' ').replace(/\s+SERIES$/i, '').trim().toUpperCase()}
                     </h1>
-
-                    <p style={{
-                        fontSize: 'clamp(0.65rem, 1.2vw, 0.78rem)',
-                        color: 'rgba(255, 255, 255, 0.7)',
-                        maxWidth: '360px',
-                        margin: '0',
-                        fontWeight: '600',
-                        lineHeight: '1.6',
-                        letterSpacing: '2.5px',
-                        textShadow: '0 2px 8px rgba(0,0,0,0.8)',
-                        fontFamily: 'var(--font-mono)',
-                        textTransform: 'uppercase'
-                    }}>
-                        {product.tagline}
-                    </p>
                 </div>
             </section>
 

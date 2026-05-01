@@ -7,7 +7,7 @@ export default function About() {
         <section id="about" className="about-section bg-dark-soft">
             <div className="container">
                 <h2 className="section-title">Corporate Overview</h2>
-                <p className="section-subtitle">Chakravyuh Dynamics (CDPL) is a strategic leader in autonomous defense.</p>
+                <p className="section-subtitle">Chakravyuha Dynamics (CDPL) is a strategic leader in autonomous defense.</p>
 
                 <div className="about-content">
                     <div className="about-text">
