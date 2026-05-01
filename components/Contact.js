@@ -160,11 +160,7 @@ export default function Contact() {
                 {/* Mini Map Section */}
                 <div className="map-wrapper" style={{ marginTop: '4rem', position: 'relative' }}>
                     <div className="map-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <div style={{ width: '8px', height: '8px', background: 'var(--accent-primary)', borderRadius: '50%', boxShadow: '0 0 10px var(--accent-primary)' }}></div>
-                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-tertiary)', letterSpacing: '3px' }}>GEO_LOCATION_LOCK</span>
-                        </div>
-                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>[ 17.4461° N, 78.3916° E ]</span>
+
                     </div>
                     
                     <div className="map-container" style={{ 
