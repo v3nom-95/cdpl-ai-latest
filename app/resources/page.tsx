@@ -271,59 +271,6 @@ export default function ResourcesPage() {
                 </div>
             )}
 
-            {/* Technical Downloads Section */}
-            <section id="downloads" className="reveal-section" style={{ padding: '8rem 0 12rem', background: '#fcfcfc' }}>
-                <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(400px, 1fr) 1.5fr', gap: '6rem' }}>
-                        <div>
-                            <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>SYSTEM SPECIFICATIONS</h2>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '3rem', lineHeight: '1.7' }}>
-                                Download detailed technical documentation and mission capabilities or request access to the secure partner portal for full system diagnostics.
-                            </p>
-                            <div style={{ padding: '2.5rem', background: '#fff', border: '1px solid var(--border-color)', position: 'relative' }}>
-                                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--accent-primary)', fontWeight: '800' }}>[ PARTNER PORTAL ]</span>
-                                <h4 style={{ marginTop: '0.5rem', marginBottom: '1rem' }}>SECURE ACCESS</h4>
-                                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Confidential engineering data and API documentation requires verified military-grade credentials.</p>
-                                <Link href="/contact" className="btn-text" style={{ fontSize: '0.8rem', fontWeight: '800' }}>CONTACT FOR CLEARANCE →</Link>
-                            </div>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            {downloads.map((doc, i) => (
-                                <div key={i} className="download-item" style={{
-                                    padding: '1.5rem 2rem',
-                                    border: '1px solid var(--border-color)',
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    background: '#fff',
-                                    transition: 'all 0.3s ease'
-                                }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                                        <div style={{ width: '40px', height: '40px', border: '1px solid var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)', fontWeight: '800', fontSize: '0.65rem' }}>{doc.type}</div>
-                                        <div>
-                                            <h4 style={{ fontSize: '1.05rem', color: 'var(--text-primary)' }}>{doc.title}</h4>
-                                            <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>{doc.size}</span>
-                                        </div>
-                                    </div>
-                                    <button style={{
-                                        padding: '0.6rem 1.2rem',
-                                        background: 'transparent',
-                                        border: '1px solid var(--accent-primary)',
-                                        color: 'var(--accent-primary)',
-                                        fontFamily: 'var(--font-mono)',
-                                        fontSize: '0.75rem',
-                                        fontWeight: '800',
-                                        cursor: 'pointer',
-                                        transition: 'all 0.3s ease'
-                                    }}>FILE_GET</button>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
             <Footer />
 
             <style jsx>{`

@@ -4,11 +4,12 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 
 const images = [
-  { src: '/partners/r1.png',         alt: 'RAVEN Simulation',    link: '/products/raven',        label: 'RAVEN SIMULATOR',      tag: 'UAV SIMULATOR' },
-  { src: '/partners/bard1.png',      alt: 'BARD ISR Mission',    link: '/products/bard',         label: 'B.A.R.D. V2.0',       tag: 'ISR · GROUP 2 UAS' },
-  { src: '/partners/horizonvtol.png',alt: 'HORIZON VTOL Flight', link: '/products/horizon-vtol', label: 'HORIZON 120 VTOL',     tag: 'FIXED WING · TRAINER' },
-  { src: '/partners/stinger.jpeg',   alt: 'STINGER Tactical',    link: '/products/stinger',      label: 'STINGER SERIES',       tag: 'TACTICAL · FPV' },
-  { src: '/partners/aot.png',        alt: 'AOT Trainer',         link: '/products/aot',          label: 'A.O.T. TRAINER',       tag: 'MULTI-ROTOR · TRAINER' },
+  { src: '/partners/r1.png',         alt: 'RAVEN Simulation',    link: '/products/raven',        label: 'RAVEN SIMULATOR' },
+  { src: '/partners/bard1.png',      alt: 'BARD ISR Mission',    link: '/products/bard',         label: 'B.A.R.D.' },
+  { src: '/partners/horizonvtol.png',alt: 'HORIZON VTOL Flight', link: '/products/horizon-vtol', label: 'HORIZON VTOL' },
+  { src: '/partners/horizonfpv.jpeg',alt: 'HORIZON FPV',         link: '/products/horizon-fpv',  label: 'HORIZON FPV' },
+  { src: '/partners/stinger.jpeg',   alt: 'STINGER Tactical',    link: '/products/stinger',      label: 'STINGER' },
+  { src: '/partners/aot.png',        alt: 'AOT Trainer',         link: '/products/aot',          label: 'A.O.T.' },
 ];
 
 export default function PhotoGallery() {

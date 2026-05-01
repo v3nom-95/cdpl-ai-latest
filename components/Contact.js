@@ -50,8 +50,8 @@ export default function Contact() {
         {
             id: 'email',
             label: 'Email',
-            value: 'dev@cdpl.ai',
-            href: 'mailto:dev@cdpl.ai',
+            value: 'info@cdpl.ai',
+            href: 'mailto:info@cdpl.ai',
             icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -63,7 +63,7 @@ export default function Contact() {
             id: 'linkedin',
             label: 'LinkedIn',
             value: 'Connect with us',
-            href: 'https://in.linkedin.com/company/cdpl-ai',
+            href: 'https://linkedin.com/company/cdpl-ai',
             external: true,
             icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -84,7 +84,7 @@ export default function Contact() {
         {
             id: 'location',
             label: 'HQ_LOCATION',
-            value: 'T-Hub, Hyderabad, India',
+            value: 'Madhapur, Hyderabad, India',
             href: 'https://www.google.com/maps/place/Chakravyuha+Dynamics+Private+Limited+-+CDPL+(formerly+MAS)/@17.4461847,78.3890188,17z/data=!3m1!4b1!4m6!3m5!1s0x3bcb91991df605d3:0xae337cba48305f9d!8m2!3d17.4461847!4d78.3915937!16s%2Fg%2F11zjzl4lwn',
             external: true,
             icon: (
@@ -131,22 +131,22 @@ export default function Contact() {
                         <span className="corner corner-bl"></span>
                         <span className="corner corner-br"></span>
                         
-                        <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: 'var(--text-primary)' }}>SECURE MESSAGE</h3>
+                        <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: 'var(--text-primary)' }}>GET IN TOUCH</h3>
                         <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
                             <div className="input-group">
                                 <label style={{ display: 'block', fontSize: '0.7rem', fontFamily: 'var(--font-mono)', marginBottom: '0.5rem', color: 'var(--text-tertiary)' }}>FULL_NAME</label>
                                 <input type="text" name="name" required placeholder="NAME" className="hacker-input" style={{ width: '100%', padding: '1rem', background: '#fff', border: '1px solid var(--border-color)' }} />
                             </div>
                             <div className="input-group">
-                                <label style={{ display: 'block', fontSize: '0.7rem', fontFamily: 'var(--font-mono)', marginBottom: '0.5rem', color: 'var(--text-tertiary)' }}>EMAIL_ENDPOINT</label>
+                                <label style={{ display: 'block', fontSize: '0.7rem', fontFamily: 'var(--font-mono)', marginBottom: '0.5rem', color: 'var(--text-tertiary)' }}>EMAIL</label>
                                 <input type="email" name="email" required placeholder="EMAIL" className="hacker-input" style={{ width: '100%', padding: '1rem', background: '#fff', border: '1px solid var(--border-color)' }} />
                             </div>
                             <div className="input-group">
-                                <label style={{ display: 'block', fontSize: '0.7rem', fontFamily: 'var(--font-mono)', marginBottom: '0.5rem', color: 'var(--text-tertiary)' }}>MISSION_BRIEF</label>
+                                <label style={{ display: 'block', fontSize: '0.7rem', fontFamily: 'var(--font-mono)', marginBottom: '0.5rem', color: 'var(--text-tertiary)' }}>MESSAGE</label>
                                 <textarea name="message" required placeholder="MESSAGE" className="hacker-input" rows={4} style={{ width: '100%', padding: '1rem', background: '#fff', border: '1px solid var(--border-color)', resize: 'none' }}></textarea>
                             </div>
                             <button type="submit" disabled={isSubmitting} className="btn btn-primary" style={{ width: '100%', marginTop: '0.5rem', opacity: isSubmitting ? 0.7 : 1 }}>
-                                {isSubmitting ? 'TRANSMITTING...' : 'SEND TRANSMISSION'}
+                                {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
                             </button>
                             {result && (
                                 <p style={{ fontSize: '0.8rem', fontFamily: 'var(--font-mono)', color: result.includes('Aborted') || result.includes('Failed') ? '#e11d48' : 'var(--accent-primary)', textAlign: 'center', marginTop: '0.5rem' }}>
