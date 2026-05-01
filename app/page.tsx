@@ -5,7 +5,6 @@ import GlobeMap from '../components/GlobeMap';
 import Footer from '../components/Footer';
 import News from '../components/News';
 import PhotoGallery from '../components/PhotoGallery';
-import Testimonials from '../components/Testimonials';
 
 export default function Home() {
     return (
@@ -21,7 +20,6 @@ export default function Home() {
             </section>
             <PhotoGallery />
             <News />
-            <Testimonials />
             <Footer />
         </>
     );

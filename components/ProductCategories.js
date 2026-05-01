@@ -81,7 +81,7 @@ export default function ProductCategories() {
         {
             id: "mas",
             title: "Major Aerospace Systems",
-            tagline: "A BRAND OF CDPL",
+            tagline: "CDPL AERO DIVISION",
             description: "Dedicated to the design and development of advanced Autonomous Aerial Systems (AAS) and Group 1/2/3 UAS, delivering software-defined warfare supremacy for defense and institutional surveillance.",
             logo: "/partners/masicon.png",
             link: "/mas",

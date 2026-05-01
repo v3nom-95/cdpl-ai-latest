@@ -61,9 +61,9 @@ export default function ResourcesPage() {
         {
             id: 1,
             date: "FEB 18, 2026",
-            category: "FIELD DEPLOYMENT",
-            title: "MAS BARD Deployed at Exercise Topchi 2026",
-            excerpt: "Chakravyuha Dynamics' BARD system successfully completed high-altitude surveillance and target acquisition missions during the recent Exercise Topchi demonstration.",
+            category: "",
+            title: "MAS BARD Demonstrated at Exercise Topchi 2026",
+            excerpt: "Chakravyuha Dynamics' B.A.R.D. system was demonstrated at Exercise Topchi 2026, showcasing autonomous aerial surveillance capabilities to the Indian Armed Forces.",
             link: "https://www.youtube.com/watch?v=PWX3_uDB7z4"
         }
     ];
